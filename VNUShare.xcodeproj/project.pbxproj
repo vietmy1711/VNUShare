@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21494850546EEA022494D16C /* Pods_VNUShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */; };
+		8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D8C3741244036240042B253 /* GoogleService-Info.plist */; };
 		8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB147244017B600E6CCB0 /* AppDelegate.swift */; };
 		8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */; };
 		8D8CB14C244017B600E6CCB0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB14B244017B600E6CCB0 /* FirstViewController.swift */; };
@@ -17,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05166AC97F01B0E840269306 /* Pods-VNUShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.release.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.release.xcconfig"; sourceTree = "<group>"; };
+		5C64E412508D9CF78C60ECCA /* Pods-VNUShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.debug.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.debug.xcconfig"; sourceTree = "<group>"; };
+		61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VNUShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D8C3741244036240042B253 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D8CB144244017B600E6CCB0 /* VNU Share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VNU Share.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8CB147244017B600E6CCB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21494850546EEA022494D16C /* Pods_VNUShare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		877D50BE9C302F466F91004C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C64E412508D9CF78C60ECCA /* Pods-VNUShare.debug.xcconfig */,
+				05166AC97F01B0E840269306 /* Pods-VNUShare.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8D8CB13B244017B600E6CCB0 = {
 			isa = PBXGroup;
 			children = (
 				8D8CB146244017B600E6CCB0 /* VNUShare */,
 				8D8CB145244017B600E6CCB0 /* Products */,
+				877D50BE9C302F466F91004C /* Pods */,
+				F68F2DE21ED567BAECE20D5A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +84,7 @@
 				8D8CB152244017B700E6CCB0 /* Assets.xcassets */,
 				8D8CB154244017B700E6CCB0 /* LaunchScreen.storyboard */,
 				8D8CB157244017B700E6CCB0 /* Info.plist */,
+				8D8C3741244036240042B253 /* GoogleService-Info.plist */,
 			);
 			path = VNUShare;
 			sourceTree = "<group>";
@@ -94,6 +113,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F68F2DE21ED567BAECE20D5A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -101,9 +128,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8D8CB15A244017B700E6CCB0 /* Build configuration list for PBXNativeTarget "VNUShare" */;
 			buildPhases = (
+				80AC20B599FD375589CB22B8 /* [CP] Check Pods Manifest.lock */,
 				8D8CB140244017B600E6CCB0 /* Sources */,
 				8D8CB141244017B600E6CCB0 /* Frameworks */,
 				8D8CB142244017B600E6CCB0 /* Resources */,
+				634BF1FD8DA5AD33C8FD5B2C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -153,12 +182,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */,
+				8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */,
 				8D8CB153244017B700E6CCB0 /* Assets.xcassets in Resources */,
 				8D8CB151244017B600E6CCB0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		634BF1FD8DA5AD33C8FD5B2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80AC20B599FD375589CB22B8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VNUShare-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D8CB140244017B600E6CCB0 /* Sources */ = {
@@ -310,6 +382,7 @@
 		};
 		8D8CB15B244017B700E6CCB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C64E412508D9CF78C60ECCA /* Pods-VNUShare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -328,6 +401,7 @@
 		};
 		8D8CB15C244017B700E6CCB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05166AC97F01B0E840269306 /* Pods-VNUShare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
