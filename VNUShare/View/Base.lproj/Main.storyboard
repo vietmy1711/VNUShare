@@ -120,7 +120,7 @@
         <!--Login View Controller-->
         <scene sceneID="AxJ-cz-9sm">
             <objects>
-                <viewController id="NdZ-Vn-dBw" userLabel="Login View Controller" sceneMemberID="viewController">
+                <viewController id="NdZ-Vn-dBw" userLabel="Login View Controller" customClass="LoginViewController" customModule="VNU_Share" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EHs-Uh-qfy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -135,7 +135,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-ea-KkJ" userLabel="Login">
-                                        <rect key="frame" x="0.0" y="136" width="414" height="276"/>
+                                        <rect key="frame" x="0.0" y="136" width="414" height="285.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đăng nhập" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVP-fx-dcM">
                                                 <rect key="frame" x="16" y="8" width="382" height="33.5"/>
@@ -177,22 +177,25 @@
                                                 </userDefinedRuntimeAttributes>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NZ6-ik-dYW">
-                                                <rect key="frame" x="16" y="247.5" width="382" height="20.5"/>
+                                                <rect key="frame" x="16" y="247.5" width="382" height="30"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nMh-SV-5Mo" userLabel="Sign up">
-                                                        <rect key="frame" x="66" y="0.0" width="250.5" height="20.5"/>
+                                                        <rect key="frame" x="66" y="0.0" width="250.5" height="30"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chưa tạo tài khoản?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THW-iv-His">
-                                                                <rect key="frame" x="0.0" y="0.0" width="152.5" height="20.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="152.5" height="30"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQa-sq-Nob">
-                                                                <rect key="frame" x="156.5" y="0.0" width="94" height="20.5"/>
+                                                                <rect key="frame" x="156.5" y="0.0" width="94" height="30"/>
                                                                 <state key="normal" title="Đăng ký ngay">
                                                                     <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <segue destination="aYl-yC-Qvm" kind="presentation" modalPresentationStyle="fullScreen" id="hqj-E8-UhV"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -202,7 +205,7 @@
                                         <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="k43-jq-Rpq">
-                                        <rect key="frame" x="0.0" y="420" width="414" height="432"/>
+                                        <rect key="frame" x="0.0" y="429.5" width="414" height="422.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -220,7 +223,120 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O2T-ak-3oZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-868.11594202898561" y="0.0"/>
+            <point key="canvasLocation" x="-1838" y="102"/>
+        </scene>
+        <!--Sign Up View Controller-->
+        <scene sceneID="jie-Hu-6YU">
+            <objects>
+                <viewController id="aYl-yC-Qvm" userLabel="Sign Up View Controller" customClass="SignUpViewController" customModule="VNU_Share" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hqc-i7-1ZK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6oU-t8-wsY">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VNUSHARE-trans" translatesAutoresizingMaskIntoConstraints="NO" id="LjM-i8-JwA">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="JDu-fP-gMm"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NhE-UR-bnq" userLabel="Login">
+                                        <rect key="frame" x="0.0" y="136" width="414" height="343.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đăng ký" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zs3-Lh-VYQ">
+                                                <rect key="frame" x="16" y="8" width="382" height="33.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FJy-Mp-3eq" userLabel="Text Entry">
+                                                <rect key="frame" x="16" y="57.5" width="382" height="166"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YGN-LK-Myx">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="8tP-vC-WYp"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rat-vy-jQ2">
+                                                        <rect key="frame" x="0.0" y="58" width="382" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập lại mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-kv-q4X">
+                                                        <rect key="frame" x="0.0" y="116" width="382" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUI-a8-D1p">
+                                                <rect key="frame" x="16" y="239.5" width="382" height="50"/>
+                                                <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="oDB-uC-xiv"/>
+                                                </constraints>
+                                                <state key="normal" title="Tiếp tục">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="25"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YY0-dV-cIm">
+                                                <rect key="frame" x="16" y="305.5" width="382" height="30"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cEZ-XR-2j0" userLabel="Sign up">
+                                                        <rect key="frame" x="88" y="0.0" width="206" height="30"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đã có tài khoản?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAZ-RE-UWZ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="127" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILl-96-SVZ">
+                                                                <rect key="frame" x="131" y="0.0" width="75" height="30"/>
+                                                                <state key="normal" title="Đăng nhập">
+                                                                    <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="loginButtonPressed:" destination="aYl-yC-Qvm" eventType="touchUpInside" id="8t5-DM-YVK"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="2BT-7J-EDE">
+                                        <rect key="frame" x="0.0" y="487.5" width="414" height="364.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6oU-t8-wsY" firstAttribute="top" secondItem="tYZ-4j-22i" secondAttribute="top" id="9AT-Vv-sXl"/>
+                            <constraint firstItem="tYZ-4j-22i" firstAttribute="bottom" secondItem="6oU-t8-wsY" secondAttribute="bottom" constant="-34" id="HL6-oy-6Jk"/>
+                            <constraint firstItem="6oU-t8-wsY" firstAttribute="leading" secondItem="tYZ-4j-22i" secondAttribute="leading" id="LUz-Tn-YNx"/>
+                            <constraint firstAttribute="trailing" secondItem="6oU-t8-wsY" secondAttribute="trailing" id="kbn-ck-xK8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tYZ-4j-22i"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1mz-aH-LNX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-796" y="0.0"/>
         </scene>
     </scenes>
     <resources>
