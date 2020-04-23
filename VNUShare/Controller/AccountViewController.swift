@@ -1,14 +1,14 @@
 //
-//  LoginViewController.swift
+//  AccountViewController.swift
 //  VNUShare
 //
-//  Created by MM on 4/19/20.
+//  Created by MM on 4/23/20.
 //  Copyright © 2020 MM. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class AccountViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

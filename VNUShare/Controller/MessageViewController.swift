@@ -8,13 +8,16 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
-
+class  MessageViewController: UIViewController {
+    
+    @IBOutlet var tableView: UITableView!
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        navigationItem.searchController = searchController
     }
-
-
 }
+
 

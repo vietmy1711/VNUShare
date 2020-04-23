@@ -11,13 +11,14 @@
 		8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D8C3741244036240042B253 /* GoogleService-Info.plist */; };
 		8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB147244017B600E6CCB0 /* AppDelegate.swift */; };
 		8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */; };
-		8D8CB14C244017B600E6CCB0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB14B244017B600E6CCB0 /* FirstViewController.swift */; };
-		8D8CB14E244017B600E6CCB0 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB14D244017B600E6CCB0 /* SecondViewController.swift */; };
+		8D8CB14C244017B600E6CCB0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */; };
+		8D8CB14E244017B600E6CCB0 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB14D244017B600E6CCB0 /* MessageViewController.swift */; };
 		8D8CB151244017B600E6CCB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB14F244017B600E6CCB0 /* Main.storyboard */; };
 		8D8CB153244017B700E6CCB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB152244017B700E6CCB0 /* Assets.xcassets */; };
 		8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB154244017B700E6CCB0 /* LaunchScreen.storyboard */; };
 		8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7056244C25DD008961F9 /* SignUpViewController.swift */; };
 		8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7058244C25EA008961F9 /* LoginViewController.swift */; };
+		8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC36CD7245155E9002A6686 /* AccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,14 +29,15 @@
 		8D8CB144244017B600E6CCB0 /* VNU Share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VNU Share.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8CB147244017B600E6CCB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8D8CB14B244017B600E6CCB0 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		8D8CB14D244017B600E6CCB0 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8D8CB14D244017B600E6CCB0 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		8D8CB150244017B600E6CCB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8D8CB152244017B700E6CCB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D8CB155244017B700E6CCB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D8CB157244017B700E6CCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DAD7056244C25DD008961F9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8DAD7058244C25EA008961F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8DC36CD7245155E9002A6686 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,10 +98,10 @@
 		8D8CB15D2440197400E6CCB0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8D8CB14B244017B600E6CCB0 /* FirstViewController.swift */,
-				8D8CB14D244017B600E6CCB0 /* SecondViewController.swift */,
-				8DAD7056244C25DD008961F9 /* SignUpViewController.swift */,
-				8DAD7058244C25EA008961F9 /* LoginViewController.swift */,
+				8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */,
+				8D8CB14D244017B600E6CCB0 /* MessageViewController.swift */,
+				8DC36CD7245155E9002A6686 /* AccountViewController.swift */,
+				8DC36CD924516463002A6686 /* Authentication */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -117,6 +119,15 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8DC36CD924516463002A6686 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				8DAD7056244C25DD008961F9 /* SignUpViewController.swift */,
+				8DAD7058244C25EA008961F9 /* LoginViewController.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		F68F2DE21ED567BAECE20D5A /* Frameworks */ = {
@@ -244,8 +255,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */,
-				8D8CB14E244017B600E6CCB0 /* SecondViewController.swift in Sources */,
-				8D8CB14C244017B600E6CCB0 /* FirstViewController.swift in Sources */,
+				8D8CB14E244017B600E6CCB0 /* MessageViewController.swift in Sources */,
+				8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */,
+				8D8CB14C244017B600E6CCB0 /* HomeViewController.swift in Sources */,
 				8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */,
 				8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */,
 				8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */,
