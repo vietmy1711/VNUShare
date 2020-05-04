@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NdZ-Vn-dBw">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -42,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="722" y="-794"/>
+            <point key="canvasLocation" x="787" y="-751"/>
         </scene>
         <!--Chat-->
         <scene sceneID="wg7-f3-ORb">
@@ -65,7 +65,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController modalPresentationStyle="fullScreen" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="9PN-RK-5Hs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -100,7 +100,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLj-ci-FwI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="788" y="0.0"/>
+            <point key="canvasLocation" x="787" y="0.0"/>
         </scene>
         <!--Account-->
         <scene sceneID="QRl-es-KTe">
@@ -116,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKS-FX-w0G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="787" y="684"/>
+            <point key="canvasLocation" x="757" y="730"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="AxJ-cz-9sm">
@@ -232,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O2T-ak-3oZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-914" y="0.0"/>
+            <point key="canvasLocation" x="-962" y="-17"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="jie-Hu-6YU">
@@ -367,11 +367,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1mz-aH-LNX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-914" y="718"/>
+            <point key="canvasLocation" x="-962" y="752"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Dd-Zs-DpN"/>
+        <segue reference="aKc-c4-XX2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="VNUSHARE-trans" width="625" height="625"/>
