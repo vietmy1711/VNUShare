@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController {
+    
+    let user = Auth.auth().currentUser
 
+    @IBOutlet weak var nameLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.modalPresentationStyle = .fullScreen
+        nameLabel.text = "Hello,\(String(describing: user?.displayName)) !"
     }
 
     
