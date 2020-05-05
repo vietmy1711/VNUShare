@@ -11,15 +11,18 @@ import Firebase
 
 class HomeViewController: UIViewController {
     
-    let user = Auth.auth().currentUser
-
+    let user = Auth.auth().currentUser!
+    
     @IBOutlet weak var nameLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        nameLabel.text = "Hello,\(String(describing: user?.displayName)) !"
+        DispatchQueue.main.async {
+            self.nameLabel.text = "Hello, \(String(describing: self.user.displayName!))!"
+        }
+        
     }
-
+    
     
 }
 
