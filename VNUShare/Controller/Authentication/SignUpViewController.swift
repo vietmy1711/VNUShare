@@ -80,7 +80,6 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    
     @IBAction func emailError(_ sender: UITextField) {
         if let email = emailTextField.text {
             if !isValidEmail(email) {

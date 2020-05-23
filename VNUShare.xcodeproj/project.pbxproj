@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		21494850546EEA022494D16C /* Pods_VNUShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */; };
+		8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0BF870247769AE009B7C39 /* MenuCell.swift */; };
+		8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BF871247769AE009B7C39 /* MenuCell.xib */; };
+		8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6424616E51009E0734 /* UserCell.swift */; };
+		8D3A7B6724616E51009E0734 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6524616E51009E0734 /* UserCell.xib */; };
 		8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D8C3741244036240042B253 /* GoogleService-Info.plist */; };
 		8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB147244017B600E6CCB0 /* AppDelegate.swift */; };
 		8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */; };
@@ -25,6 +29,10 @@
 		05166AC97F01B0E840269306 /* Pods-VNUShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.release.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.release.xcconfig"; sourceTree = "<group>"; };
 		5C64E412508D9CF78C60ECCA /* Pods-VNUShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.debug.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.debug.xcconfig"; sourceTree = "<group>"; };
 		61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VNUShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D0BF870247769AE009B7C39 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		8D0BF871247769AE009B7C39 /* MenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		8D3A7B6424616E51009E0734 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		8D3A7B6524616E51009E0734 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8D8C3741244036240042B253 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D8CB144244017B600E6CCB0 /* VNU Share.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VNU Share.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8CB147244017B600E6CCB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +69,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8D3A7B6324616E2A009E0734 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8D3A7B6424616E51009E0734 /* UserCell.swift */,
+				8D3A7B6524616E51009E0734 /* UserCell.xib */,
+				8D0BF870247769AE009B7C39 /* MenuCell.swift */,
+				8D0BF871247769AE009B7C39 /* MenuCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		8D8CB13B244017B600E6CCB0 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +103,7 @@
 			children = (
 				8D8CB147244017B600E6CCB0 /* AppDelegate.swift */,
 				8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */,
+				8D3A7B6324616E2A009E0734 /* Cell */,
 				8D8CB15F2440199D00E6CCB0 /* Model */,
 				8D8CB15D2440197400E6CCB0 /* Controller */,
 				8D8CB15E2440198D00E6CCB0 /* View */,
@@ -198,10 +218,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */,
 				8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */,
 				8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */,
 				8D8CB153244017B700E6CCB0 /* Assets.xcassets in Resources */,
 				8D8CB151244017B600E6CCB0 /* Main.storyboard in Resources */,
+				8D3A7B6724616E51009E0734 /* UserCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */,
 				8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */,
+				8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */,
 				8D8CB14E244017B600E6CCB0 /* MessageViewController.swift in Sources */,
 				8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */,
 				8D8CB14C244017B600E6CCB0 /* HomeViewController.swift in Sources */,
