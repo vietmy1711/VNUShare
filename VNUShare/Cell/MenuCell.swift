@@ -35,6 +35,7 @@ class MenuCell: UITableViewCell {
     let imvMenu: UIImageView = {
         let imv = UIImageView()
         imv.contentMode = .scaleAspectFill
+        imv.layer.masksToBounds = true
         imv.image = UIImage(named: "Bike")
         imv.translatesAutoresizingMaskIntoConstraints = false
 
@@ -45,7 +46,7 @@ class MenuCell: UITableViewCell {
         let lbl = UILabel()
         lbl.text = "Alo alo"
         lbl.textAlignment = .center
-        lbl.font = UIFont(name: "Helvetica-Bold", size: 16)
+        lbl.font = UIFont(name: "Helvetica-Bold", size: 18)
         lbl.textColor = UIColor(red: 84/255, green: 84/255, blue: 84/255, alpha: 1)
         lbl.translatesAutoresizingMaskIntoConstraints = false
 
@@ -72,7 +73,7 @@ class MenuCell: UITableViewCell {
         vwView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
         vwView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 24).isActive = true
         vwView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -24).isActive = true
-        vwView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        vwView.heightAnchor.constraint(equalToConstant: 180).isActive = true
         
         vwView.addSubview(vwContainer)
         
@@ -89,11 +90,10 @@ class MenuCell: UITableViewCell {
         imvMenu.rightAnchor.constraint(equalTo: vwContainer.rightAnchor).isActive = true
         //imvMenu.heightAnchor.constraint(equalToConstant: 160).isActive = true
 
-        lblMenu.topAnchor.constraint(equalTo: imvMenu.bottomAnchor, constant: 24).isActive = true
+        lblMenu.topAnchor.constraint(equalTo: imvMenu.bottomAnchor, constant: 10).isActive = true
         lblMenu.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
         lblMenu.leftAnchor.constraint(equalTo: vwContainer.leftAnchor).isActive = true
         lblMenu.rightAnchor.constraint(equalTo: vwContainer.rightAnchor).isActive = true
-        
     }
     
 }

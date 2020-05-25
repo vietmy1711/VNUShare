@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NdZ-Vn-dBw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NdZ-Vn-dBw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -233,7 +233,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NhE-UR-bnq" userLabel="Login">
-                                        <rect key="frame" x="0.0" y="136" width="414" height="428.5"/>
+                                        <rect key="frame" x="0.0" y="136" width="414" height="544.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đăng ký" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zs3-Lh-VYQ">
                                                 <rect key="frame" x="16" y="8" width="382" height="33.5"/>
@@ -242,7 +242,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FJy-Mp-3eq" userLabel="Text Entry">
-                                                <rect key="frame" x="16" y="57.5" width="382" height="224"/>
+                                                <rect key="frame" x="16" y="57.5" width="382" height="340"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Họ và Tên" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wp4-iX-iPl">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
@@ -260,29 +260,44 @@
                                                             <action selector="emailError:" destination="aYl-yC-Qvm" eventType="editingChanged" id="TzM-Xm-hT7"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rat-vy-jQ2">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Số điện thoại" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-Gx-wiA">
                                                         <rect key="frame" x="0.0" y="116" width="382" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
+                                                        <connections>
+                                                            <action selector="phoneNumberError:" destination="aYl-yC-Qvm" eventType="editingChanged" id="lPu-fQ-g9b"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rat-vy-jQ2">
+                                                        <rect key="frame" x="0.0" y="174" width="382" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nhập lại mật khẩu" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-kv-q4X">
-                                                        <rect key="frame" x="0.0" y="174" width="382" height="50"/>
+                                                        <rect key="frame" x="0.0" y="232" width="382" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                         <connections>
                                                             <action selector="reenteringPasswordError:" destination="aYl-yC-Qvm" eventType="editingChanged" id="e0w-s0-HwU"/>
                                                         </connections>
                                                     </textField>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bDm-eN-BiK">
+                                                        <rect key="frame" x="0.0" y="290" width="382" height="51"/>
+                                                        <segments>
+                                                            <segment title="Hành khách"/>
+                                                            <segment title="Tài xế"/>
+                                                        </segments>
+                                                    </segmentedControl>
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vui lòng điền đủ thông tin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hpv-4d-rXI">
-                                                <rect key="frame" x="16" y="297.5" width="382" height="20.5"/>
+                                                <rect key="frame" x="16" y="413.5" width="382" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUI-a8-D1p">
-                                                <rect key="frame" x="16" y="334" width="382" height="50"/>
+                                                <rect key="frame" x="16" y="450" width="382" height="50"/>
                                                 <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="oDB-uC-xiv"/>
@@ -300,7 +315,7 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YY0-dV-cIm">
-                                                <rect key="frame" x="16" y="400" width="382" height="20.5"/>
+                                                <rect key="frame" x="16" y="516" width="382" height="20.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cEZ-XR-2j0" userLabel="Sign up">
                                                         <rect key="frame" x="88" y="0.0" width="206" height="20.5"/>
@@ -328,7 +343,7 @@
                                         <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="2BT-7J-EDE">
-                                        <rect key="frame" x="0.0" y="572.5" width="414" height="279.5"/>
+                                        <rect key="frame" x="0.0" y="688.5" width="414" height="163.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -348,6 +363,7 @@
                         <outlet property="errorLabel" destination="Hpv-4d-rXI" id="5Ph-Al-yO0"/>
                         <outlet property="nameTextField" destination="wp4-iX-iPl" id="S8K-96-j4j"/>
                         <outlet property="passwordTextField" destination="rat-vy-jQ2" id="8F0-JG-xdt"/>
+                        <outlet property="phoneNumberTextField" destination="4wh-Gx-wiA" id="mFr-aM-bn3"/>
                         <outlet property="reenterPasswordTextField" destination="GfF-kv-q4X" id="HE7-ZH-ltL"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="signUpSegue" id="7Dd-Zs-DpN"/>
                     </connections>
@@ -358,7 +374,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aKc-c4-XX2"/>
+        <segue reference="7Dd-Zs-DpN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="VNUSHARE-trans" width="1250" height="1250"/>

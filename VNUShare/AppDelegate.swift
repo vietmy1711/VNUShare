@@ -19,6 +19,7 @@ UIApplicationDelegate {
         // Override point for customization after application launch.
         // Firebase
         FirebaseApp.configure()
+        
         return true
     }
 

@@ -13,10 +13,10 @@ class HomeViewController: UIViewController {
     
     var coupon: Int = 0
     let greetingString: String = {
-        guard let user = Auth.auth().currentUser else {
+        guard let user = Auth.auth().currentUser?.displayName else {
             return "No user logged in"
         }
-        return "Hello \(String(describing: user.displayName!))"
+        return "Hello \(String(describing: user))"
     }()
     
     private let imvTop: UIImageView = {
@@ -24,8 +24,9 @@ class HomeViewController: UIViewController {
         imv.image = #imageLiteral(resourceName: "Traffic")
         imv.translatesAutoresizingMaskIntoConstraints = false
         imv.contentMode = .scaleAspectFill
+        imv.layer.masksToBounds = true
         return imv
-    }()
+    }() 
     
     private let lblGreet: UILabel = {
         let lbl = UILabel()
@@ -79,11 +80,11 @@ class HomeViewController: UIViewController {
         imvTop.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         imvTop.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         imvTop.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        imvTop.heightAnchor.constraint(equalToConstant: 240).isActive = true
+        imvTop.heightAnchor.constraint(equalToConstant: 220).isActive = true
         
         lblGreet.text = greetingString
         
-        lblGreet.topAnchor.constraint(equalTo: view.topAnchor, constant: 180).isActive = true
+        lblGreet.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
         lblGreet.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         lblGreet.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         lblGreet.bottomAnchor.constraint(equalTo: lblCoupon.topAnchor, constant: -10).isActive = true
@@ -91,12 +92,13 @@ class HomeViewController: UIViewController {
         lblCoupon.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         lblCoupon.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         
-        lblMenu.topAnchor.constraint(equalTo: imvTop.bottomAnchor, constant: 40).isActive = true
+        lblMenu.topAnchor.constraint(equalTo: imvTop.bottomAnchor, constant: 20).isActive = true
         lblMenu.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         lblMenu.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        //lblMenu.backgroundColor = .black
         
         menuTableView.separatorStyle = .none
-        menuTableView.topAnchor.constraint(equalTo: lblMenu.bottomAnchor, constant: 10).isActive = true
+        menuTableView.topAnchor.constraint(equalTo: lblMenu.bottomAnchor, constant: 0).isActive = true
         menuTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         menuTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
