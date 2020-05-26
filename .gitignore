@@ -70,4 +70,4 @@ fastlane/screenshots
 fastlane/test_output
 
 #API
-API.swift
+/API.swift
