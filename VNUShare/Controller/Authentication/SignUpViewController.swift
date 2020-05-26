@@ -45,8 +45,12 @@ class SignUpViewController: UIViewController {
             //If password and reentered password match
             if fullCheck(email, password, reenterPassword, number) {
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    
                     if let e = error {
-                        print(e)
+                        let alert = UIAlertController(title: "Có lỗi đã xảy ra", message: e.localizedDescription, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: nil))
+                        self.present(alert, animated: true)
                     } else {
                         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                         changeRequest?.displayName = name
@@ -55,17 +59,19 @@ class SignUpViewController: UIViewController {
                                 print(e)
                             }	
                         }
-                        //Navigate to HomeViewController
-                        self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                        self.db.collection("users").addDocument(data: [
+                            "email": email,
+                            "fullname": name,
+                            "phonenumber": number
+                        ])
+                        let alert = UIAlertController(title: "Đăng ký thành công", message: "Bạn có thể đăng nhập ngay bây giờ", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
+                            self.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true)
                     }
                 }
-                
-                db.collection("users").addDocument(data: [
-                    "email": email,
-                    "fullname": name,
-                    "phonenumber": number
-                ])
-                                
             } else {
                 if !isValidEmail(email) {
                     DispatchQueue.main.async {
@@ -153,10 +159,9 @@ class SignUpViewController: UIViewController {
     }
     
     func isValidPhoneNumber(_ number: String) -> Bool {
-        //let RegEx = "/^0[0-9]{8}$/"
-        //let Test = NSPredicate(format: "SELF MATCHES %@", RegEx)
-        //return Test.evaluate(with: number)
-        return true
+        let RegEx = "^0[3|5|7|8|9]\\d\\d\\d\\d\\d\\d\\d\\d$"
+        let Test = NSPredicate(format: "SELF MATCHES %@", RegEx)
+        return Test.evaluate(with: number)
     }
     
     func fullCheck(_ email: String, _ password: String, _ reenteredPassword: String, _ number: String) -> Bool {

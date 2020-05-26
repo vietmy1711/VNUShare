@@ -12,12 +12,7 @@ import Firebase
 class HomeViewController: UIViewController {
     
     var coupon: Int = 0
-    let greetingString: String = {
-        guard let user = Auth.auth().currentUser?.displayName else {
-            return "No user logged in"
-        }
-        return "Hello \(String(describing: user))"
-    }()
+    var greetingString: String = ""
     
     private let imvTop: UIImageView = {
         let imv = UIImageView()
@@ -33,8 +28,8 @@ class HomeViewController: UIViewController {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont(name: "Helvetica-Bold", size: 30)
         lbl.textColor = .white
-        return lbl
-    }()
+            return lbl
+        }()
     
     private let lblCoupon: UILabel = {
         let lbl = UILabel()
@@ -67,8 +62,30 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         menuTableView.delegate = self
         menuTableView.dataSource = self
+        
+        checkIfUserLoggedIn()
+        
         setupUI()
     }
+    
+    func checkIfUserLoggedIn() {
+        if Auth.auth().currentUser != nil {
+          // User is signed in.
+          // ...
+            print("User is logged in")
+        } else {
+          // No user is signed in.
+          // ...
+            print("User is not logged in")
+
+        }
+        if let user:String = Auth.auth().currentUser?.displayName {
+            self.greetingString = "Hello, \(user)"
+        } else {
+            print(Auth.auth().currentUser?.displayName)
+            self.dismiss(animated: true, completion: nil)
+        }
+}
     
     func setupUI() {
         view.addSubview(imvTop)
@@ -121,5 +138,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.lblMenu.text = "Ăn uống"
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let mapPickVC = MapPickViewController()
+            mapPickVC.modalPresentationStyle = .fullScreen
+            self.present(mapPickVC, animated: true, completion: nil)
+        }
     }
 }

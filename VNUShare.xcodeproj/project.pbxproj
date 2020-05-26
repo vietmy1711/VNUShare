@@ -10,6 +10,7 @@
 		21494850546EEA022494D16C /* Pods_VNUShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */; };
 		8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0BF870247769AE009B7C39 /* MenuCell.swift */; };
 		8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BF871247769AE009B7C39 /* MenuCell.xib */; };
+		8D3944B6247CF270007F6B68 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8D3944B5247CF26F007F6B68 /* .gitignore */; };
 		8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6424616E51009E0734 /* UserCell.swift */; };
 		8D3A7B6724616E51009E0734 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6524616E51009E0734 /* UserCell.xib */; };
 		8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D8C3741244036240042B253 /* GoogleService-Info.plist */; };
@@ -20,6 +21,8 @@
 		8D8CB151244017B600E6CCB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB14F244017B600E6CCB0 /* Main.storyboard */; };
 		8D8CB153244017B700E6CCB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB152244017B700E6CCB0 /* Assets.xcassets */; };
 		8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB154244017B700E6CCB0 /* LaunchScreen.storyboard */; };
+		8DA6E474247BB84800F4EB57 /* MapPickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */; };
+		8DA6E476247BD3D100F4EB57 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA6E475247BD3D100F4EB57 /* API.swift */; };
 		8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7056244C25DD008961F9 /* SignUpViewController.swift */; };
 		8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7058244C25EA008961F9 /* LoginViewController.swift */; };
 		8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC36CD7245155E9002A6686 /* AccountViewController.swift */; };
@@ -31,6 +34,7 @@
 		61A13A2F5343BDC64F5BD978 /* Pods_VNUShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VNUShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0BF870247769AE009B7C39 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		8D0BF871247769AE009B7C39 /* MenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		8D3944B5247CF26F007F6B68 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		8D3A7B6424616E51009E0734 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8D3A7B6524616E51009E0734 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8D8C3741244036240042B253 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -43,6 +47,8 @@
 		8D8CB152244017B700E6CCB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D8CB155244017B700E6CCB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D8CB157244017B700E6CCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPickViewController.swift; sourceTree = "<group>"; };
+		8DA6E475247BD3D100F4EB57 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8DAD7056244C25DD008961F9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8DAD7058244C25EA008961F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8DC36CD7245155E9002A6686 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +109,8 @@
 			children = (
 				8D8CB147244017B600E6CCB0 /* AppDelegate.swift */,
 				8D8CB149244017B600E6CCB0 /* SceneDelegate.swift */,
+				8D3944B5247CF26F007F6B68 /* .gitignore */,
+				8DA6E475247BD3D100F4EB57 /* API.swift */,
 				8D3A7B6324616E2A009E0734 /* Cell */,
 				8D8CB15F2440199D00E6CCB0 /* Model */,
 				8D8CB15D2440197400E6CCB0 /* Controller */,
@@ -119,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */,
+				8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */,
 				8D8CB14D244017B600E6CCB0 /* MessageViewController.swift */,
 				8DC36CD7245155E9002A6686 /* AccountViewController.swift */,
 				8DC36CD924516463002A6686 /* Authentication */,
@@ -170,6 +179,7 @@
 				8D8CB141244017B600E6CCB0 /* Frameworks */,
 				8D8CB142244017B600E6CCB0 /* Resources */,
 				634BF1FD8DA5AD33C8FD5B2C /* [CP] Embed Pods Frameworks */,
+				1AFBCF565974E0622684F634 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -219,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */,
+				8D3944B6247CF270007F6B68 /* .gitignore in Resources */,
 				8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */,
 				8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */,
 				8D8CB153244017B700E6CCB0 /* Assets.xcassets in Resources */,
@@ -230,6 +241,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1AFBCF565974E0622684F634 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VNUShare/Pods-VNUShare-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		634BF1FD8DA5AD33C8FD5B2C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -276,6 +304,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DA6E476247BD3D100F4EB57 /* API.swift in Sources */,
+				8DA6E474247BB84800F4EB57 /* MapPickViewController.swift in Sources */,
 				8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */,
 				8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */,
 				8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */,
