@@ -28,8 +28,8 @@ class HomeViewController: UIViewController {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont(name: "Helvetica-Bold", size: 30)
         lbl.textColor = .white
-            return lbl
-        }()
+        return lbl
+    }()
     
     private let lblCoupon: UILabel = {
         let lbl = UILabel()
@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
         lbl.textColor = .black
         return lbl
     }()
-
+    
     
     private let menuTableView: UITableView = {
         let tableView = UITableView()
@@ -70,22 +70,19 @@ class HomeViewController: UIViewController {
     
     func checkIfUserLoggedIn() {
         if Auth.auth().currentUser != nil {
-          // User is signed in.
-          // ...
-            print("User is logged in")
+            if let user:String = Auth.auth().currentUser?.displayName {
+                self.greetingString = "Hello, \(user)"
+            }
         } else {
-          // No user is signed in.
-          // ...
-            print("User is not logged in")
-
+            let alert = UIAlertController(title: "Có lỗi đã xảy ra", message: "Vui lòng đăng nhập lại", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Đăng nhập", style: .default, handler: { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true)
         }
-        if let user:String = Auth.auth().currentUser?.displayName {
-            self.greetingString = "Hello, \(user)"
-        } else {
-            print(Auth.auth().currentUser?.displayName)
-            self.dismiss(animated: true, completion: nil)
-        }
-}
+        
+    }
     
     func setupUI() {
         view.addSubview(imvTop)
@@ -121,8 +118,6 @@ class HomeViewController: UIViewController {
         menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
     }
-    
-    
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
