@@ -7,63 +7,159 @@
 //
 
 import UIKit
-import MapKit
+import CoreLocation
+import GoogleMaps
 
 class MapPickViewController: UIViewController {
     
     let locationManager = CLLocationManager()
+    var lat: Double = 0
+    var lon: Double = 0
     
-    let mapView: MKMapView = {
-        let mapView = MKMapView()
+    let marker = GMSMarker()
+
+    let vwContainer: UIView = {
+        let vw = UIView()
+        vw.layer.cornerRadius = 10
+        vw.layer.shadowColor = UIColor.black.cgColor
+        vw.layer.shadowOpacity = 0.2
+        vw.layer.shadowOffset = .zero
+        vw.layer.shadowRadius = 0.8
+        vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        return vw
+    }()
+    
+    let btnCancel: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.layer.cornerRadius = 10
+        btn.setTitle("Hủy", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
+        btn.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    var mapView: GMSMapView = {
+        var mapView = GMSMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
 
         // Do any additional setup after loading the view.
-        
         setupUI()
+        
+    }
+    
+    override func loadView() {
+
+        super.loadView()
+        locationManager.delegate = self
+
         getUserLocation()
         setupMap()
     }
     
     func setupUI() {
-        view.addSubview(mapView)
+//        view.addSubview(mapView)
+//
+//        mapView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//        mapView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//
+        view.addSubview(vwContainer)
         
-        mapView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        mapView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        vwContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
+        vwContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
+        vwContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
         
+        vwContainer.addSubview(btnCancel)
+        
+        
+        
+        btnCancel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 10).isActive = true
+        btnCancel.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
+        btnCancel.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
+        btnCancel.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
+        btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     func getUserLocation() {
         locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = .greatestFiniteMagnitude
+        locationManager.activityType = .automotiveNavigation
+        locationManager.distanceFilter = 1
+        checkLocation()
+        locationManager.requestLocation()
     }
     
     func setupMap() {
+       
+        locationManager.startUpdatingLocation()
+        print(lat)
+        print(lon)
+        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16)
+        mapView = GMSMapView.map(withFrame: .zero, camera: camera)
+        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        marker.map = mapView
+        
+        view = mapView
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func cancelButtonClicked() {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
+    
+    func checkLocation() {
+               if CLLocationManager.authorizationStatus() != .authorizedWhenInUse
+               {
+                   print("requestingautorization")
+                   locationManager.requestWhenInUseAuthorization()
 
+               } else {
+                   print("startupdatinglocation")
+               }
+           }
+
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension MapPickViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        mapView.setCenter(locations.last?.coordinate ?? CLLocationCoordinate2DMake(0, 0), animated: true)
+        if let location = locations.last {
+            lat = location.coordinate.latitude
+            lon = location.coordinate.longitude
+            let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 16)
+            mapView = GMSMapView.map(withFrame: .zero, camera: camera)
+            marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            marker.title = "Vị trí"
+            marker.snippet = "hiện tại"
+            marker.map = mapView
+        }
+        else {
+            print("No location")
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }
