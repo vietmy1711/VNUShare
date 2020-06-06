@@ -9,10 +9,13 @@
 import UIKit
 import CoreLocation
 import GoogleMaps
+import GooglePlaces
 
 class MapPickViewController: UIViewController {
     
     let locationManager = CLLocationManager()
+    
+    let placesClient = GMSPlacesClient()
     
     var lat: Double = 0
     var lon: Double = 0
@@ -71,6 +74,24 @@ class MapPickViewController: UIViewController {
         getUserLocation()
         setupMap()
         locationManager.requestLocation()
+        
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
+                                                  UInt(GMSPlaceField.placeID.rawValue))!
+        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
+          (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
+          if let error = error {
+            print("An error occurred: \(error.localizedDescription)")
+            return
+          }
+
+          if let placeLikelihoodList = placeLikelihoodList {
+            for likelihood in placeLikelihoodList {
+              let place = likelihood.place
+              print("Current Place name \(String(describing: place.name)) at likelihood \(likelihood.likelihood)")
+              print("Current PlaceID \(String(describing: place.placeID))")
+            }
+          }
+        })
 
     }
     
