@@ -75,24 +75,7 @@ class MapPickViewController: UIViewController {
         setupMap()
         locationManager.requestLocation()
         
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-                                                  UInt(GMSPlaceField.placeID.rawValue))!
-        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
-          (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
-          if let error = error {
-            print("An error occurred: \(error.localizedDescription)")
-            return
-          }
-
-          if let placeLikelihoodList = placeLikelihoodList {
-            for likelihood in placeLikelihoodList {
-              let place = likelihood.place
-              print("Current Place name \(String(describing: place.name)) at likelihood \(likelihood.likelihood)")
-              print("Current PlaceID \(String(describing: place.placeID))")
-            }
-          }
-        })
-
+        
     }
     
     func setupUI() {
@@ -129,9 +112,9 @@ class MapPickViewController: UIViewController {
     func setupMap() {
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16)
         mapView = GMSMapView.map(withFrame: .zero, camera: camera)
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.map = mapView
+//        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+//        marker.title = "Sydney"
+//        marker.map = mapView
         view = mapView
     }
     
@@ -171,8 +154,10 @@ extension MapPickViewController: CLLocationManagerDelegate {
             //mapView = GMSMapView.map(withFrame: .zero, camera: camera)
             mapView.animate(toLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon))
             marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            marker.title = "Vị trí hiện tại"
-            marker.map = mapView
+//            marker.title = "Vị trí hiện tại"
+//            marker.map = mapView
+            mapView.isMyLocationEnabled = true
+            mapView.settings.myLocationButton = true
         }
         else {
             print("No location")
