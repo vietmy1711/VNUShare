@@ -13,9 +13,9 @@ import GooglePlaces
 
 class MapPickViewController: UIViewController {
     
-    let locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
     
-    let placesClient = GMSPlacesClient()
+    var placesClient = GMSPlacesClient()
     
     var lat: Double = 0
     var lon: Double = 0
@@ -23,7 +23,7 @@ class MapPickViewController: UIViewController {
     let marker = GMSMarker()
     let marker1 = GMSMarker()
     
-    let vwContainer: UIView = {
+    let vwBtnContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.shadowColor = UIColor.black.cgColor
@@ -35,16 +35,60 @@ class MapPickViewController: UIViewController {
         return vw
     }()
     
+    let vwTxfContainer: UIView = {
+           let vw = UIView()
+           vw.layer.cornerRadius = 10
+           vw.layer.shadowColor = UIColor.black.cgColor
+           vw.layer.shadowOpacity = 0.2
+           vw.layer.shadowOffset = .zero
+           vw.layer.shadowRadius = 0.8
+           vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+           vw.translatesAutoresizingMaskIntoConstraints = false
+           return vw
+       }()
+    
     let btnCancel: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
         btn.layer.cornerRadius = 10
         btn.setTitle("Hủy", for: .normal)
         btn.setTitleColor(.black, for: .normal)
-        btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
+        btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
         btn.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
+    }()
+    
+    let txfCurrent: UITextField = {
+        let txf = UITextField()
+        txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        txf.font = UIFont(name: "Helvetica-Bold", size: 17)
+        txf.placeholder = "Vị trí hiện tại"
+        txf.isUserInteractionEnabled = true
+        txf.isEnabled = true
+        txf.becomeFirstResponder()
+        txf.translatesAutoresizingMaskIntoConstraints = false
+        return txf
+    }()
+    
+    let txfToGo: UITextField = {
+        let txf = UITextField()
+        txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        txf.font = UIFont(name: "Helvetica-Bold", size: 17)
+        txf.placeholder = "Nơi cần đến"
+        txf.isUserInteractionEnabled = true
+        txf.isEnabled = true
+        txf.becomeFirstResponder()
+        txf.translatesAutoresizingMaskIntoConstraints = false
+        return txf
+    }()
+    
+    let verticalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     var mapView: GMSMapView = {
@@ -54,11 +98,11 @@ class MapPickViewController: UIViewController {
         return mapView
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        
-        // Do any additional setup after loading the view.
+        placesClient = GMSPlacesClient.shared()
         setupUI()
         
     }
@@ -68,7 +112,6 @@ class MapPickViewController: UIViewController {
         super.loadView()
         mapView.delegate = self
         locationManager.delegate = self
-        
         checkLocation()
         
         getUserLocation()
@@ -79,28 +122,48 @@ class MapPickViewController: UIViewController {
     }
     
     func setupUI() {
-        //        view.addSubview(mapView)
-        //
-        //        mapView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        //        mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        //        mapView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        //        mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        //
-        view.addSubview(vwContainer)
+
+        view.addSubview(vwBtnContainer)
         
-        vwContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
-        vwContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
-        vwContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
+        vwBtnContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
+        vwBtnContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
+        vwBtnContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
         
-        vwContainer.addSubview(btnCancel)
+        vwBtnContainer.addSubview(verticalStackView)
         
-        
-        
-        btnCancel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 10).isActive = true
-        btnCancel.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
-        btnCancel.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
-        btnCancel.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
+        verticalStackView.topAnchor.constraint(equalTo: vwBtnContainer.topAnchor, constant: 10).isActive = true
+        verticalStackView.bottomAnchor.constraint(equalTo: vwBtnContainer.bottomAnchor, constant: -10).isActive = true
+        verticalStackView.leftAnchor.constraint(equalTo: vwBtnContainer.leftAnchor, constant: 10).isActive = true
+        verticalStackView.rightAnchor.constraint(equalTo: vwBtnContainer.rightAnchor, constant: -10).isActive = true
+
+        verticalStackView.addArrangedSubview(btnCancel)
+
         btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        view.addSubview(vwTxfContainer)
+        
+        vwTxfContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
+        vwTxfContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
+        vwTxfContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
+        
+        vwTxfContainer.addSubview(txfCurrent)
+        vwTxfContainer.addSubview(txfToGo)
+        txfCurrent.delegate = self
+        txfToGo.delegate = self
+        
+        txfCurrent.topAnchor.constraint(equalTo: vwTxfContainer.topAnchor, constant: 10).isActive = true
+        txfCurrent.bottomAnchor.constraint(equalTo: txfToGo.topAnchor, constant: -10).isActive = true
+        txfCurrent.leftAnchor.constraint(equalTo: vwTxfContainer.leftAnchor, constant: 10).isActive = true
+        txfCurrent.rightAnchor.constraint(equalTo: vwTxfContainer.rightAnchor, constant: -10).isActive = true
+
+        txfToGo.bottomAnchor.constraint(equalTo: vwTxfContainer.bottomAnchor, constant: -10).isActive = true
+        txfToGo.leftAnchor.constraint(equalTo: vwTxfContainer.leftAnchor, constant: 10).isActive = true
+        txfToGo.rightAnchor.constraint(equalTo: vwTxfContainer.rightAnchor, constant: -10).isActive = true
+
+        txfCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        txfToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        vwTxfContainer.bringSubviewToFront(self.view)
     }
     
     func getUserLocation() {
@@ -111,11 +174,14 @@ class MapPickViewController: UIViewController {
     
     func setupMap() {
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16)
-        mapView = GMSMapView.map(withFrame: .zero, camera: camera)
-//        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-//        marker.title = "Sydney"
-//        marker.map = mapView
-        view = mapView
+        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
+        //        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+        //        marker.title = "Sydney"
+        //        marker.map = mapView
+        self.view.addSubview(mapView)
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
     }
     
     @objc func cancelButtonClicked() {
@@ -131,17 +197,7 @@ class MapPickViewController: UIViewController {
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+
 }
 
 extension MapPickViewController: CLLocationManagerDelegate {
@@ -150,14 +206,8 @@ extension MapPickViewController: CLLocationManagerDelegate {
             lat = location.coordinate.latitude
             lon = location.coordinate.longitude
             print(lat, lon)
-            //let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 16)
-            //mapView = GMSMapView.map(withFrame: .zero, camera: camera)
             mapView.animate(toLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon))
-            marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//            marker.title = "Vị trí hiện tại"
-//            marker.map = mapView
-            mapView.isMyLocationEnabled = true
-            mapView.settings.myLocationButton = true
+            
         }
         else {
             print("No location")
@@ -170,4 +220,13 @@ extension MapPickViewController: CLLocationManagerDelegate {
 
 extension MapPickViewController: GMSMapViewDelegate {
     
+}
+
+extension MapPickViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print("Aaa")
+        return true
+    }
+
+
 }

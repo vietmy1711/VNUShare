@@ -132,6 +132,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.lblMenu.text = "Ăn uống"
         }
+        cell.selectionStyle = .none
         return cell
     }
     
