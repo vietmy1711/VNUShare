@@ -31,6 +31,36 @@ class MapPickViewController: UIViewController {
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
     }()
+    
+    let vwCurrent: UIView = {
+        let vw = UIView()
+        vw.backgroundColor = .clear
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        return vw
+    }()
+    
+    let imvCurrent: UIImageView = {
+        let imv = UIImageView()
+        imv.image = UIImage(systemName: "location")
+        imv.tintColor = .gray
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
+    }()
+    
+    let vwToGo: UIView = {
+        let vw = UIView()
+        vw.backgroundColor = .clear
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        return vw
+    }()
+    
+    let imvToGo: UIImageView = {
+        let imv = UIImageView()
+        imv.image = UIImage(systemName: "car")
+        imv.tintColor = .gray
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
+    }()
 
     let btnCancel: UIButton = {
         let btn = UIButton()
@@ -49,6 +79,8 @@ class MapPickViewController: UIViewController {
         txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Vị trí hiện tại"
+        txf.clearButtonMode = .whileEditing
+        txf.spellCheckingType = .no
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
@@ -58,6 +90,8 @@ class MapPickViewController: UIViewController {
         txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Nơi cần đến"
+        txf.clearButtonMode = .whileEditing
+        txf.spellCheckingType = .no
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
@@ -115,14 +149,44 @@ class MapPickViewController: UIViewController {
         verticalStackView.leftAnchor.constraint(equalTo: vwBtnContainer.leftAnchor, constant: 10).isActive = true
         verticalStackView.rightAnchor.constraint(equalTo: vwBtnContainer.rightAnchor, constant: -10).isActive = true
 
-        verticalStackView.addArrangedSubview(txfCurrent)
-        verticalStackView.addArrangedSubview(txfToGo)
+        verticalStackView.addArrangedSubview(vwCurrent)
+        verticalStackView.addArrangedSubview(vwToGo)
         verticalStackView.addArrangedSubview(btnCancel)
+        
+        vwCurrent.addSubview(imvCurrent)
+        vwCurrent.addSubview(txfCurrent)
 
-        txfCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        txfToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        vwCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        vwToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
         btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        imvCurrent.topAnchor.constraint(equalTo: vwCurrent.topAnchor, constant: 10).isActive = true
+        imvCurrent.bottomAnchor.constraint(equalTo: vwCurrent.bottomAnchor, constant: -10).isActive = true
+        imvCurrent.leftAnchor.constraint(equalTo: vwCurrent.leftAnchor, constant: 10).isActive = true
+        imvCurrent.rightAnchor.constraint(equalTo: txfCurrent.leftAnchor, constant: -16).isActive = true
+        
+        imvCurrent.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        imvCurrent.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        txfCurrent.topAnchor.constraint(equalTo: vwCurrent.topAnchor, constant: 0).isActive = true
+        txfCurrent.bottomAnchor.constraint(equalTo: vwCurrent.bottomAnchor, constant: 0).isActive = true
+        txfCurrent.rightAnchor.constraint(equalTo: vwCurrent.rightAnchor, constant: 0).isActive = true
+        
+        vwToGo.addSubview(imvToGo)
+        vwToGo.addSubview(txfToGo)
 
+        imvToGo.topAnchor.constraint(equalTo: vwToGo.topAnchor, constant: 10).isActive = true
+        imvToGo.bottomAnchor.constraint(equalTo: vwToGo.bottomAnchor, constant: -10).isActive = true
+        imvToGo.leftAnchor.constraint(equalTo: vwToGo.leftAnchor, constant: 10).isActive = true
+        imvToGo.rightAnchor.constraint(equalTo: txfToGo.leftAnchor, constant: -16).isActive = true
+        
+        imvToGo.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        imvToGo.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        txfToGo.topAnchor.constraint(equalTo: vwToGo.topAnchor, constant: 0).isActive = true
+        txfToGo.bottomAnchor.constraint(equalTo: vwToGo.bottomAnchor, constant: 0).isActive = true
+        txfToGo.rightAnchor.constraint(equalTo: vwToGo.rightAnchor, constant: 0).isActive = true
+        
     }
     
     func getCurrentPlaceName() {
