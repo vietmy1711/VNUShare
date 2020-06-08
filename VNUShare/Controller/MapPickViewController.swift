@@ -19,10 +19,7 @@ class MapPickViewController: UIViewController {
     
     var lat: Double = 0
     var lon: Double = 0
-    
-    let marker = GMSMarker()
-    let marker1 = GMSMarker()
-    
+
     let vwBtnContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
@@ -34,19 +31,7 @@ class MapPickViewController: UIViewController {
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
     }()
-    
-    let vwTxfContainer: UIView = {
-           let vw = UIView()
-           vw.layer.cornerRadius = 10
-           vw.layer.shadowColor = UIColor.black.cgColor
-           vw.layer.shadowOpacity = 0.2
-           vw.layer.shadowOffset = .zero
-           vw.layer.shadowRadius = 0.8
-           vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
-           vw.translatesAutoresizingMaskIntoConstraints = false
-           return vw
-       }()
-    
+
     let btnCancel: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
@@ -64,9 +49,6 @@ class MapPickViewController: UIViewController {
         txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Vị trí hiện tại"
-        txf.isUserInteractionEnabled = true
-        txf.isEnabled = true
-        txf.becomeFirstResponder()
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
@@ -76,9 +58,6 @@ class MapPickViewController: UIViewController {
         txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Nơi cần đến"
-        txf.isUserInteractionEnabled = true
-        txf.isEnabled = true
-        txf.becomeFirstResponder()
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
@@ -115,9 +94,9 @@ class MapPickViewController: UIViewController {
         checkLocation()
         
         getUserLocation()
+        //getCurrentPlaceName()
         setupMap()
         locationManager.requestLocation()
-        
         
     }
     
@@ -136,34 +115,30 @@ class MapPickViewController: UIViewController {
         verticalStackView.leftAnchor.constraint(equalTo: vwBtnContainer.leftAnchor, constant: 10).isActive = true
         verticalStackView.rightAnchor.constraint(equalTo: vwBtnContainer.rightAnchor, constant: -10).isActive = true
 
+        verticalStackView.addArrangedSubview(txfCurrent)
+        verticalStackView.addArrangedSubview(txfToGo)
         verticalStackView.addArrangedSubview(btnCancel)
-
-        btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        view.addSubview(vwTxfContainer)
-        
-        vwTxfContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
-        vwTxfContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
-        vwTxfContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
-        
-        vwTxfContainer.addSubview(txfCurrent)
-        vwTxfContainer.addSubview(txfToGo)
-        txfCurrent.delegate = self
-        txfToGo.delegate = self
-        
-        txfCurrent.topAnchor.constraint(equalTo: vwTxfContainer.topAnchor, constant: 10).isActive = true
-        txfCurrent.bottomAnchor.constraint(equalTo: txfToGo.topAnchor, constant: -10).isActive = true
-        txfCurrent.leftAnchor.constraint(equalTo: vwTxfContainer.leftAnchor, constant: 10).isActive = true
-        txfCurrent.rightAnchor.constraint(equalTo: vwTxfContainer.rightAnchor, constant: -10).isActive = true
-
-        txfToGo.bottomAnchor.constraint(equalTo: vwTxfContainer.bottomAnchor, constant: -10).isActive = true
-        txfToGo.leftAnchor.constraint(equalTo: vwTxfContainer.leftAnchor, constant: 10).isActive = true
-        txfToGo.rightAnchor.constraint(equalTo: vwTxfContainer.rightAnchor, constant: -10).isActive = true
 
         txfCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
         txfToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        vwTxfContainer.bringSubviewToFront(self.view)
+    }
+    
+    func getCurrentPlaceName() {
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
+        UInt(GMSPlaceField.placeID.rawValue))!
+        placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
+          (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
+          if let error = error {
+            print("An error occurred: \(error.localizedDescription)")
+            return
+          }
+
+            if let currentPlaceName = placeLikelihoodList?.last?.place.name {
+                self.txfCurrent.text = currentPlaceName
+            }
+        })
     }
     
     func getUserLocation() {
@@ -222,11 +197,3 @@ extension MapPickViewController: GMSMapViewDelegate {
     
 }
 
-extension MapPickViewController: UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print("Aaa")
-        return true
-    }
-
-
-}
