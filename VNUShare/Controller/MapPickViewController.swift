@@ -16,10 +16,11 @@ class MapPickViewController: UIViewController {
     var locationManager = CLLocationManager()
     
     var placesClient = GMSPlacesClient()
+    var resultsViewController = GMSAutocompleteResultsViewController()
     
     var lat: Double = 0
     var lon: Double = 0
-
+    
     let vwBtnContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
@@ -61,7 +62,7 @@ class MapPickViewController: UIViewController {
         imv.translatesAutoresizingMaskIntoConstraints = false
         return imv
     }()
-
+    
     let btnCancel: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
@@ -81,6 +82,7 @@ class MapPickViewController: UIViewController {
         txf.placeholder = "Vị trí hiện tại"
         txf.clearButtonMode = .whileEditing
         txf.spellCheckingType = .no
+        txf.addTarget(self, action: #selector(autocompleteClicked(_:)), for: .touchDown)
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
@@ -92,9 +94,12 @@ class MapPickViewController: UIViewController {
         txf.placeholder = "Nơi cần đến"
         txf.clearButtonMode = .whileEditing
         txf.spellCheckingType = .no
+        txf.addTarget(self, action: #selector(autocompleteClicked(_:)), for: .touchDown)
         txf.translatesAutoresizingMaskIntoConstraints = false
         return txf
     }()
+    
+    
     
     let verticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -128,14 +133,14 @@ class MapPickViewController: UIViewController {
         checkLocation()
         
         getUserLocation()
-        //getCurrentPlaceName()
+        getCurrentPlaceName()
         setupMap()
         locationManager.requestLocation()
         
     }
     
     func setupUI() {
-
+        
         view.addSubview(vwBtnContainer)
         
         vwBtnContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
@@ -148,14 +153,14 @@ class MapPickViewController: UIViewController {
         verticalStackView.bottomAnchor.constraint(equalTo: vwBtnContainer.bottomAnchor, constant: -10).isActive = true
         verticalStackView.leftAnchor.constraint(equalTo: vwBtnContainer.leftAnchor, constant: 10).isActive = true
         verticalStackView.rightAnchor.constraint(equalTo: vwBtnContainer.rightAnchor, constant: -10).isActive = true
-
+        
         verticalStackView.addArrangedSubview(vwCurrent)
         verticalStackView.addArrangedSubview(vwToGo)
         verticalStackView.addArrangedSubview(btnCancel)
         
         vwCurrent.addSubview(imvCurrent)
         vwCurrent.addSubview(txfCurrent)
-
+        
         vwCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
         vwToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
         btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -174,7 +179,7 @@ class MapPickViewController: UIViewController {
         
         vwToGo.addSubview(imvToGo)
         vwToGo.addSubview(txfToGo)
-
+        
         imvToGo.topAnchor.constraint(equalTo: vwToGo.topAnchor, constant: 10).isActive = true
         imvToGo.bottomAnchor.constraint(equalTo: vwToGo.bottomAnchor, constant: -10).isActive = true
         imvToGo.leftAnchor.constraint(equalTo: vwToGo.leftAnchor, constant: 10).isActive = true
@@ -191,14 +196,14 @@ class MapPickViewController: UIViewController {
     
     func getCurrentPlaceName() {
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-        UInt(GMSPlaceField.placeID.rawValue))!
+            UInt(GMSPlaceField.placeID.rawValue))!
         placesClient.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
-          (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
-          if let error = error {
-            print("An error occurred: \(error.localizedDescription)")
-            return
-          }
-
+            (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
+            if let error = error {
+                print("An error occurred: \(error.localizedDescription)")
+                return
+            }
+            
             if let currentPlaceName = placeLikelihoodList?.last?.place.name {
                 self.txfCurrent.text = currentPlaceName
             }
@@ -223,6 +228,18 @@ class MapPickViewController: UIViewController {
         mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
     }
     
+    
+    // Present the Autocomplete view controller when the button is pressed.
+    @objc func autocompleteClicked(_ sender: UITextField) {
+        let autocompleteController = SearchMapViewController()
+        if sender == txfToGo {
+            autocompleteController.toGo = true
+        }
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    
     @objc func cancelButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -236,8 +253,18 @@ class MapPickViewController: UIViewController {
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
-
+    
+    func setToGoWithPlace(place: Place) {
+        txfToGo.text = place.name
+    }
+    
+    func setCurrentWithPlace(place: Place) {
+        txfCurrent.text = place.name
+    }
+    
 }
+
+//MARK: - CLLocationManagerDelegate
 
 extension MapPickViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -257,7 +284,23 @@ extension MapPickViewController: CLLocationManagerDelegate {
     }
 }
 
+//MARK: - CLLocationManagerDelegate
+
+extension MapPickViewController: SearchMapViewControllerDelegate {
+    
+    func didUpdateWithPlace(place: Place, toGo: Bool) {
+        if toGo == true {
+            setToGoWithPlace(place: place)
+        } else {
+            setCurrentWithPlace(place: place)
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+}
+
 extension MapPickViewController: GMSMapViewDelegate {
     
 }
-

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0BF870247769AE009B7C39 /* MenuCell.swift */; };
 		8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BF871247769AE009B7C39 /* MenuCell.xib */; };
+		8D2B9A702497BD6900FB153A /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2B9A6F2497BD6900FB153A /* SearchMapViewController.swift */; };
+		8D2B9A742497C64800FB153A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2B9A732497C64800FB153A /* Place.swift */; };
 		8D3944B6247CF270007F6B68 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8D3944B5247CF26F007F6B68 /* .gitignore */; };
 		8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6424616E51009E0734 /* UserCell.swift */; };
 		8D3A7B6724616E51009E0734 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3A7B6524616E51009E0734 /* UserCell.xib */; };
@@ -33,6 +35,8 @@
 		6D78F788E03C33138BD89DB3 /* Pods-VNUShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.debug.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.debug.xcconfig"; sourceTree = "<group>"; };
 		8D0BF870247769AE009B7C39 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		8D0BF871247769AE009B7C39 /* MenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		8D2B9A6F2497BD6900FB153A /* SearchMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMapViewController.swift; sourceTree = "<group>"; };
+		8D2B9A732497C64800FB153A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		8D3944B5247CF26F007F6B68 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		8D3A7B6424616E51009E0734 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8D3A7B6524616E51009E0734 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 			children = (
 				8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */,
 				8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */,
+				8D2B9A6F2497BD6900FB153A /* SearchMapViewController.swift */,
 				8D8CB14D244017B600E6CCB0 /* MessageViewController.swift */,
 				8DC36CD7245155E9002A6686 /* AccountViewController.swift */,
 				8DC36CD924516463002A6686 /* Authentication */,
@@ -146,6 +151,7 @@
 		8D8CB15F2440199D00E6CCB0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8D2B9A732497C64800FB153A /* Place.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -305,12 +311,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DA6E476247BD3D100F4EB57 /* API.swift in Sources */,
+				8D2B9A742497C64800FB153A /* Place.swift in Sources */,
 				8DA6E474247BB84800F4EB57 /* MapPickViewController.swift in Sources */,
 				8D3A7B6624616E51009E0734 /* UserCell.swift in Sources */,
 				8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */,
 				8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */,
 				8D8CB14E244017B600E6CCB0 /* MessageViewController.swift in Sources */,
 				8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */,
+				8D2B9A702497BD6900FB153A /* SearchMapViewController.swift in Sources */,
 				8D8CB14C244017B600E6CCB0 /* HomeViewController.swift in Sources */,
 				8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */,
 				8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */,
