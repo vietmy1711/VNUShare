@@ -20,10 +20,13 @@ class MapPickViewController: UIViewController {
     
     var lat: Double = 0
     var lon: Double = 0
-    
+        
+    var sourceMarker: GMSMarker?
     var sourcePlace: Place?
-    var destinationPlace: Place?
     
+    var destinationMarker: GMSMarker?
+    var destinationPlace: Place?
+        
     let vwContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
@@ -103,8 +106,9 @@ class MapPickViewController: UIViewController {
     
     let txfCurrent: UITextField = {
         let txf = UITextField()
-        txf.backgroundColor = .white//UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
-        txf.font = UIFont(name: "Helvetica-Bold", size: 17)
+        txf.backgroundColor = .white
+        txf.font = UIFont(name: "Helvetica", size: 17)
+        txf.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
         txf.placeholder = "Vị trí hiện tại"
         txf.clearButtonMode = .whileEditing
         txf.spellCheckingType = .no
@@ -115,8 +119,9 @@ class MapPickViewController: UIViewController {
     
     let txfToGo: UITextField = {
         let txf = UITextField()
-        txf.backgroundColor = .white//UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
-        txf.font = UIFont(name: "Helvetica-Bold", size: 17)
+        txf.backgroundColor = .white
+        txf.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        txf.font = UIFont(name: "Helvetica", size: 17)
         txf.placeholder = "Nơi cần đến"
         txf.clearButtonMode = .whileEditing
         txf.spellCheckingType = .no
@@ -146,7 +151,6 @@ class MapPickViewController: UIViewController {
         locationManager.delegate = self
         placesClient = GMSPlacesClient.shared()
         setupUI()
-        
     }
     
     override func loadView() {
@@ -227,15 +231,15 @@ class MapPickViewController: UIViewController {
                 print("An error occurred: \(error.localizedDescription)")
                 return
             }
-            
             if let currentPlace = placeLikelihoodList?.last?.place {
-                self.txfCurrent.text = currentPlace.name
                 
                 let name = currentPlace.name ?? "No name"
                 let address = currentPlace.formattedAddress ?? "No address"
                 let coordinate = currentPlace.coordinate
 
-                self.sourcePlace = Place(name: name, address: address, coordinate: coordinate)
+                let place = Place(name: name, address: address, coordinate: coordinate)
+                
+                self.setCurrentWithPlace(place: place)
             }
         })
     }
@@ -249,15 +253,11 @@ class MapPickViewController: UIViewController {
     func setupMap() {
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16)
         mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-        //        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        //        marker.title = "Sydney"
-        //        marker.map = mapView
         self.view.addSubview(mapView)
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
     }
-    
     
     // Present the Autocomplete view controller when the button is pressed.
     @objc func autocompleteClicked(_ sender: UITextField) {
@@ -285,12 +285,27 @@ class MapPickViewController: UIViewController {
     func setToGoWithPlace(place: Place) {
         txfToGo.text = place.name
         destinationPlace = place
+        destinationMarker = GMSMarker(position: place.coordinate)
+        destinationMarker?.icon = GMSMarker.markerImage(with: .green)
+        destinationMarker?.appearAnimation = .pop
+        destinationMarker?.title = place.name
+        destinationMarker?.snippet = place.address
+        destinationMarker?.map = mapView
+        mapView.animate(toLocation: destinationPlace!.coordinate)
     }
     
     func setCurrentWithPlace(place: Place) {
         txfCurrent.text = place.name
         sourcePlace = place
+        sourceMarker = GMSMarker(position: place.coordinate)
+        sourceMarker?.icon = GMSMarker.markerImage(with: .blue)
+        sourceMarker?.appearAnimation = .pop
+        sourceMarker?.title = place.name
+        sourceMarker?.snippet = place.address
+        sourceMarker?.map = mapView
+        mapView.animate(toLocation: sourcePlace!.coordinate)
     }
+    
     
 }
 

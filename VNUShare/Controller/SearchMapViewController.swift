@@ -51,7 +51,7 @@ class SearchMapViewController: UIViewController {
         
         let filter = GMSAutocompleteFilter()
         filter.country = "vn"
-        filter.type = .address
+        filter.type = .noFilter
         resultsViewController?.autocompleteFilter = filter
     }
 }
