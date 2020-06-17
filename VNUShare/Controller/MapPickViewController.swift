@@ -21,16 +21,29 @@ class MapPickViewController: UIViewController {
     var lat: Double = 0
     var lon: Double = 0
     
-    let vwBtnContainer: UIView = {
+    var sourcePlace: Place?
+    var destinationPlace: Place?
+    
+    let vwContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
         vw.layer.shadowColor = UIColor.black.cgColor
         vw.layer.shadowOpacity = 0.2
         vw.layer.shadowOffset = .zero
         vw.layer.shadowRadius = 0.8
-        vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        vw.backgroundColor = .white
+        //vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
+    }()
+    
+    let stackViewBtn: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     let vwCurrent: UIView = {
@@ -63,10 +76,23 @@ class MapPickViewController: UIViewController {
         return imv
     }()
     
+    let btnConfirm: UIButton = {
+           let btn = UIButton()
+           btn.backgroundColor = .systemPink
+           btn.layer.cornerRadius = 10
+           btn.setTitle("Đặt", for: .normal)
+           btn.setTitleColor(.white, for: .normal)
+           btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
+           //btn.addTarget(self, action: #selector(), for: .touchUpInside)
+           btn.translatesAutoresizingMaskIntoConstraints = false
+           return btn
+       }()
+    
     let btnCancel: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
         btn.layer.cornerRadius = 10
+        btn.layer.borderWidth = 2
         btn.setTitle("Hủy", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
@@ -77,7 +103,7 @@ class MapPickViewController: UIViewController {
     
     let txfCurrent: UITextField = {
         let txf = UITextField()
-        txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        txf.backgroundColor = .white//UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Vị trí hiện tại"
         txf.clearButtonMode = .whileEditing
@@ -89,7 +115,7 @@ class MapPickViewController: UIViewController {
     
     let txfToGo: UITextField = {
         let txf = UITextField()
-        txf.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
+        txf.backgroundColor = .white//UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         txf.font = UIFont(name: "Helvetica-Bold", size: 17)
         txf.placeholder = "Nơi cần đến"
         txf.clearButtonMode = .whileEditing
@@ -99,12 +125,10 @@ class MapPickViewController: UIViewController {
         return txf
     }()
     
-    
-    
     let verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -126,43 +150,43 @@ class MapPickViewController: UIViewController {
     }
     
     override func loadView() {
-        
         super.loadView()
         mapView.delegate = self
         locationManager.delegate = self
         checkLocation()
-        
         getUserLocation()
         getCurrentPlaceName()
         setupMap()
         locationManager.requestLocation()
-        
     }
     
     func setupUI() {
         
-        view.addSubview(vwBtnContainer)
+        view.addSubview(vwContainer)
         
-        vwBtnContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
-        vwBtnContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
-        vwBtnContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
+        vwContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6).isActive = true
+        vwContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 6).isActive = true
+        vwContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -6).isActive = true
+        vwContainer.addSubview(verticalStackView)
         
-        vwBtnContainer.addSubview(verticalStackView)
-        
-        verticalStackView.topAnchor.constraint(equalTo: vwBtnContainer.topAnchor, constant: 10).isActive = true
-        verticalStackView.bottomAnchor.constraint(equalTo: vwBtnContainer.bottomAnchor, constant: -10).isActive = true
-        verticalStackView.leftAnchor.constraint(equalTo: vwBtnContainer.leftAnchor, constant: 10).isActive = true
-        verticalStackView.rightAnchor.constraint(equalTo: vwBtnContainer.rightAnchor, constant: -10).isActive = true
+        verticalStackView.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 10).isActive = true
+        verticalStackView.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
+        verticalStackView.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
+        verticalStackView.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
         
         verticalStackView.addArrangedSubview(vwCurrent)
         verticalStackView.addArrangedSubview(vwToGo)
-        verticalStackView.addArrangedSubview(btnCancel)
+        verticalStackView.addArrangedSubview(stackViewBtn)
+        
+        stackViewBtn.addArrangedSubview(btnCancel)
+        stackViewBtn.addArrangedSubview(btnConfirm)
         
         vwCurrent.addSubview(imvCurrent)
         vwCurrent.addSubview(txfCurrent)
-        
+            
         vwCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
         vwToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        btnConfirm.heightAnchor.constraint(equalToConstant: 40).isActive = true
         btnCancel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         imvCurrent.topAnchor.constraint(equalTo: vwCurrent.topAnchor, constant: 10).isActive = true
@@ -204,8 +228,14 @@ class MapPickViewController: UIViewController {
                 return
             }
             
-            if let currentPlaceName = placeLikelihoodList?.last?.place.name {
-                self.txfCurrent.text = currentPlaceName
+            if let currentPlace = placeLikelihoodList?.last?.place {
+                self.txfCurrent.text = currentPlace.name
+                
+                let name = currentPlace.name ?? "No name"
+                let address = currentPlace.formattedAddress ?? "No address"
+                let coordinate = currentPlace.coordinate
+
+                self.sourcePlace = Place(name: name, address: address, coordinate: coordinate)
             }
         })
     }
@@ -246,20 +276,20 @@ class MapPickViewController: UIViewController {
     
     func checkLocation() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways  {
-            print("Start updating location")
             self.locationManager.startUpdatingLocation()
         } else {
-            
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
     
     func setToGoWithPlace(place: Place) {
         txfToGo.text = place.name
+        destinationPlace = place
     }
     
     func setCurrentWithPlace(place: Place) {
         txfCurrent.text = place.name
+        sourcePlace = place
     }
     
 }
@@ -271,9 +301,7 @@ extension MapPickViewController: CLLocationManagerDelegate {
         if let location = locations.last {
             lat = location.coordinate.latitude
             lon = location.coordinate.longitude
-            print(lat, lon)
             mapView.animate(toLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon))
-            
         }
         else {
             print("No location")
@@ -284,7 +312,7 @@ extension MapPickViewController: CLLocationManagerDelegate {
     }
 }
 
-//MARK: - CLLocationManagerDelegate
+//MARK: - SearchMapViewControllerDelegate
 
 extension MapPickViewController: SearchMapViewControllerDelegate {
     
