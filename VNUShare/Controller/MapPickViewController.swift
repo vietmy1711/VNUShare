@@ -10,6 +10,8 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
+import Alamofire
+import SwiftyJSON
 
 class MapPickViewController: UIViewController {
     
@@ -20,13 +22,15 @@ class MapPickViewController: UIViewController {
     
     var lat: Double = 0
     var lon: Double = 0
-        
+    
+    var totalDistance: Float = 0
+    
     var sourceMarker: GMSMarker?
     var sourcePlace: Place?
     
     var destinationMarker: GMSMarker?
     var destinationPlace: Place?
-        
+    
     let vwContainer: UIView = {
         let vw = UIView()
         vw.layer.cornerRadius = 10
@@ -80,16 +84,16 @@ class MapPickViewController: UIViewController {
     }()
     
     let btnConfirm: UIButton = {
-           let btn = UIButton()
-           btn.backgroundColor = .systemPink
-           btn.layer.cornerRadius = 10
-           btn.setTitle("Đặt", for: .normal)
-           btn.setTitleColor(.white, for: .normal)
-           btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
-           //btn.addTarget(self, action: #selector(), for: .touchUpInside)
-           btn.translatesAutoresizingMaskIntoConstraints = false
-           return btn
-       }()
+        let btn = UIButton()
+        btn.backgroundColor = .systemPink
+        btn.layer.cornerRadius = 10
+        btn.setTitle("Đặt", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
+        //btn.addTarget(self, action: #selector(), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
     
     let btnCancel: UIButton = {
         let btn = UIButton()
@@ -187,7 +191,7 @@ class MapPickViewController: UIViewController {
         
         vwCurrent.addSubview(imvCurrent)
         vwCurrent.addSubview(txfCurrent)
-            
+        
         vwCurrent.heightAnchor.constraint(equalToConstant: 40).isActive = true
         vwToGo.heightAnchor.constraint(equalToConstant: 40).isActive = true
         btnConfirm.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -231,15 +235,17 @@ class MapPickViewController: UIViewController {
                 print("An error occurred: \(error.localizedDescription)")
                 return
             }
-            if let currentPlace = placeLikelihoodList?.last?.place {
+            if let currentPlace = placeLikelihoodList?.last?.place {                
+                
                 
                 let name = currentPlace.name ?? "No name"
                 let address = currentPlace.formattedAddress ?? "No address"
                 let coordinate = currentPlace.coordinate
-
-                let place = Place(name: name, address: address, coordinate: coordinate)
+                // print(coordinate)
                 
-                self.setCurrentWithPlace(place: place)
+                let current = Place(name: name, address: address, coordinate: coordinate)
+                self.setCurrentWithPlace(place: current)
+
             }
         })
     }
@@ -285,6 +291,7 @@ class MapPickViewController: UIViewController {
     func setToGoWithPlace(place: Place) {
         txfToGo.text = place.name
         destinationPlace = place
+        mapView.clear()
         destinationMarker = GMSMarker(position: place.coordinate)
         destinationMarker?.icon = GMSMarker.markerImage(with: .green)
         destinationMarker?.appearAnimation = .pop
@@ -292,11 +299,24 @@ class MapPickViewController: UIViewController {
         destinationMarker?.snippet = place.address
         destinationMarker?.map = mapView
         mapView.animate(toLocation: destinationPlace!.coordinate)
+        if var origin = sourcePlace {
+            if origin.coordinate.latitude == -180 && origin.coordinate.longitude == -180 {
+                origin.coordinate = CLLocationCoordinate2DMake(lat, lon)
+            }
+            sourceMarker = GMSMarker(position: origin.coordinate)
+            sourceMarker?.icon = GMSMarker.markerImage(with: .blue)
+            sourceMarker?.appearAnimation = .pop
+            sourceMarker?.title = origin.name
+            sourceMarker?.snippet = origin.address
+            sourceMarker?.map = mapView
+            drawRoute(origin, destinationPlace!)
+        }
     }
     
     func setCurrentWithPlace(place: Place) {
         txfCurrent.text = place.name
         sourcePlace = place
+        mapView.clear()
         sourceMarker = GMSMarker(position: place.coordinate)
         sourceMarker?.icon = GMSMarker.markerImage(with: .blue)
         sourceMarker?.appearAnimation = .pop
@@ -304,9 +324,44 @@ class MapPickViewController: UIViewController {
         sourceMarker?.snippet = place.address
         sourceMarker?.map = mapView
         mapView.animate(toLocation: sourcePlace!.coordinate)
+        if let destination = destinationPlace {
+            destinationMarker = GMSMarker(position: destination.coordinate)
+            destinationMarker?.icon = GMSMarker.markerImage(with: .blue)
+            destinationMarker?.appearAnimation = .pop
+            destinationMarker?.title = destination.name
+            destinationMarker?.snippet = destination.address
+            sourceMarker?.map = mapView
+            drawRoute(sourcePlace!, destination)
+        }
     }
     
-    
+    func drawRoute(_ originPlace: Place, _ destinationPlace: Place) {
+        let origin = "\(originPlace.coordinate.latitude),\(originPlace.coordinate.longitude)"
+        let destination = "\(destinationPlace.coordinate.latitude),\(destinationPlace.coordinate.longitude)"
+        let apiKey = API().APIKey
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(apiKey)"
+        
+        AF.request(url).responseJSON { response in
+            do {
+                let json = try JSON(data: response.data!)
+                let routes = json["routes"].arrayValue
+                for route in routes
+                {
+                    let routeOverviewPolyline = route["overview_polyline"].dictionary
+                    let points = routeOverviewPolyline?["points"]?.stringValue
+                    let path = GMSPath.init(fromEncodedPath: points!)
+                    
+                    let polyline = GMSPolyline(path: path)
+                    polyline.strokeColor = .systemBlue
+                    polyline.strokeWidth = 10.0
+                    polyline.map = self.mapView
+                }
+            }
+            catch {
+                print(error)
+            }
+        }
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
