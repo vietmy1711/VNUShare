@@ -12,8 +12,13 @@ import GoogleMaps
 import GooglePlaces
 import Alamofire
 import SwiftyJSON
+import Firebase
 
 class MapPickViewController: UIViewController {
+    
+    let db = Firestore.firestore()
+    
+    var user: User?
     
     var locationManager = CLLocationManager()
     
@@ -154,6 +159,7 @@ class MapPickViewController: UIViewController {
         super.viewDidLoad()
         locationManager.delegate = self
         placesClient = GMSPlacesClient.shared()
+        getUser()
         setupUI()
     }
     
@@ -226,6 +232,12 @@ class MapPickViewController: UIViewController {
         
     }
     
+    func getUser() {
+        db.collection("user").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+            print(document?.data() as Any)
+        }
+    }
+    
     func getCurrentPlaceName() {
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
             UInt(GMSPlaceField.placeID.rawValue))!
@@ -277,8 +289,23 @@ class MapPickViewController: UIViewController {
     
     @objc func confirmButtonClicked() {
         if let destination = destinationPlace, let source = sourcePlace {
-            print(destination, source)
-            
+            db.collection("trip").addDocument(data: [
+                "originName": source.name,
+                "originAddress": source.address,
+                "originLatitude": source.coordinate.latitude,
+                "originLongitude": source.coordinate.longitude,
+                "destinationName": destination.name,
+                "destinationAddress": destination.address,
+                "destinationLatitude": destination.coordinate.latitude,
+                "destinationLongitude": destination.coordinate.longitude,
+                "status": "waiting"
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
         }
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct Place {
+struct Place  {
     let name: String
     let address: String
     var coordinate: CLLocationCoordinate2D
