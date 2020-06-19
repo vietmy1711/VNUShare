@@ -90,7 +90,7 @@ class MapPickViewController: UIViewController {
         btn.setTitle("Đặt", for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
-        //btn.addTarget(self, action: #selector(), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(confirmButtonClicked), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -245,7 +245,7 @@ class MapPickViewController: UIViewController {
                 
                 let current = Place(name: name, address: address, coordinate: coordinate)
                 self.setCurrentWithPlace(place: current)
-
+                
             }
         })
     }
@@ -275,6 +275,12 @@ class MapPickViewController: UIViewController {
         present(autocompleteController, animated: true, completion: nil)
     }
     
+    @objc func confirmButtonClicked() {
+        if let destination = destinationPlace, let source = sourcePlace {
+            print(destination, source)
+            
+        }
+    }
     
     @objc func cancelButtonClicked() {
         self.dismiss(animated: true, completion: nil)
@@ -293,7 +299,7 @@ class MapPickViewController: UIViewController {
         destinationPlace = place
         mapView.clear()
         destinationMarker = GMSMarker(position: place.coordinate)
-        destinationMarker?.icon = GMSMarker.markerImage(with: .green)
+        destinationMarker?.icon = GMSMarker.markerImage(with: .systemPink)
         destinationMarker?.appearAnimation = .pop
         destinationMarker?.title = place.name
         destinationMarker?.snippet = place.address
@@ -302,6 +308,7 @@ class MapPickViewController: UIViewController {
         if var origin = sourcePlace {
             if origin.coordinate.latitude == -180 && origin.coordinate.longitude == -180 {
                 origin.coordinate = CLLocationCoordinate2DMake(lat, lon)
+                sourcePlace!.coordinate = CLLocationCoordinate2DMake(lat, lon)
             }
             sourceMarker = GMSMarker(position: origin.coordinate)
             sourceMarker?.icon = GMSMarker.markerImage(with: .blue)
@@ -326,11 +333,11 @@ class MapPickViewController: UIViewController {
         mapView.animate(toLocation: sourcePlace!.coordinate)
         if let destination = destinationPlace {
             destinationMarker = GMSMarker(position: destination.coordinate)
-            destinationMarker?.icon = GMSMarker.markerImage(with: .blue)
+            destinationMarker?.icon = GMSMarker.markerImage(with: .systemPink)
             destinationMarker?.appearAnimation = .pop
             destinationMarker?.title = destination.name
             destinationMarker?.snippet = destination.address
-            sourceMarker?.map = mapView
+            destinationMarker?.map = mapView
             drawRoute(sourcePlace!, destination)
         }
     }
