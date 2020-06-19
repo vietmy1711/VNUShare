@@ -16,6 +16,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var reenterPasswordTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var roleSegmentControl: UISegmentedControl!
     @IBOutlet weak var errorLabel: UILabel!
     
     let db = Firestore.firestore()
@@ -59,10 +60,15 @@ class SignUpViewController: UIViewController {
                                 print(e)
                             }	
                         }
+                        var role = "Hành khách"
+                        if self.roleSegmentControl.selectedSegmentIndex == 1 {
+                            role = "Tài xế"
+                        }
                         self.db.collection("users").addDocument(data: [
                             "email": email,
                             "fullname": name,
-                            "phonenumber": number
+                            "phonenumber": number,
+                            "role": role
                         ])
                         let alert = UIAlertController(title: "Đăng ký thành công", message: "Bạn có thể đăng nhập ngay bây giờ", preferredStyle: .alert)
                         

@@ -365,6 +365,7 @@
                         <outlet property="passwordTextField" destination="rat-vy-jQ2" id="8F0-JG-xdt"/>
                         <outlet property="phoneNumberTextField" destination="4wh-Gx-wiA" id="mFr-aM-bn3"/>
                         <outlet property="reenterPasswordTextField" destination="GfF-kv-q4X" id="HE7-ZH-ltL"/>
+                        <outlet property="roleSegmentControl" destination="bDm-eN-BiK" id="Lgo-Vv-VBN"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="signUpSegue" id="7Dd-Zs-DpN"/>
                     </connections>
                 </viewController>

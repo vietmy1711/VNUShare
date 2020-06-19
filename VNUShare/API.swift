@@ -7,3 +7,6 @@
 //
 
 import Foundation
+struct API {
+    let APIKey = ""
+}
