@@ -28,7 +28,8 @@ class MapPickViewController: UIViewController {
     var lat: Double = 0
     var lon: Double = 0
     
-    var totalDistance: Float = 0
+    var totalDistance: Int = 0
+    var totalMoney: Int = 0
     
     var sourceMarker: GMSMarker?
     var sourcePlace: Place?
@@ -47,6 +48,33 @@ class MapPickViewController: UIViewController {
         //vw.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 251/255, alpha: 1)
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
+    }()
+    
+    let lblDistance: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "   Khoảng cách: "
+        lbl.font = UIFont(name: "Helvetica", size: 17)
+        lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let lblDuration: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "   Thời gian: "
+        lbl.font = UIFont(name: "Helvetica", size: 17)
+        lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let lblMoney: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "   Thành tiền: "
+        lbl.font = UIFont(name: "Helvetica", size: 17)
+        lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
     }()
     
     let stackViewBtn: UIStackView = {
@@ -159,7 +187,6 @@ class MapPickViewController: UIViewController {
         super.viewDidLoad()
         locationManager.delegate = self
         placesClient = GMSPlacesClient.shared()
-        getUser()
         setupUI()
     }
     
@@ -188,6 +215,9 @@ class MapPickViewController: UIViewController {
         verticalStackView.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
         verticalStackView.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
         
+        verticalStackView.addArrangedSubview(lblDistance)
+        verticalStackView.addArrangedSubview(lblDuration)
+        verticalStackView.addArrangedSubview(lblMoney)
         verticalStackView.addArrangedSubview(vwCurrent)
         verticalStackView.addArrangedSubview(vwToGo)
         verticalStackView.addArrangedSubview(stackViewBtn)
@@ -232,12 +262,6 @@ class MapPickViewController: UIViewController {
         
     }
     
-    func getUser() {
-        db.collection("user").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-            print(document?.data() as Any)
-        }
-    }
-    
     func getCurrentPlaceName() {
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
             UInt(GMSPlaceField.placeID.rawValue))!
@@ -247,17 +271,12 @@ class MapPickViewController: UIViewController {
                 print("An error occurred: \(error.localizedDescription)")
                 return
             }
-            if let currentPlace = placeLikelihoodList?.last?.place {                
-                
-                
+            if let currentPlace = placeLikelihoodList?.last?.place {
                 let name = currentPlace.name ?? "No name"
                 let address = currentPlace.formattedAddress ?? "No address"
                 let coordinate = currentPlace.coordinate
-                // print(coordinate)
-                
                 let current = Place(name: name, address: address, coordinate: coordinate)
                 self.setCurrentWithPlace(place: current)
-                
             }
         })
     }
@@ -289,7 +308,10 @@ class MapPickViewController: UIViewController {
     
     @objc func confirmButtonClicked() {
         if let destination = destinationPlace, let source = sourcePlace {
-            db.collection("trip").addDocument(data: [
+            db.collection("trips").addDocument(data: [
+                "distance": totalDistance,
+                "money": totalMoney,
+                "time": Date().timeIntervalSince1970,
                 "originName": source.name,
                 "originAddress": source.address,
                 "originLatitude": source.coordinate.latitude,
@@ -298,6 +320,9 @@ class MapPickViewController: UIViewController {
                 "destinationAddress": destination.address,
                 "destinationLatitude": destination.coordinate.latitude,
                 "destinationLongitude": destination.coordinate.longitude,
+                "customerId": user!.uid,
+                "customerName": user!.fullname,
+                "customerPhoneNumber": user!.phonenumber,
                 "status": "waiting"
             ]) { err in
                 if let err = err {
@@ -369,6 +394,14 @@ class MapPickViewController: UIViewController {
         }
     }
     
+    func calculate(distance: Int, duration: Int) {
+        totalDistance = distance
+        totalMoney = distance/1000 * 3000
+        lblDistance.text = "   Khoảng cách: ~\(Float(totalDistance)/1000) km"
+        lblDuration.text = "   Thời gian: ~\((duration)/60) phút"
+        lblMoney.text = "   Thành tiền: \(totalMoney) VND"
+    }
+    
     func drawRoute(_ originPlace: Place, _ destinationPlace: Place) {
         let origin = "\(originPlace.coordinate.latitude),\(originPlace.coordinate.longitude)"
         let destination = "\(destinationPlace.coordinate.latitude),\(destinationPlace.coordinate.longitude)"
@@ -379,17 +412,27 @@ class MapPickViewController: UIViewController {
             do {
                 let json = try JSON(data: response.data!)
                 let routes = json["routes"].arrayValue
+                var distance: Int = 0 //1000 distance = 1km
+                var duration: Int = 0 //1 duration = 1 second
                 for route in routes
                 {
                     let routeOverviewPolyline = route["overview_polyline"].dictionary
                     let points = routeOverviewPolyline?["points"]?.stringValue
                     let path = GMSPath.init(fromEncodedPath: points!)
                     
+                    let legs = route["legs"].arrayValue
+                    for leg in legs {
+                        let distanceJSON = leg["distance"].dictionary
+                        distance += (distanceJSON?["value"]!.intValue)!
+                        let durationJSON = leg["duration"].dictionary
+                        duration += (durationJSON?["value"]!.intValue)!
+                    }
                     let polyline = GMSPolyline(path: path)
                     polyline.strokeColor = .systemBlue
                     polyline.strokeWidth = 10.0
                     polyline.map = self.mapView
                 }
+                self.calculate(distance: distance, duration: duration)
             }
             catch {
                 print(error)

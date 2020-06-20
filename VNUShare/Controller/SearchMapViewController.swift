@@ -48,7 +48,6 @@ class SearchMapViewController: UIViewController {
         // Prevent the navigation bar from being hidden when searching.
         searchController?.hidesNavigationBarDuringPresentation = false
         //        searchController?.searchBar.becomeFirstResponder()
-        
         let filter = GMSAutocompleteFilter()
         filter.country = "vn"
         filter.type = .noFilter
@@ -70,5 +69,4 @@ extension SearchMapViewController: GMSAutocompleteResultsViewControllerDelegate 
                            didFailAutocompleteWithError error: Error){
         delegate?.didFailWithError(error: error)
     }
-    
 }

@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--Home View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="9pv-A4-QxB" customClass="HomeViewController" customModule="VNU_Share" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,13 +17,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="car.fill" catalog="system" selectedImage="car.fill" id="acW-dT-cKf">
-                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" id="FUY-qb-3qD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="786.95652173913049" y="-751.33928571428567"/>
+            <point key="canvasLocation" x="1697.1014492753625" y="-751.33928571428567"/>
         </scene>
         <!--Chat-->
         <scene sceneID="wg7-f3-ORb">
@@ -55,7 +53,7 @@
                         <color key="selectedImageTintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <segue destination="X7Q-za-7gf" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="Etf-ej-aNx" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="Q3i-VO-qwq" kind="relationship" relationship="viewControllers" id="hmU-Fg-iUd"/>
                     </connections>
@@ -372,6 +370,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1mz-aH-LNX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-962" y="730"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="WVp-Gh-Eyy">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X7Q-za-7gf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="car.fill" catalog="system" selectedImage="car.fill" id="acW-dT-cKf">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gh5-De-CJL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="WfZ-YB-gwQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tee-Zk-MDk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="786.95652173913049" y="-751.33928571428567"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

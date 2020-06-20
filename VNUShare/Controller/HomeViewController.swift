@@ -11,8 +11,11 @@ import Firebase
 
 class HomeViewController: UIViewController {
     
+    var user: User?
     var coupon: Int = 0
     var greetingString: String = ""
+    
+    let db = Firestore.firestore()
     
     private let imvTop: UIImageView = {
         let imv = UIImageView()
@@ -62,16 +65,25 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         menuTableView.delegate = self
         menuTableView.dataSource = self
-        
         checkIfUserLoggedIn()
-        
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func checkIfUserLoggedIn() {
         if Auth.auth().currentUser != nil {
             if let user:String = Auth.auth().currentUser?.displayName {
                 self.greetingString = "Hello, \(user)"
+                getUser()
             }
         } else {
             let alert = UIAlertController(title: "Có lỗi đã xảy ra", message: "Vui lòng đăng nhập lại", preferredStyle: .alert)
@@ -85,6 +97,8 @@ class HomeViewController: UIViewController {
     }
     
     func setupUI() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
         view.addSubview(imvTop)
         view.addSubview(lblGreet)
         view.addSubview(lblCoupon)
@@ -118,11 +132,30 @@ class HomeViewController: UIViewController {
         menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
     }
+    
+    func getUser() {
+        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+            if document!.exists {
+                let uid = Auth.auth().currentUser!.uid
+                let email: String = document!.get("email") as! String
+                let fullname: String = document!.get("fullname") as! String
+                let phonenumber: String = document!.get("phonenumber") as! String
+                let role: String = document!.get("role") as! String
+                self.user = User(uid: uid,email: email, fullname: fullname, phonenumber: phonenumber, role: role)
+                self.menuTableView.reloadData()
+            } else {
+                print("not exist")
+            }
+        }
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if user?.role == "Tài xế" {
+            return 2
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +163,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             cell.lblMenu.text = "Di chuyển"
         } else {
-            cell.lblMenu.text = "Ăn uống"
+            cell.lblMenu.text = "Nhận cuốc"
         }
         cell.selectionStyle = .none
         return cell
@@ -138,9 +171,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let mapPickVC = MapPickViewController()
-            mapPickVC.modalPresentationStyle = .fullScreen
-            self.present(mapPickVC, animated: true, completion: nil)
+            if let currentUser = user {
+                let mapPickVC = MapPickViewController()
+                mapPickVC.user = currentUser
+                mapPickVC.modalPresentationStyle = .fullScreen
+                self.present(mapPickVC, animated: true, completion: nil)
+            }
+        } else {
+            let findTripVC = FindTripViewController()
+            findTripVC.modalPresentationStyle = .fullScreen
+            findTripVC.navigationItem.title = "Nhận cuốc"
+            navigationController?.pushViewController(findTripVC, animated: true)
         }
     }
 }

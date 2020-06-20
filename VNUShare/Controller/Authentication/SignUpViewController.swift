@@ -64,7 +64,7 @@ class SignUpViewController: UIViewController {
                         if self.roleSegmentControl.selectedSegmentIndex == 1 {
                             role = "Tài xế"
                         }
-                        self.db.collection("users").addDocument(data: [
+                        self.db.collection("users").document(Auth.auth().currentUser!.uid).setData([
                             "email": email,
                             "fullname": name,
                             "phonenumber": number,
