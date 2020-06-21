@@ -496,13 +496,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JJNWBDA6P5;
+				DEVELOPMENT_TEAM = L334R88X2F;
 				INFOPLIST_FILE = VNUShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.namtruong.VNUShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenvietmy.VNUShare;
 				PRODUCT_NAME = "VNU Share";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -515,13 +515,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JJNWBDA6P5;
+				DEVELOPMENT_TEAM = L334R88X2F;
 				INFOPLIST_FILE = VNUShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.namtruong.VNUShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenvietmy.VNUShare;
 				PRODUCT_NAME = "VNU Share";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
