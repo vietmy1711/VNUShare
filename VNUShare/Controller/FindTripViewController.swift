@@ -25,7 +25,6 @@ class FindTripViewController: UIViewController {
     let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.backgroundColor = .black
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refreshControl
     }()
@@ -35,8 +34,8 @@ class FindTripViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.refreshControl = refreshControl
-        // tableView.addSubview(refreshControl)
+        refreshControl.didMoveToSuperview()
+        tableView.addSubview(refreshControl)
         tableView.register(UINib(nibName: "TripTableViewCell", bundle: nil), forCellReuseIdentifier: "TripTableViewCell")
         getTrips()
         setupUI()
@@ -89,14 +88,10 @@ class FindTripViewController: UIViewController {
                         print(trip)
                     }
                 }
-                DispatchQueue.main.async {
-                    if self.refreshControl.isRefreshing {
-                        UIView.animate(withDuration: 0.5) {
-                            self.refreshControl.endRefreshing()
-                        }
-                    }
-                    self.tableView.reloadData()
+                if self.refreshControl.isRefreshing {
+                    self.refreshControl.endRefreshing()
                 }
+                self.tableView.reloadData()
             }
         }
     }

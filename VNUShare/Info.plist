@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
-	<key>Privacy – Location Always and When In Use Usage Description</key>
-	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -28,6 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
+	<key>Privacy – Location Always and When In Use Usage Description</key>
+	<string>Cho phép ứng dụng tìm tài xế cho bạn</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -81,5 +79,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

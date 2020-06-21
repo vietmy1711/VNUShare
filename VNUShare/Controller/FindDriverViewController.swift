@@ -96,9 +96,11 @@ class FindDriverViewController: UIViewController {
             return
           }
             if status == "accepted" {
-                print("trip accepted")
                 self.timer?.invalidate()
                 self.timer = nil
+                self.indicatorView.stopAnimating()
+                self.lblStatus.text = "Đã tìm đc tài xế cho bạn"
+                self.isTimerStillRunning = false
             }
         }
     }
