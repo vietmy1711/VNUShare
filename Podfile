@@ -7,6 +7,7 @@ target 'VNUShare' do
   
   # Pods for VNUShare
   pod 'SwiftyJSON'
+  pod 'MessageKit'
   pod 'Alamofire', '~> 5.2'
   pod 'IQKeyboardManagerSwift'
   pod 'NVActivityIndicatorView'
