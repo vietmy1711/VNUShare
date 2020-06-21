@@ -90,7 +90,7 @@ class FindTripViewController: UIViewController {
                     }
                 }
                 DispatchQueue.main.async {
-                    if refreshControl.isRefreshing {
+                    if self.refreshControl.isRefreshing {
                         UIView.animate(withDuration: 0.5) {
                             self.refreshControl.endRefreshing()
                         }
