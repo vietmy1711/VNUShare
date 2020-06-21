@@ -8,15 +8,19 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Firebase
 
 protocol FindDriverViewControllerDelegate {
-    func didFoundDriver()
     func didCancelFindingDriver()
 }
 
 class FindDriverViewController: UIViewController {
     
     var delegate: FindDriverViewControllerDelegate?
+    
+    let db = Firestore.firestore()
+    
+    var tripId: String?
     
     var timer: Timer?
     var isTimerStillRunning = true
@@ -81,6 +85,22 @@ class FindDriverViewController: UIViewController {
     func setTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(failToFindDriver), userInfo: nil, repeats: false)
+        db.collection("trips").document(tripId!)
+        .addSnapshotListener { documentSnapshot, error in
+          guard let document = documentSnapshot else {
+            print("Error fetching document: \(error!)")
+            return
+          }
+            guard let status: String = document.get("status") as? String else {
+            print("Document data was empty.")
+            return
+          }
+            if status == "accepted" {
+                print("trip accepted")
+                self.timer?.invalidate()
+                self.timer = nil
+            }
+        }
     }
     
     @objc func failToFindDriver() {

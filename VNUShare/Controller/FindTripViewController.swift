@@ -25,6 +25,7 @@ class FindTripViewController: UIViewController {
     let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.backgroundColor = .black
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refreshControl
     }()
@@ -34,8 +35,8 @@ class FindTripViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         tableView.delegate = self
         tableView.dataSource = self
-        //tableView.refreshControl = refreshControl
-        tableView.addSubview(refreshControl)
+        tableView.refreshControl = refreshControl
+        // tableView.addSubview(refreshControl)
         tableView.register(UINib(nibName: "TripTableViewCell", bundle: nil), forCellReuseIdentifier: "TripTableViewCell")
         getTrips()
         setupUI()
@@ -53,7 +54,7 @@ class FindTripViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
-
+        
     }
     
     func getTrips() {
@@ -88,8 +89,14 @@ class FindTripViewController: UIViewController {
                         print(trip)
                     }
                 }
-                self.tableView.reloadData()
-                self.refreshControl.endRefreshing()
+                DispatchQueue.main.async {
+                    if refreshControl.isRefreshing {
+                        UIView.animate(withDuration: 0.5) {
+                            self.refreshControl.endRefreshing()
+                        }
+                    }
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -111,5 +118,12 @@ extension FindTripViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        db.collection("trips").document(trips[indexPath.row].id).updateData(["status": "accepted"]) { (error) in
+            if let error = error {
+                print(error)
+            }
+            self.getTrips()
+        }
+    }
 }

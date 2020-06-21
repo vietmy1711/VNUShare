@@ -337,6 +337,7 @@ class MapPickViewController: UIViewController {
                     self.createdId = ref!.documentID
                     let findDriverVC = FindDriverViewController()
                     findDriverVC.modalPresentationStyle = .fullScreen
+                    findDriverVC.tripId = self.createdId
                     findDriverVC.delegate = self
                     self.present(findDriverVC, animated: true) {
                         
@@ -488,10 +489,9 @@ extension MapPickViewController: SearchMapViewControllerDelegate {
     }
 }
 
+//MARK: - FindDriverViewControllerDelegate
+
 extension MapPickViewController: FindDriverViewControllerDelegate {
-    func didFoundDriver() {
-        
-    }
     
     func didCancelFindingDriver() {
         if let createdId = createdId {
@@ -505,6 +505,8 @@ extension MapPickViewController: FindDriverViewControllerDelegate {
         }
     }
 }
+
+//MARK: - GMSMapViewDelegate
 
 extension MapPickViewController: GMSMapViewDelegate {
     
