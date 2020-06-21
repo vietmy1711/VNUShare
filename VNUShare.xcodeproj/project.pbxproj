@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D3EB5F9249F7C3100E94DA0 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3EB5F8249F7C3100E94DA0 /* ChatViewController.swift */; };
+		3DEA7188249FC33F000EB4AE /* TripUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEA7187249FC33F000EB4AE /* TripUserViewController.swift */; };
 		8D0BF872247769AE009B7C39 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0BF870247769AE009B7C39 /* MenuCell.swift */; };
 		8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BF871247769AE009B7C39 /* MenuCell.xib */; };
 		8D2B9A702497BD6900FB153A /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2B9A6F2497BD6900FB153A /* SearchMapViewController.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		12A7C3144FBCFD08382DA83F /* Pods_VNUShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VNUShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3EB5F8249F7C3100E94DA0 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		3DEA7187249FC33F000EB4AE /* TripUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripUserViewController.swift; sourceTree = "<group>"; };
 		6D78F788E03C33138BD89DB3 /* Pods-VNUShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.debug.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.debug.xcconfig"; sourceTree = "<group>"; };
 		8D0BF870247769AE009B7C39 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		8D0BF871247769AE009B7C39 /* MenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				8D3F09CB249F759F008DE850 /* FindDriverViewController.swift */,
+				3DEA7187249FC33F000EB4AE /* TripUserViewController.swift */,
 				8D3F09CA249F759F008DE850 /* FindTripViewController.swift */,
 				8D8CB14B244017B600E6CCB0 /* HomeViewController.swift */,
 				8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */,
@@ -348,6 +351,7 @@
 				8D3F09D3249F75D9008DE850 /* TripTableViewCell.swift in Sources */,
 				8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */,
 				8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */,
+				3DEA7188249FC33F000EB4AE /* TripUserViewController.swift in Sources */,
 				8D3F09CC249F759F008DE850 /* FindTripViewController.swift in Sources */,
 				8D3F09CF249F75B8008DE850 /* Trip.swift in Sources */,
 				8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */,
@@ -496,13 +500,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L334R88X2F;
+				DEVELOPMENT_TEAM = JJNWBDA6P5;
 				INFOPLIST_FILE = VNUShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenvietmy.VNUShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.namtruong.VNUShare;
 				PRODUCT_NAME = "VNU Share";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -515,13 +519,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L334R88X2F;
+				DEVELOPMENT_TEAM = JJNWBDA6P5;
 				INFOPLIST_FILE = VNUShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenvietmy.VNUShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.namtruong.VNUShare;
 				PRODUCT_NAME = "VNU Share";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
