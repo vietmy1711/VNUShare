@@ -66,7 +66,7 @@ class FindDriverViewController: UIViewController {
         lblStatus.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40).isActive = true
         lblStatus.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
         
-        btnCancel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        btnCancel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
         btnCancel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         btnCancel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         btnCancel.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -93,9 +93,8 @@ class FindDriverViewController: UIViewController {
     @objc func cancelButtonPressed() {
         if isTimerStillRunning {
             delegate?.didCancelFindingDriver()
-        } else {
-            indicatorView.stopAnimating()
-            self.dismiss(animated: true, completion: nil)
         }
+        indicatorView.stopAnimating()
+        self.dismiss(animated: true, completion: nil)
     }
 }

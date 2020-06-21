@@ -71,6 +71,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.tintColor = .systemPink
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -93,7 +94,6 @@ class HomeViewController: UIViewController {
             }))
             self.present(alert, animated: true)
         }
-        
     }
     
     func setupUI() {

@@ -504,7 +504,6 @@ extension MapPickViewController: FindDriverViewControllerDelegate {
             }
         }
     }
-    
 }
 
 extension MapPickViewController: GMSMapViewDelegate {
