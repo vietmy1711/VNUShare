@@ -20,6 +20,8 @@ class MapPickViewController: UIViewController {
     
     var user: User?
     
+    var createdId: String?
+    
     var locationManager = CLLocationManager()
     
     var placesClient = GMSPlacesClient()
@@ -307,8 +309,11 @@ class MapPickViewController: UIViewController {
     }
     
     @objc func confirmButtonClicked() {
+        
         if let destination = destinationPlace, let source = sourcePlace {
-            db.collection("trips").addDocument(data: [
+            var ref: DocumentReference? = nil
+            
+            ref = db.collection("trips").addDocument (data: [
                 "distance": totalDistance,
                 "money": totalMoney,
                 "time": Date().timeIntervalSince1970,
@@ -329,6 +334,13 @@ class MapPickViewController: UIViewController {
                     print("Error writing document: \(err)")
                 } else {
                     print("Document successfully written!")
+                    self.createdId = ref!.documentID
+                    let findDriverVC = FindDriverViewController()
+                    findDriverVC.modalPresentationStyle = .fullScreen
+                    findDriverVC.delegate = self
+                    self.present(findDriverVC, animated: true) {
+                        
+                    }
                 }
             }
         }
@@ -474,6 +486,25 @@ extension MapPickViewController: SearchMapViewControllerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
+}
+
+extension MapPickViewController: FindDriverViewControllerDelegate {
+    func didFoundDriver() {
+        
+    }
+    
+    func didCancelFindingDriver() {
+        if let createdId = createdId {
+            db.collection("trips").document(createdId).delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+        }
+    }
+    
 }
 
 extension MapPickViewController: GMSMapViewDelegate {
