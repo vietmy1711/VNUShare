@@ -114,11 +114,29 @@ extension FindTripViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        db.collection("trips").document(trips[indexPath.row].id).updateData(["status": "accepted"]) { (error) in
+        db.collection("trips").document(trips[indexPath.row].id).getDocument { (document, error) in
             if let error = error {
                 print(error)
             }
-            self.getTrips()
+            if let document = document, document.exists {
+                let status: String = document.get("status") as! String
+                if status != "accepted" {
+                    self.db.collection("trips").document(document.documentID).updateData(["status": "accepted"]) { (error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        self.getTrips()
+                    }
+                } else { //someone has accepted it
+                    let alert = UIAlertController(title: "Rất tiếc", message: "Đã có người nhận cuốc này rồi, thử lại sau nha!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Đồng ý", style: .default, handler: { (_) in
+                        self.getTrips()
+                    }))
+                    self.present(alert, animated: true)
+                }
+            }
         }
     }
 }
+
+
