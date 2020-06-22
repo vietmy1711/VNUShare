@@ -19,7 +19,7 @@ class TripTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDestinationAddress: UILabel!
     
     @IBOutlet weak var lblDistanceMoney: UILabel!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -41,6 +41,7 @@ class TripTableViewCell: UITableViewCell {
         
         vwMask.layer.masksToBounds = true
         vwMask.layer.cornerRadius = 8
+        
     }
     
     func configWithTrip(trip: Trip) {
@@ -52,4 +53,5 @@ class TripTableViewCell: UITableViewCell {
         
         lblDistanceMoney.text = "\(Float(trip.distance)/1000) km - \(trip.duration/60) phút - \(trip.money) VND"
     }
+
 }
