@@ -13,6 +13,12 @@ class TripTableViewCell: UITableViewCell {
     @IBOutlet weak var vwMask: UIView!
     
     @IBOutlet weak var lblOriginName: UILabel!
+    @IBOutlet weak var lblOriginAddress: UILabel!
+    
+    @IBOutlet weak var lblDestinationName: UILabel!
+    @IBOutlet weak var lblDestinationAddress: UILabel!
+    
+    @IBOutlet weak var lblDistanceMoney: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,6 +44,12 @@ class TripTableViewCell: UITableViewCell {
     }
     
     func configWithTrip(trip: Trip) {
-        lblOriginName.text = trip.originName
+        lblOriginName.text = "Từ: \(trip.originName)"
+        lblOriginAddress.text = trip.originAddress
+        
+        lblDestinationName.text = "Đến: \(trip.destinationName)"
+        lblDestinationAddress.text = trip.destinationAddress
+        
+        lblDistanceMoney.text = "\(Float(trip.distance)/1000) km - \(trip.duration/60) phút - \(trip.money) VND"
     }
 }

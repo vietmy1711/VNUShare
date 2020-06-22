@@ -32,6 +32,7 @@ class MapPickViewController: UIViewController {
     
     var totalDistance: Int = 0
     var totalMoney: Int = 0
+    var totalDuration: Int = 0
     
     var sourceMarker: GMSMarker?
     var sourcePlace: Place?
@@ -316,6 +317,7 @@ class MapPickViewController: UIViewController {
             ref = db.collection("trips").addDocument (data: [
                 "distance": totalDistance,
                 "money": totalMoney,
+                "duration": totalDuration,
                 "time": Date().timeIntervalSince1970,
                 "originName": source.name,
                 "originAddress": source.address,
@@ -410,6 +412,10 @@ class MapPickViewController: UIViewController {
     func calculate(distance: Int, duration: Int) {
         totalDistance = distance
         totalMoney = distance/1000 * 3000
+        totalDuration = duration
+        if totalMoney == 0 {
+            totalMoney = 3000
+        }
         lblDistance.text = "   Khoảng cách: ~\(Float(totalDistance)/1000) km"
         lblDuration.text = "   Thời gian: ~\((duration)/60) phút"
         lblMoney.text = "   Thành tiền: \(totalMoney) VND"
