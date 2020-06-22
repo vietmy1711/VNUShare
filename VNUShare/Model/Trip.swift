@@ -11,6 +11,7 @@ import Foundation
 struct Trip {
     let id: String
     let distance: Int
+    let duration: Int
     let money: Int
     let originName: String
     let originAddress: String

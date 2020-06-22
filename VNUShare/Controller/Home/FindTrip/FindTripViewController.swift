@@ -67,6 +67,8 @@ class FindTripViewController: UIViewController {
                     if status == "waiting" {
                         let distanceNS: NSNumber = document.get("distance") as! NSNumber
                         let distance = distanceNS.intValue
+                        let durationNS: NSNumber = document.get("duration") as! NSNumber
+                        let duration = durationNS.intValue
                         let moneyNS: NSNumber = document.get("money") as! NSNumber
                         let money = moneyNS.intValue
                         let originName: String = document.get("originName") as! String
@@ -83,7 +85,7 @@ class FindTripViewController: UIViewController {
                         let destinationLongitude = destinationLongitudeNS.floatValue
                         let customerName: String = document.get("customerName") as! String
                         let customerPhoneNumber: String = document.get("customerPhoneNumber") as! String
-                        let trip = Trip(id: document.documentID, distance: distance, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerName: customerName, customerPhoneNumber: customerPhoneNumber, status: status)
+                        let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerName: customerName, customerPhoneNumber: customerPhoneNumber, status: status)
                         self.trips.append(trip)
                         print(trip)
                     }
