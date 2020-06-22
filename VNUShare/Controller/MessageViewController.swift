@@ -28,8 +28,7 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.reloadData()
     }
     func setupUI() {
-        tableView.register(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "UserCell")
-
+        tableView.register(UserCell.self, forCellReuseIdentifier: "UserCell")
         tableView.delegate = self
         tableView.dataSource = self
     }
