@@ -9,6 +9,8 @@
 import UIKit
 import GoogleMaps
 import Firebase
+import Alamofire
+import SwiftyJSON
 
 protocol TripOverViewViewControllerDelegate {
     func didNotAcceptTrip(trip: Trip)
@@ -85,13 +87,13 @@ class TripOverViewViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
         setupUI()
-        setupMarker()
     }
     
     override func loadView() {
         super.loadView()
         checkLocation()
         setupMap()
+        setupMarker()
     }
     
     func setupUI() {
@@ -133,7 +135,42 @@ class TripOverViewViewController: UIViewController {
     }
     
     func setupMarker() {
+        let origin = CLLocationCoordinate2DMake(CLLocationDegrees(trip!.originLatitude), CLLocationDegrees(trip!.originLongitude))
+        let destination = CLLocationCoordinate2DMake(CLLocationDegrees(trip!.destinationLatitude), CLLocationDegrees(trip!.destinationLongitude))
+        originMarker = GMSMarker(position: origin)
+        originMarker?.map = mapView
+        destinationMarker = GMSMarker(position: destination)
+        destinationMarker?.map = mapView
+        drawRoute(origin, destination)
+    }
+    
+    func drawRoute(_ originCoordinate: CLLocationCoordinate2D, _ destinationCoordinate: CLLocationCoordinate2D) {
+        let origin = "\(originCoordinate.latitude),\(originCoordinate.longitude)"
+        let destination = "\(destinationCoordinate.latitude),\(destinationCoordinate.longitude)"
+        let apiKey = API().APIKey
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=\(apiKey)"
         
+        AF.request(url).responseJSON { response in
+            do {
+                let json = try JSON(data: response.data!)
+                let routes = json["routes"].arrayValue
+                for route in routes
+                {
+                    let routeOverviewPolyline = route["overview_polyline"].dictionary
+                    let points = routeOverviewPolyline?["points"]?.stringValue
+                    let path = GMSPath.init(fromEncodedPath: points!)
+                    let polyline = GMSPolyline(path: path)
+                    polyline.strokeColor = .systemBlue
+                    polyline.strokeWidth = 10.0
+                    polyline.map = self.mapView
+                }
+                let bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: originCoordinate, coordinate: destinationCoordinate)
+                self.mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 20.0))
+            }
+            catch {
+                print(error)
+            }
+        }
     }
     
     @objc func acceptBtnClicked() {
