@@ -98,11 +98,19 @@ class FindDriverViewController: UIViewController {
             if status == "accepted" {
                 self.timer?.invalidate()
                 self.timer = nil
-                self.indicatorView.stopAnimating()
                 self.lblStatus.text = "Đã tìm đc tài xế cho bạn"
                 self.isTimerStillRunning = false
+                self.btnCancel.isEnabled = false
+                self.btnCancel.alpha = 0.5
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.foundDriver), userInfo: nil, repeats: false)
             }
         }
+    }
+    
+    @objc func foundDriver() {
+        indicatorView.stopAnimating()
+        let tripUserVC = TripUserViewController()
+        navigationController?.pushViewController(tripUserVC, animated: true)
     }
     
     @objc func failToFindDriver() {

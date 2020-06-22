@@ -296,7 +296,7 @@ class MapPickViewController: UIViewController {
         self.view.addSubview(mapView)
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
-        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
+        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
     }
     
     // Present the Autocomplete view controller when the button is pressed.
