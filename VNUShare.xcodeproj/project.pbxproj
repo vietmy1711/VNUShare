@@ -164,7 +164,6 @@
 				8D8CB145244017B600E6CCB0 /* Products */,
 				877D50BE9C302F466F91004C /* Pods */,
 				F7EE1B4F23B2AA6B0D904B31 /* Frameworks */,
-				8DC2227F24A0A7990078E528 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -396,7 +395,6 @@
 				8D3F09D3249F75D9008DE850 /* TripTableViewCell.swift in Sources */,
 				8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */,
 				8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */,
-				3DEA7188249FC33F000EB4AE /* TripUserViewController.swift in Sources */,
 				8D3F09CC249F759F008DE850 /* FindTripViewController.swift in Sources */,
 				8D3F09CF249F75B8008DE850 /* Trip.swift in Sources */,
 				8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */,
