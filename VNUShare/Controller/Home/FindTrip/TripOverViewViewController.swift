@@ -17,13 +17,13 @@ protocol TripOverViewViewControllerDelegate {
 }
 
 class TripOverViewViewController: UIViewController {
-
+    
     var trip: Trip?
     
     var delegate: TripOverViewViewControllerDelegate?
     
     let db = Firestore.firestore()
-
+    
     var originMarker: GMSMarker?
     var destinationMarker: GMSMarker?
     
@@ -108,13 +108,13 @@ class TripOverViewViewController: UIViewController {
         stackView.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
         stackView.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
         stackView.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
-
+        
         stackView.addArrangedSubview(btnAccept)
         stackView.addArrangedSubview(btnBack)
         
         btnAccept.heightAnchor.constraint(equalToConstant: 40).isActive = true
         btnBack.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
+        
     }
     
     func checkLocation() {
@@ -181,13 +181,13 @@ class TripOverViewViewController: UIViewController {
             if let document = document, document.exists {
                 let status: String = document.get("status") as! String
                 if status != "accepted" {
-                    self.db.collection("trips").document(document.documentID).updateData(["status": "accepted"]) { (error) in
-                        if let error = error {
-                            print(error)
-                        }
+//                    self.db.collection("trips").document(document.documentID).updateData(["status": "accepted"]) { (error) in
+//                        if let error = error {
+//                            print(error)
+//                        }
                         let tripDriverVC = TripDriverViewController()
                         self.navigationController?.pushViewController(tripDriverVC, animated: true)
-                    }
+//                    }
                 } else { //someone has accepted it
                     let alert = UIAlertController(title: "Rất tiếc", message: "Đã có người nhận cuốc này rồi, thử lại sau nha!", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Đồng ý", style: .default, handler: { (_) in
