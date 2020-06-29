@@ -61,14 +61,22 @@ class SignUpViewController: UIViewController {
                             }	
                         }
                         var role = "Hành khách"
+                        var roleImage = UIImage(named: "img_hanhkhach")
+                        roleImage = roleImage!.resizeImage(targetSize: CGSize(width: 500, height: 500))
+                        var imageData = roleImage!.pngData()
                         if self.roleSegmentControl.selectedSegmentIndex == 1 {
                             role = "Tài xế"
+                            var roleImage = UIImage(named: "img_taixe")
+                            roleImage = roleImage!.resizeImage(targetSize: CGSize(width: 500, height: 500))
+                            imageData = roleImage!.pngData()
                         }
                         self.db.collection("users").document(Auth.auth().currentUser!.uid).setData([
                             "email": email,
                             "fullname": name,
                             "phonenumber": number,
-                            "role": role
+                            "role": role,
+                            "contacts": [],
+                            "avatar": imageData!
                         ])
                         let alert = UIAlertController(title: "Đăng ký thành công", message: "Bạn có thể đăng nhập ngay bây giờ", preferredStyle: .alert)
                         
