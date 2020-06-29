@@ -330,6 +330,9 @@ class MapPickViewController: UIViewController {
                 "customerId": user!.uid,
                 "customerName": user!.fullname,
                 "customerPhoneNumber": user!.phonenumber,
+                "driverId": "",
+                "driverName": "",
+                "driverPhoneNumber": "",
                 "status": "waiting"
             ]) { err in
                 if let err = err {

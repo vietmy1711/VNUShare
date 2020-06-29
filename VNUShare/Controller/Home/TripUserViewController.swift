@@ -10,6 +10,8 @@ import UIKit
 
 class TripUserViewController: UIViewController {
 
+    var tripId: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)

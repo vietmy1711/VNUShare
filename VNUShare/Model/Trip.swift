@@ -21,7 +21,11 @@ struct Trip {
     let destinationAddress: String
     let destinationLatitude: Float
     let destinationLongitude: Float
+    let customerId: String
     let customerName: String
     let customerPhoneNumber: String
+    var driverId: String?
+    var driverName: String?
+    var driverPhoneNumber: String?
     var status: String
 }

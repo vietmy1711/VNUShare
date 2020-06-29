@@ -20,6 +20,8 @@ class TripOverViewViewController: UIViewController {
     
     var trip: Trip?
     
+    var user: User?
+    
     var delegate: TripOverViewViewControllerDelegate?
     
     let db = Firestore.firestore()
@@ -86,6 +88,7 @@ class TripOverViewViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
+        getUser()
         setupUI()
     }
     
@@ -173,6 +176,21 @@ class TripOverViewViewController: UIViewController {
         }
     }
     
+    func getUser() {
+        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+            if document!.exists {
+                let uid = Auth.auth().currentUser!.uid
+                let email: String = document!.get("email") as! String
+                let fullname: String = document!.get("fullname") as! String
+                let phonenumber: String = document!.get("phonenumber") as! String
+                let role: String = document!.get("role") as! String
+                self.user = User(uid: uid,email: email, fullname: fullname, phonenumber: phonenumber, role: role)
+            } else {
+                print("not exist")
+            }
+        }
+    }
+    
     @objc func acceptBtnClicked() {
         db.collection("trips").document(trip!.id).getDocument { (document, error) in
             if let error = error {
@@ -180,14 +198,20 @@ class TripOverViewViewController: UIViewController {
             }
             if let document = document, document.exists {
                 let status: String = document.get("status") as! String
-                if status != "accepted" {
-//                    self.db.collection("trips").document(document.documentID).updateData(["status": "accepted"]) { (error) in
-//                        if let error = error {
-//                            print(error)
-//                        }
+                if status != "accepted", let user = self.user {
+                    self.db.collection("trips").document(document.documentID).updateData(
+                    [
+                        "driverId": user.uid,
+                        "driverName": user.fullname,
+                        "driverPhoneNumber": user.phonenumber,
+                        "status": "accepted"
+                    ]) { (error) in
+                        if let error = error {
+                            print(error)
+                        }
                         let tripDriverVC = TripDriverViewController()
                         self.navigationController?.pushViewController(tripDriverVC, animated: true)
-//                    }
+                    }
                 } else { //someone has accepted it
                     let alert = UIAlertController(title: "Rất tiếc", message: "Đã có người nhận cuốc này rồi, thử lại sau nha!", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Đồng ý", style: .default, handler: { (_) in

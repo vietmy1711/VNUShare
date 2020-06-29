@@ -110,6 +110,7 @@ class FindDriverViewController: UIViewController {
     @objc func foundDriver() {
         indicatorView.stopAnimating()
         let tripUserVC = TripUserViewController()
+        tripUserVC.tripId = tripId
         navigationController?.pushViewController(tripUserVC, animated: true)
     }
     

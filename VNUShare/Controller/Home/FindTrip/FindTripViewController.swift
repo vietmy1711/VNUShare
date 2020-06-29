@@ -85,9 +85,10 @@ class FindTripViewController: UIViewController {
                         let destinationLatitude = destinationLatitudeNS.floatValue
                         let destinationLongitudeNS: NSNumber = document.get("destinationLongitude") as! NSNumber
                         let destinationLongitude = destinationLongitudeNS.floatValue
+                        let customerId: String = document.get("customerId") as! String
                         let customerName: String = document.get("customerName") as! String
                         let customerPhoneNumber: String = document.get("customerPhoneNumber") as! String
-                        let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerName: customerName, customerPhoneNumber: customerPhoneNumber, status: status)
+                        let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerId: customerId, customerName: customerName, customerPhoneNumber: customerPhoneNumber, status: status)
                         self.trips.append(trip)
                         print(trip)
                     }

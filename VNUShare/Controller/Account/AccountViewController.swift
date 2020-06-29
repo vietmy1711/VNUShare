@@ -13,38 +13,102 @@ class AccountViewController: UIViewController {
     
     let db = Firestore.firestore()
     
+    var user: User?
+    
     var imagePicker = UIImagePickerController()
     
     let imvAvatar: UIImageView = {
         let imv = UIImageView()
         imv.layer.masksToBounds = true
         imv.contentMode = .scaleAspectFill
-        imv.layer.cornerRadius = 80
-        imv.backgroundColor = .gray
+        imv.layer.cornerRadius = 25
+        imv.backgroundColor = .systemGray6
         imv.isUserInteractionEnabled = true
         imv.translatesAutoresizingMaskIntoConstraints = false
         return imv
     }()
     
+    let verticalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    let vwSeperator: UIView = {
+        let vw = UIView()
+        vw.backgroundColor = .systemGray6
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        return vw
+    }()
+    
+    let lblName: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .black
+        lbl.font = UIFont(name: "Helvetica-Bold", size: 17)
+        lbl.textAlignment = .left
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let lblPhonenumber: UILabel = {
+           let lbl = UILabel()
+           lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+           lbl.font = UIFont(name: "Helvetica", size: 16)
+           lbl.textAlignment = .left
+           lbl.translatesAutoresizingMaskIntoConstraints = false
+           return lbl
+       }()
+    
+    let btnSignOut: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Đăng xuất", for: .normal)
+        btn.setTitleColor(.systemPink, for: .normal)
+        btn.addTarget(self, action: #selector(btnSignOutPressed), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        getUser()
         setupUI()
-        getAvatar()
     }
     
     func setupUI() {
         view.addSubview(imvAvatar)
         
-        imvAvatar.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        imvAvatar.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        imvAvatar.heightAnchor.constraint(equalToConstant: 160).isActive = true
-        imvAvatar.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        imvAvatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24).isActive = true
+        imvAvatar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true
+        imvAvatar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        imvAvatar.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(imvOnClicked))
         imvAvatar.addGestureRecognizer(tap)
+        
+        view.addSubview(verticalStackView)
+        
+        verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+        verticalStackView.leftAnchor.constraint(equalTo: imvAvatar.rightAnchor, constant: 24).isActive = true
+        verticalStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
+        
+        verticalStackView.addArrangedSubview(lblName)
+        verticalStackView.addArrangedSubview(lblPhonenumber)
+
+        view.addSubview(vwSeperator)
+        vwSeperator.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 20).isActive = true
+        vwSeperator.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30).isActive = true
+        vwSeperator.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30).isActive = true
+        vwSeperator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        view.addSubview(btnSignOut)
+        btnSignOut.topAnchor.constraint(equalTo: vwSeperator.bottomAnchor, constant: 30).isActive = true
+        btnSignOut.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
     }
     
-    func getAvatar() {
+    func getUser() {
         db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
             if let error = error {
                 print(error)
@@ -52,6 +116,16 @@ class AccountViewController: UIViewController {
                 if let document = document {
                     let avatarData = document.get("avatar")
                     self.imvAvatar.image = UIImage(data: avatarData as! Data)
+                    
+                    let uid = document.documentID
+                    let email = document.get("email") as! String
+                    let phonenumber = document.get("phonenumber") as! String
+                    let fullname = document.get("fullname") as! String
+                    let role = document.get("role") as! String
+                    self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role)
+                    
+                    self.lblName.text = self.user!.fullname
+                    self.lblPhonenumber.text = self.user!.phonenumber
                 }
             }
         }
@@ -88,6 +162,15 @@ class AccountViewController: UIViewController {
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
+    }
+    
+    @objc func btnSignOutPressed() {
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
