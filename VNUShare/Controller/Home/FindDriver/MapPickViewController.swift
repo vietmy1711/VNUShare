@@ -285,7 +285,7 @@ class MapPickViewController: UIViewController {
     }
     
     func getUserLocation() {
-        locationManager.desiredAccuracy = .greatestFiniteMagnitude
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.activityType = .automotiveNavigation
         locationManager.distanceFilter = 1
     }
@@ -425,8 +425,10 @@ class MapPickViewController: UIViewController {
     }
     
     func focusMapToShowAllMarkers() {
-        let bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: destinationPlace!.coordinate, coordinate: sourcePlace!.coordinate)
-        mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 15.0))
+        if let destination = destinationPlace, let source = sourcePlace {
+            let bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: destination.coordinate, coordinate: source.coordinate)
+            mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 15.0))
+        }
     }
     
     func drawRoute(_ originPlace: Place, _ destinationPlace: Place) {
@@ -477,6 +479,20 @@ extension MapPickViewController: CLLocationManagerDelegate {
             lat = location.coordinate.latitude
             lon = location.coordinate.longitude
             mapView.animate(toLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon))
+            if let locationFromMap = mapView.myLocation {
+                db.collection("users").document(Auth.auth().currentUser!.uid).updateData(
+                    [
+                        "lat": locationFromMap.coordinate.latitude,
+                        "lon": locationFromMap.coordinate.longitude,
+                        "course": locationFromMap.course
+
+                ]) { err in
+                    if let err = err {
+                        print(err)
+                    }
+                }
+            }
+            focusMapToShowAllMarkers()
         }
         else {
             print("No location")

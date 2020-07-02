@@ -9,11 +9,17 @@
 import UIKit
 
 class TripDriverViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        tabBarController?.tabBar.isHidden = true
-    }
-
+    
+    var tripId: String?
+      
+      override func viewDidLoad() {
+          super.viewDidLoad()
+      }
+      
+      override func viewWillAppear(_ animated: Bool) {
+          super.viewWillAppear(animated)
+          navigationController?.setNavigationBarHidden(true, animated: true)
+          tabBarController?.tabBar.isHidden = true
+      }
+      
 }

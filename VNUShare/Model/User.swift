@@ -14,4 +14,5 @@ struct User: Codable {
     let fullname: String
     let phonenumber: String
     let role: String
+    var points: Int
 }

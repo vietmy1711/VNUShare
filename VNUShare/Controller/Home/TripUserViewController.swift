@@ -9,11 +9,15 @@
 import UIKit
 
 class TripUserViewController: UIViewController {
-
+    
     var tripId: String?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
     }

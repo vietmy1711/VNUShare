@@ -75,6 +75,11 @@ class SignUpViewController: UIViewController {
                             "fullname": name,
                             "phonenumber": number,
                             "role": role,
+                            "lat": 0,
+                            "lon": 0,
+                            "course": 0,
+                            "points": 0,
+                            "completed": [],
                             "contacts": [],
                             "avatar": imageData!
                         ])

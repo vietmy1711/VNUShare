@@ -77,7 +77,9 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 let fullname = document.get("fullname") as! String
                                 let phonenumber = document.get("phonenumber") as! String
                                 let role = document.get("role") as! String
-                                let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role)
+                                let pointsNS: NSNumber = document.get("points") as! NSNumber
+                                let points: Int = pointsNS.intValue
+                                let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
                                 self.users.append(user)
                                 self.tableView.reloadData()
                             }

@@ -122,8 +122,9 @@ class AccountViewController: UIViewController {
                     let phonenumber = document.get("phonenumber") as! String
                     let fullname = document.get("fullname") as! String
                     let role = document.get("role") as! String
-                    self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role)
-                    
+                    let pointsNS: NSNumber = document.get("points") as! NSNumber
+                    let points: Int = pointsNS.intValue
+                    self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
                     self.lblName.text = self.user!.fullname
                     self.lblPhonenumber.text = self.user!.phonenumber
                 }
@@ -185,7 +186,6 @@ extension AccountViewController: UIImagePickerControllerDelegate & UINavigationC
                 print(error)
             }
         }
-        
         self.dismiss(animated: true)
     }
 }
