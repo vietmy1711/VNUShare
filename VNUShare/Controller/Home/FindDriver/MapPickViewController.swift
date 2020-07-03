@@ -204,6 +204,12 @@ class MapPickViewController: UIViewController {
         locationManager.requestLocation()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     func setupUI() {
         
         view.addSubview(vwContainer)
@@ -344,9 +350,7 @@ class MapPickViewController: UIViewController {
                     findDriverVC.modalPresentationStyle = .fullScreen
                     findDriverVC.tripId = self.createdId
                     findDriverVC.delegate = self
-                    self.present(findDriverVC, animated: true) {
-                        
-                    }
+                    self.navigationController?.pushViewController(findDriverVC, animated: true)
                 }
             }
         }

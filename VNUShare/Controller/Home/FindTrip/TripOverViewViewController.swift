@@ -202,17 +202,23 @@ class TripOverViewViewController: UIViewController {
                 let status: String = document.get("status") as! String
                 if status != "accepted", let user = self.user {
                     self.db.collection("trips").document(document.documentID).updateData(
-                    [
-                        "driverId": user.uid,
-                        "driverName": user.fullname,
-                        "driverPhoneNumber": user.phonenumber,
-                        "status": "accepted"
+                        [
+                            "driverId": user.uid,
+                            "driverName": user.fullname,
+                            "driverPhoneNumber": user.phonenumber,
+                            "status": "accepted"
                     ]) { (error) in
                         if let error = error {
                             print(error)
+                        } else {
+                            self.trip?.driverId = user.uid
+                            self.trip?.driverName = user.fullname
+                            self.trip?.driverPhoneNumber = user.phonenumber
+                            self.trip?.status = "accepted"
+                            let tripDriverVC = TripDriverViewController()
+                            tripDriverVC.trip = self.trip
+                            self.navigationController?.pushViewController(tripDriverVC, animated: true)
                         }
-                        let tripDriverVC = TripDriverViewController()
-                        self.navigationController?.pushViewController(tripDriverVC, animated: true)
                     }
                 } else { //someone has accepted it
                     let alert = UIAlertController(title: "Rất tiếc", message: "Đã có người nhận cuốc này rồi, thử lại sau nha!", preferredStyle: .alert)

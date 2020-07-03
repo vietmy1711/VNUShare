@@ -179,7 +179,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 let mapPickVC = MapPickViewController()
                 mapPickVC.user = currentUser
                 mapPickVC.modalPresentationStyle = .fullScreen
-                self.present(mapPickVC, animated: true, completion: nil)
+                navigationController?.pushViewController(mapPickVC, animated: true)
             }
         } else {
             let findTripVC = FindTripViewController()

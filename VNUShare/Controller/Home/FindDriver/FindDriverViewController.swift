@@ -86,32 +86,70 @@ class FindDriverViewController: UIViewController {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(failToFindDriver), userInfo: nil, repeats: false)
         db.collection("trips").document(tripId!)
-        .addSnapshotListener { documentSnapshot, error in
-          guard let document = documentSnapshot else {
-            print("Error fetching document: \(error!)")
-            return
-          }
-            guard let status: String = document.get("status") as? String else {
-            print("Document data was empty.")
-            return
-          }
-            if status == "accepted" {
-                self.timer?.invalidate()
-                self.timer = nil
-                self.lblStatus.text = "Đã tìm đc tài xế cho bạn"
-                self.isTimerStillRunning = false
-                self.btnCancel.isEnabled = false
-                self.btnCancel.alpha = 0.5
-                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.foundDriver), userInfo: nil, repeats: false)
-            }
+            .addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                guard let status: String = document.get("status") as? String else {
+                    print("Document data was empty.")
+                    return
+                }
+                if status == "accepted" {
+                    self.timer?.invalidate()
+                    self.timer = nil
+                    self.lblStatus.text = "Đã tìm đc tài xế cho bạn"
+                    self.isTimerStillRunning = false
+                    self.btnCancel.isEnabled = false
+                    self.btnCancel.alpha = 0.5
+                    self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.foundDriver), userInfo: nil, repeats: false)
+                }
         }
     }
     
+    
     @objc func foundDriver() {
         indicatorView.stopAnimating()
-        let tripUserVC = TripUserViewController()
-        tripUserVC.tripId = tripId
-        navigationController?.pushViewController(tripUserVC, animated: true)
+        db.collection("trips").document(tripId!).getDocument { (document, error) in
+            if let error = error {
+                print(error)
+                return
+            } else {
+                if let document = document {
+                    let distanceNS: NSNumber = document.get("distance") as! NSNumber
+                    let distance = distanceNS.intValue
+                    let durationNS: NSNumber = document.get("duration") as! NSNumber
+                    let duration = durationNS.intValue
+                    let moneyNS: NSNumber = document.get("money") as! NSNumber
+                    let money = moneyNS.intValue
+                    let originName: String = document.get("originName") as! String
+                    let originAddress: String = document.get("originAddress") as! String
+                    let originLatitudeNS: NSNumber = document.get("originLatitude") as! NSNumber
+                    let originLatitude = originLatitudeNS.floatValue
+                    let originLongitudeNS: NSNumber = document.get("originLongitude") as! NSNumber
+                    let originLongitude = originLongitudeNS.floatValue
+                    let destinationName: String = document.get("destinationName") as! String
+                    let destinationAddress: String = document.get("destinationAddress") as! String
+                    let destinationLatitudeNS: NSNumber = document.get("destinationLatitude") as! NSNumber
+                    let destinationLatitude = destinationLatitudeNS.floatValue
+                    let destinationLongitudeNS: NSNumber = document.get("destinationLongitude") as! NSNumber
+                    let destinationLongitude = destinationLongitudeNS.floatValue
+                    let customerId: String = document.get("customerId") as! String
+                    let customerName: String = document.get("customerName") as! String
+                    let customerPhoneNumber: String = document.get("customerPhoneNumber") as! String
+                    let driverId: String = document.get("driverId") as! String
+                    let driverName: String = document.get("driverName") as! String
+                    let driverPhoneNumber: String = document.get("driverPhoneNumber") as! String
+                    let status: String = document.get("status") as! String
+                    let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerId: customerId, customerName: customerName, customerPhoneNumber: customerPhoneNumber, driverId: driverId, driverName: driverName, driverPhoneNumber: driverPhoneNumber, status: status)
+                    let tripUserVC = TripUserViewController()
+                    tripUserVC.trip = trip
+                    print(trip)
+                    self.navigationController?.pushViewController(tripUserVC, animated: true)
+                }
+            }
+        }
+        
     }
     
     @objc func failToFindDriver() {
