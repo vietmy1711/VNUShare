@@ -164,6 +164,6 @@ class FindDriverViewController: UIViewController {
             delegate?.didCancelFindingDriver()
         }
         indicatorView.stopAnimating()
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }

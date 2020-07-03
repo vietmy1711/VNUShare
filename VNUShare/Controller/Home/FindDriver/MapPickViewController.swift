@@ -357,7 +357,8 @@ class MapPickViewController: UIViewController {
     }
     
     @objc func cancelButtonClicked() {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
+        
     }
     
     func checkLocation() {
