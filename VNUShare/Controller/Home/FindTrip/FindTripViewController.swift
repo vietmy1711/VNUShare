@@ -90,7 +90,6 @@ class FindTripViewController: UIViewController {
                         let customerPhoneNumber: String = document.get("customerPhoneNumber") as! String
                         let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerId: customerId, customerName: customerName, customerPhoneNumber: customerPhoneNumber, status: status)
                         self.trips.append(trip)
-                        print(trip)
                     }
                 }
                 if self.refreshControl.isRefreshing {

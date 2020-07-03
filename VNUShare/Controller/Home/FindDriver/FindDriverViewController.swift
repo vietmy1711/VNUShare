@@ -20,6 +20,8 @@ class FindDriverViewController: UIViewController {
     
     let db = Firestore.firestore()
     
+    var user: User?
+    
     var tripId: String?
     
     var timer: Timer?
@@ -144,7 +146,7 @@ class FindDriverViewController: UIViewController {
                     let trip = Trip(id: document.documentID, distance: distance, duration: duration, money:money, originName: originName, originAddress: originAddress, originLatitude: originLatitude, originLongitude: originLongitude, destinationName: destinationName, destinationAddress: destinationAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude, customerId: customerId, customerName: customerName, customerPhoneNumber: customerPhoneNumber, driverId: driverId, driverName: driverName, driverPhoneNumber: driverPhoneNumber, status: status)
                     let tripUserVC = TripUserViewController()
                     tripUserVC.trip = trip
-                    print(trip)
+                    tripUserVC.user = self.user
                     self.navigationController?.pushViewController(tripUserVC, animated: true)
                 }
             }

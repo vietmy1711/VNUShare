@@ -335,8 +335,16 @@ class TripDriverViewController: UIViewController {
                 }
                 let status = document.get("status") as! String
                 if status == "finished" {
-                    self.navigationController?.popToRootViewController(animated: true)
-                    return
+                    self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData([
+                        "completed": FieldValue.arrayUnion([self.trip!.id])
+                    ]) { (error) in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            self.navigationController?.popToRootViewController(animated: true)
+                            return
+                        }
+                    }
                 }
                 if status == "canceled" {
                     let alert = UIAlertController(title: "Hủy chuyến", message: "Khách hàng vừa hủy chuyến", preferredStyle: .alert)

@@ -12,7 +12,6 @@ import Firebase
 class HomeViewController: UIViewController {
     
     var user: User?
-    var coupon: Int = 0
     var greetingString: String = ""
     
     let db = Firestore.firestore()
@@ -34,9 +33,8 @@ class HomeViewController: UIViewController {
         return lbl
     }()
     
-    private let lblCoupon: UILabel = {
+    private let lblPoints: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Bạn có 0 coupon sẵn sàng sử dụng."
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont(name: "Helvetica-Bold", size: 16)
         lbl.textColor = .white
@@ -80,6 +78,7 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
+        getUser()
     }
     
     func checkIfUserLoggedIn() {
@@ -103,7 +102,7 @@ class HomeViewController: UIViewController {
         
         view.addSubview(imvTop)
         view.addSubview(lblGreet)
-        view.addSubview(lblCoupon)
+        view.addSubview(lblPoints)
         view.addSubview(lblMenu)
         view.addSubview(menuTableView)
         
@@ -117,15 +116,14 @@ class HomeViewController: UIViewController {
         lblGreet.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
         lblGreet.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         lblGreet.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        lblGreet.bottomAnchor.constraint(equalTo: lblCoupon.topAnchor, constant: -10).isActive = true
+        lblGreet.bottomAnchor.constraint(equalTo: lblPoints.topAnchor, constant: -10).isActive = true
         
-        lblCoupon.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        lblCoupon.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        lblPoints.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        lblPoints.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         
         lblMenu.topAnchor.constraint(equalTo: imvTop.bottomAnchor, constant: 20).isActive = true
         lblMenu.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         lblMenu.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        //lblMenu.backgroundColor = .black
         
         menuTableView.separatorStyle = .none
         menuTableView.topAnchor.constraint(equalTo: lblMenu.bottomAnchor, constant: 0).isActive = true
@@ -147,6 +145,7 @@ class HomeViewController: UIViewController {
                 let points: Int = pointsNS.intValue
                 self.user = User(uid: uid,email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
                 self.menuTableView.reloadData()
+                self.lblPoints.text = "Bạn đang có \(points) điểm thưởng"
             } else {
                 print("not exist")
             }

@@ -141,9 +141,17 @@ class TripOverViewViewController: UIViewController {
         let origin = CLLocationCoordinate2DMake(CLLocationDegrees(trip!.originLatitude), CLLocationDegrees(trip!.originLongitude))
         let destination = CLLocationCoordinate2DMake(CLLocationDegrees(trip!.destinationLatitude), CLLocationDegrees(trip!.destinationLongitude))
         originMarker = GMSMarker(position: origin)
+        originMarker?.icon = GMSMarker.markerImage(with: .systemBlue)
+        originMarker?.appearAnimation = .pop
+        originMarker?.title = trip?.originName
+        originMarker?.snippet = trip?.originAddress
         originMarker?.map = mapView
         destinationMarker = GMSMarker(position: destination)
         destinationMarker?.map = mapView
+        destinationMarker?.icon = GMSMarker.markerImage(with: .systemPink)
+        destinationMarker?.appearAnimation = .pop
+        destinationMarker?.title = trip?.destinationName
+        destinationMarker?.snippet = trip?.destinationAddress
         drawRoute(origin, destination)
     }
     

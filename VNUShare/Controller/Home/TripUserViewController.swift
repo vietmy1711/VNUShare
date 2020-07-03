@@ -16,6 +16,8 @@ class TripUserViewController: UIViewController {
     
     var trip: Trip?
     
+    var user: User?
+    
     let db = Firestore.firestore()
     
     var originMarker: GMSMarker?
@@ -325,8 +327,21 @@ class TripUserViewController: UIViewController {
                 } else if status == "going" {
                     self.btnCancel.isEnabled = false
                 } else if status == "finished" {
-                    self.navigationController?.popToRootViewController(animated: true)
-                    return
+                    self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData([
+                        "completed": FieldValue.arrayUnion([self.trip!.id]),
+                        "points": self.user!.points + (self.trip!.distance/100)
+                    ]) { (error) in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            let alert = UIAlertController(title: "Chúc mừng", message: "Bạn đã hoàn thành chuyến đi và nhận được \(self.trip!.distance/100) điểm thưởng", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
+                                self.navigationController?.popToRootViewController(animated: true)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+
                 }
         }
     }

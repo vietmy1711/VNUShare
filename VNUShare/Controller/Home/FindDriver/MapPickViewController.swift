@@ -349,6 +349,7 @@ class MapPickViewController: UIViewController {
                     let findDriverVC = FindDriverViewController()
                     findDriverVC.modalPresentationStyle = .fullScreen
                     findDriverVC.tripId = self.createdId
+                    findDriverVC.user = self.user
                     findDriverVC.delegate = self
                     self.navigationController?.pushViewController(findDriverVC, animated: true)
                 }
