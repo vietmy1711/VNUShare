@@ -35,6 +35,9 @@
 		8DA6E476247BD3D100F4EB57 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA6E475247BD3D100F4EB57 /* API.swift */; };
 		8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7056244C25DD008961F9 /* SignUpViewController.swift */; };
 		8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7058244C25EA008961F9 /* LoginViewController.swift */; };
+		8DB35AB724B3301E00B9D00E /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB35AB524B3301E00B9D00E /* HistoryCell.swift */; };
+		8DB35AB824B3301E00B9D00E /* HistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB35AB624B3301E00B9D00E /* HistoryCell.xib */; };
+		8DB35ABB24B3306300B9D00E /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB35ABA24B3306300B9D00E /* HistoryViewController.swift */; };
 		8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC36CD7245155E9002A6686 /* AccountViewController.swift */; };
 		983214107792D0A2C656DAC6 /* Pods_VNUShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A7C3144FBCFD08382DA83F /* Pods_VNUShare.framework */; };
 /* End PBXBuildFile section */
@@ -72,6 +75,9 @@
 		8DA6E475247BD3D100F4EB57 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8DAD7056244C25DD008961F9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8DAD7058244C25EA008961F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8DB35AB524B3301E00B9D00E /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
+		8DB35AB624B3301E00B9D00E /* HistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryCell.xib; sourceTree = "<group>"; };
+		8DB35ABA24B3306300B9D00E /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		8DC36CD7245155E9002A6686 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		CA30305F97C03F6892082AF1 /* Pods-VNUShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VNUShare.release.xcconfig"; path = "Target Support Files/Pods-VNUShare/Pods-VNUShare.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +111,8 @@
 				8D0BF870247769AE009B7C39 /* MenuCell.swift */,
 				8D0BF871247769AE009B7C39 /* MenuCell.xib */,
 				3DEA7189249FD362000EB4AE /* UserCell.swift */,
+				8DB35AB524B3301E00B9D00E /* HistoryCell.swift */,
+				8DB35AB624B3301E00B9D00E /* HistoryCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -134,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC36CD7245155E9002A6686 /* AccountViewController.swift */,
+				8DB35AB924B3304400B9D00E /* History */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -223,6 +232,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8DB35AB924B3304400B9D00E /* History */ = {
+			isa = PBXGroup;
+			children = (
+				8DB35ABA24B3306300B9D00E /* HistoryViewController.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		8DC36CD924516463002A6686 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +320,7 @@
 			files = (
 				8D3F09D2249F75D9008DE850 /* TripTableViewCell.xib in Resources */,
 				8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */,
+				8DB35AB824B3301E00B9D00E /* HistoryCell.xib in Resources */,
 				8D3944B6247CF270007F6B68 /* .gitignore in Resources */,
 				8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */,
 				8D8C3742244036240042B253 /* GoogleService-Info.plist in Resources */,
@@ -392,6 +410,8 @@
 				8D2B9A702497BD6900FB153A /* SearchMapViewController.swift in Sources */,
 				3D3EB5F9249F7C3100E94DA0 /* ChatViewController.swift in Sources */,
 				8D8CB14C244017B600E6CCB0 /* HomeViewController.swift in Sources */,
+				8DB35ABB24B3306300B9D00E /* HistoryViewController.swift in Sources */,
+				8DB35AB724B3301E00B9D00E /* HistoryCell.swift in Sources */,
 				8D3F09D3249F75D9008DE850 /* TripTableViewCell.swift in Sources */,
 				8D8CB148244017B600E6CCB0 /* AppDelegate.swift in Sources */,
 				8D8CB14A244017B600E6CCB0 /* SceneDelegate.swift in Sources */,

@@ -37,6 +37,16 @@ class AccountViewController: UIViewController {
         return stackView
     }()
     
+    let btnStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     let vwSeperator: UIView = {
         let vw = UIView()
         vw.backgroundColor = .systemGray6
@@ -54,13 +64,25 @@ class AccountViewController: UIViewController {
     }()
     
     let lblPhonenumber: UILabel = {
-           let lbl = UILabel()
-           lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
-           lbl.font = UIFont(name: "Helvetica", size: 16)
-           lbl.textAlignment = .left
-           lbl.translatesAutoresizingMaskIntoConstraints = false
-           return lbl
-       }()
+        let lbl = UILabel()
+        lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        lbl.font = UIFont(name: "Helvetica", size: 16)
+        lbl.textAlignment = .left
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let btnHistory: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Lịch sử chuyến đi", for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1), for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.5), for: .highlighted)
+        btn.titleLabel!.font = UIFont(name: "Helvetica", size: 17)
+        btn.backgroundColor = .clear
+        btn.addTarget(self, action: #selector(btnHistoryPressed), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
     
     let btnSignOut: UIButton = {
         let btn = UIButton()
@@ -96,15 +118,23 @@ class AccountViewController: UIViewController {
         
         verticalStackView.addArrangedSubview(lblName)
         verticalStackView.addArrangedSubview(lblPhonenumber)
-
+        
         view.addSubview(vwSeperator)
         vwSeperator.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 20).isActive = true
         vwSeperator.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30).isActive = true
         vwSeperator.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30).isActive = true
         vwSeperator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
+        view.addSubview(btnStackView)
+        
+        btnStackView.topAnchor.constraint(equalTo: vwSeperator.bottomAnchor, constant: 30).isActive = true
+        btnStackView.leftAnchor.constraint(equalTo: vwSeperator.leftAnchor, constant: 10).isActive = true
+        btnStackView.rightAnchor.constraint(equalTo: vwSeperator.rightAnchor, constant: -10).isActive = true
+        
+        btnStackView.addArrangedSubview(btnHistory)
+        
         view.addSubview(btnSignOut)
-        btnSignOut.topAnchor.constraint(equalTo: vwSeperator.bottomAnchor, constant: 30).isActive = true
+        btnSignOut.topAnchor.constraint(equalTo: btnStackView.bottomAnchor, constant: 30).isActive = true
         btnSignOut.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
     }
     
@@ -163,6 +193,10 @@ class AccountViewController: UIViewController {
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
+    }
+    
+    @objc func btnHistoryPressed() {
+        
     }
     
     @objc func btnSignOutPressed() {
