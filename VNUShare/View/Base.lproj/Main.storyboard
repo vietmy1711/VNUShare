@@ -55,7 +55,7 @@
                     <connections>
                         <segue destination="X7Q-za-7gf" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="Etf-ej-aNx" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="pER-Gz-E1B" kind="relationship" relationship="viewControllers" id="hmU-Fg-iUd"/>
+                        <segue destination="QJs-ls-p7y" kind="relationship" relationship="viewControllers" id="D3B-ym-tMq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -91,11 +91,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="2Fj-VG-ds4"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Account" image="person" catalog="system" selectedImage="person.fill" id="Ots-kO-Bky"/>
+                    <navigationItem key="navigationItem" id="gJM-wD-8c4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKS-FX-w0G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1666.6666666666667" y="729.91071428571422"/>
+            <point key="canvasLocation" x="1697.1014492753625" y="729.91071428571422"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="AxJ-cz-9sm">
@@ -392,23 +392,24 @@
             </objects>
             <point key="canvasLocation" x="786.95652173913049" y="-751.33928571428567"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="cRR-eE-czf">
+        <!--Account-->
+        <scene sceneID="aMb-Kb-KHA">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="pER-Gz-E1B" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="dJq-ui-Ytm"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QJs-ls-p7y" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Account" image="person" catalog="system" selectedImage="person.fill" id="Ots-kO-Bky"/>
                     <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4df-ML-NcY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="K1r-W8-VFV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Q3i-VO-qwq" kind="relationship" relationship="viewControllers" id="RSn-BK-M0z"/>
+                        <segue destination="Q3i-VO-qwq" kind="relationship" relationship="rootViewController" id="eQL-yd-ncp"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kid-fD-ka6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fXt-Pt-MKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="756.52173913043487" y="729.91071428571422"/>
+            <point key="canvasLocation" x="786.95652173913049" y="729.91071428571422"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

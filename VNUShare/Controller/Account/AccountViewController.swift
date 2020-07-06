@@ -99,6 +99,12 @@ class AccountViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.navigationBar.tintColor = .systemPink
+        tabBarController?.tabBar.isHidden = false
+    }
     func setupUI() {
         view.addSubview(imvAvatar)
         
@@ -196,7 +202,10 @@ class AccountViewController: UIViewController {
     }
     
     @objc func btnHistoryPressed() {
-        
+        let historyVC = HistoryViewController()
+        historyVC.user = user
+        historyVC.navigationItem.title = "Lịch sử"
+        navigationController?.pushViewController(historyVC, animated: true)
     }
     
     @objc func btnSignOutPressed() {
