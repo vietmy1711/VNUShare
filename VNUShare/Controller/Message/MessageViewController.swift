@@ -27,6 +27,12 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupUI()
         search()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+          super.viewWillAppear(animated)
+          tabBarController?.tabBar.isHidden = false
+      }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
             if let error = error {
@@ -89,6 +95,7 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
+        
     }
     func setupUI() {
         tableView.delegate = self
@@ -98,8 +105,30 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatVC = ChatViewController()
-        chatVC.navigationItem.title = users[indexPath.row].fullname
-        navigationController?.pushViewController(chatVC, animated: true)
+        db.collection("messsages").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let user1 = document.get("user1") as! String
+                    let user2 = document.get("user2") as! String
+                    if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
+                        if user1 == self.users[indexPath.row].uid || user2 == self.users[indexPath.row].uid {
+                            let content = document.get("content") as! [String]
+                            let sender = document.get("sender") as! [String]
+                            let messages = Messages(user1: user1, user2: user2, content: content, sender: sender)
+                            if user2 == Auth.auth().currentUser!.uid {
+                                chatVC.isUser1 = false
+                            }
+                            chatVC.messages = messages
+                            chatVC.navigationItem.title = self.users[indexPath.row].fullname
+                            self.navigationController?.pushViewController(chatVC, animated: true)
+                        }
+                    }
+                }
+            }
+        }
+
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,6 +138,7 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
         cell.textLabel!.text = users[indexPath.row].fullname
+        cell.selectionStyle = .none
         return cell
     }
     
