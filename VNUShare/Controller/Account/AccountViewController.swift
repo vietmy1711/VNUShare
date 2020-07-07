@@ -37,6 +37,15 @@ class AccountViewController: UIViewController {
         return stackView
     }()
     
+    let pointStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     let btnStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -63,7 +72,15 @@ class AccountViewController: UIViewController {
         return lbl
     }()
     
-    let lblPhonenumber: UILabel = {
+    let imvPoint: UIImageView = {
+        let imv = UIImageView()
+        imv.image = UIImage(systemName: "star.circle.fill")
+        imv.tintColor = .systemPink
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
+    }()
+    
+    let lblPoint: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
         lbl.font = UIFont(name: "Helvetica", size: 16)
@@ -74,11 +91,13 @@ class AccountViewController: UIViewController {
     
     let btnHistory: UIButton = {
         let btn = UIButton()
-        btn.setTitle("Lịch sử chuyến đi", for: .normal)
+        btn.setTitle("   Lịch sử chuyến đi", for: .normal)
         btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1), for: .normal)
-        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.5), for: .highlighted)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.8), for: .highlighted)
         btn.titleLabel!.font = UIFont(name: "Helvetica", size: 17)
+        btn.setImage(UIImage(systemName: "book.fill"), for: .normal)
         btn.backgroundColor = .clear
+        btn.tintColor = .systemPink
         btn.addTarget(self, action: #selector(btnHistoryPressed), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
@@ -105,6 +124,7 @@ class AccountViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .systemPink
         tabBarController?.tabBar.isHidden = false
     }
+    
     func setupUI() {
         view.addSubview(imvAvatar)
         
@@ -123,7 +143,13 @@ class AccountViewController: UIViewController {
         verticalStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
         
         verticalStackView.addArrangedSubview(lblName)
-        verticalStackView.addArrangedSubview(lblPhonenumber)
+        verticalStackView.addArrangedSubview(pointStackView)
+        
+        pointStackView.addArrangedSubview(imvPoint)
+        pointStackView.addArrangedSubview(lblPoint)
+        
+        imvPoint.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        imvPoint.widthAnchor.constraint(equalToConstant: 20).isActive = true
         
         view.addSubview(vwSeperator)
         vwSeperator.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 20).isActive = true
@@ -162,7 +188,7 @@ class AccountViewController: UIViewController {
                     let points: Int = pointsNS.intValue
                     self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
                     self.lblName.text = self.user!.fullname
-                    self.lblPhonenumber.text = self.user!.phonenumber
+                    self.lblPoint.text = String("\(self.user!.points) điểm")
                 }
             }
         }

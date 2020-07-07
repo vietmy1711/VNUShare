@@ -130,11 +130,9 @@ class TripUserViewController: UIViewController {
         let btn = UIButton()
         btn.setTitle("Hủy chuyến", for: .normal)
         btn.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
-        btn.setTitleColor(.black, for: .normal)
-        btn.backgroundColor = .white
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = .systemPink
         btn.layer.cornerRadius = 10
-        btn.layer.borderColor = UIColor.black.cgColor
-        btn.layer.borderWidth = 2
         btn.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
@@ -341,7 +339,7 @@ class TripUserViewController: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
-
+                    
                 }
         }
     }
