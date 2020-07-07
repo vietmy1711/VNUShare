@@ -116,7 +116,8 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
                         if user1 == self.users[indexPath.row].uid || user2 == self.users[indexPath.row].uid {
                             let content = document.get("content") as! [String]
                             let sender = document.get("sender") as! [String]
-                            let messages = Messages(user1: user1, user2: user2, content: content, sender: sender)
+                            let id = document.documentID
+                            let messages = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender)
                             if user2 == Auth.auth().currentUser!.uid {
                                 chatVC.isUser1 = false
                             }

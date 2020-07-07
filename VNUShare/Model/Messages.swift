@@ -9,6 +9,7 @@
 import Foundation
 
 struct Messages {
+    let id: String
     let user1: String
     let user2: String
     var content: [String]
