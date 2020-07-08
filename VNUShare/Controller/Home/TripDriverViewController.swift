@@ -15,7 +15,11 @@ import Firebase
 class TripDriverViewController: UIViewController {
     
     var trip: Trip?
+        
+    var user: User?
     
+    var messagesId: String?
+
     let db = Firestore.firestore()
     
     var originMarker: GMSMarker?

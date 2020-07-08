@@ -147,7 +147,26 @@ class FindDriverViewController: UIViewController {
                     let tripUserVC = TripUserViewController()
                     tripUserVC.trip = trip
                     tripUserVC.user = self.user
-                    self.navigationController?.pushViewController(tripUserVC, animated: true)
+                    self.db.collection("users").document(self.user!.uid).updateData([
+                        "contacts": FieldValue.arrayUnion([driverId])
+                        ])
+                    self.db.collection("messages").getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                let user1 = document.get("user1") as! String
+                                let user2 = document.get("user2") as! String
+                                if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
+                                    if user1 == trip.driverId || user2 == trip.driverId  {
+                                        tripUserVC.messagesId = document.documentID
+                                        self.navigationController?.pushViewController(tripUserVC, animated: true)
+                                        return
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

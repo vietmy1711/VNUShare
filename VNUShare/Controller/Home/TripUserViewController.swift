@@ -16,6 +16,8 @@ class TripUserViewController: UIViewController {
     
     var trip: Trip?
     
+    var messagesId: String?
+    
     var user: User?
     
     let db = Firestore.firestore()
@@ -316,6 +318,7 @@ class TripUserViewController: UIViewController {
                     print("Error fetching document: \(error!)")
                     return
                 }
+                
                 let status = document.get("status") as! String
                 
                 if status == "arrived" {
@@ -323,6 +326,7 @@ class TripUserViewController: UIViewController {
                     alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 } else if status == "going" {
+                    self.btnCancel.layer.opacity = 0.5
                     self.btnCancel.isEnabled = false
                 } else if status == "finished" {
                     self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData([

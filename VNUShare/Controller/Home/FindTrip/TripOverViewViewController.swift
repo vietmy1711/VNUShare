@@ -225,7 +225,44 @@ class TripOverViewViewController: UIViewController {
                             self.trip?.status = "accepted"
                             let tripDriverVC = TripDriverViewController()
                             tripDriverVC.trip = self.trip
-                            self.navigationController?.pushViewController(tripDriverVC, animated: true)
+                            tripDriverVC.user = self.user
+                            self.db.collection("users").document(self.user!.uid).updateData([
+                                "contacts": FieldValue.arrayUnion([self.trip!.customerId])
+                            ])
+                            self.db.collection("messages").getDocuments() { (querySnapshot, err) in
+                                if let err = err {
+                                    print("Error getting documents: \(err)")
+                                } else {
+                                    for document in querySnapshot!.documents {
+                                        let user1 = document.get("user1") as! String
+                                        let user2 = document.get("user2") as! String
+                                        if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
+                                            if user1 == self.trip!.customerId || user2 == self.trip!.customerId  {
+                                                tripDriverVC.messagesId = document.documentID
+                                                self.navigationController?.pushViewController(tripDriverVC, animated: true)
+                                                return
+                                            }
+                                        }
+                                    }
+                                    var ref: DocumentReference? = nil
+
+                                    ref = self.db.collection("messages").addDocument(data: [
+                                        "user1": self.trip!.customerId,
+                                        "user2": self.user!.uid,
+                                        "content": [],
+                                        "sender": []
+                                    ]) { (error) in
+                                        if let error = error {
+                                            print(error)
+                                        }
+                                        else {
+                                            tripDriverVC.messagesId = ref?.documentID
+                                            self.navigationController?.pushViewController(tripDriverVC, animated: true)
+                                        }
+                                    }
+                                }
+                            }
+                            
                         }
                     }
                 } else { //someone has accepted it
