@@ -22,6 +22,8 @@ class TripDriverViewController: UIViewController {
 
     let db = Firestore.firestore()
     
+    var listener: ListenerRegistration?
+    
     var originMarker: GMSMarker?
     var destinationMarker: GMSMarker?
     
@@ -331,7 +333,7 @@ class TripDriverViewController: UIViewController {
     }
     
     func listenForStatus() {
-        db.collection("trips").document(trip!.id)
+        listener = db.collection("trips").document(trip!.id)
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
@@ -345,6 +347,7 @@ class TripDriverViewController: UIViewController {
                         if let error = error {
                             print(error)
                         } else {
+                            self.listener?.remove()
                             self.navigationController?.popToRootViewController(animated: true)
                             return
                         }
@@ -353,6 +356,7 @@ class TripDriverViewController: UIViewController {
                 if status == "canceled" {
                     let alert = UIAlertController(title: "Hủy chuyến", message: "Khách hàng vừa hủy chuyến", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
+                        self.listener?.remove()
                         self.navigationController?.popToRootViewController(animated: true)
                     }))
                     self.present(alert, animated: true, completion: nil)

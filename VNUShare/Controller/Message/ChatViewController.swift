@@ -56,6 +56,7 @@ class ChatViewController: UIViewController {
         tableView.register(UINib(nibName: "SendChatCell", bundle: nil), forCellReuseIdentifier: "SendChatCell")
         tableView.register(UINib(nibName: "ReceiveChatCell", bundle: nil), forCellReuseIdentifier: "ReceiveChatCell")
         setupUI()
+        listenForMessage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +89,10 @@ class ChatViewController: UIViewController {
         stackView.addArrangedSubview(btnSend)
         btnSend.widthAnchor.constraint(equalToConstant: 50).isActive = true
         btnSend.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+    }
+    
+    func listenForMessage() {
         
     }
     

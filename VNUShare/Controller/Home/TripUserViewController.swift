@@ -22,6 +22,8 @@ class TripUserViewController: UIViewController {
     
     let db = Firestore.firestore()
     
+    var listener: ListenerRegistration?
+    
     var originMarker: GMSMarker?
     var destinationMarker: GMSMarker?
     var driverMarker: GMSMarker?
@@ -312,7 +314,7 @@ class TripUserViewController: UIViewController {
     }
     
     func listenForStatus() {
-        db.collection("trips").document(trip!.id)
+        listener = db.collection("trips").document(trip!.id)
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
@@ -338,6 +340,7 @@ class TripUserViewController: UIViewController {
                         } else {
                             let alert = UIAlertController(title: "Chúc mừng", message: "Bạn đã hoàn thành chuyến đi và nhận được \(self.trip!.distance/100) điểm thưởng", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
+                                self.listener?.remove()
                                 self.navigationController?.popToRootViewController(animated: true)
                             }))
                             self.present(alert, animated: true, completion: nil)
@@ -366,6 +369,7 @@ class TripUserViewController: UIViewController {
                 if let error = error {
                     print(error)
                 } else {
+                    self.listener?.remove()
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
