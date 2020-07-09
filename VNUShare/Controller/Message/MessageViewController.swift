@@ -29,9 +29,9 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-          super.viewWillAppear(animated)
-          tabBarController?.tabBar.isHidden = false
-      }
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
@@ -122,14 +122,25 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 chatVC.isUser1 = false
                             }
                             chatVC.messages = messages
+                            chatVC.messagesId = document.documentID
                             chatVC.navigationItem.title = self.users[indexPath.row].fullname
-                            self.navigationController?.pushViewController(chatVC, animated: true)
+                            self.db.collection("users").document(self.users[indexPath.row].uid).getDocument { (document, error) in
+                                if let error = error {
+                                    print(error)
+                                } else {
+                                    if let document = document {
+                                        let avatarData = document.get("avatar") as! Data
+                                        chatVC.imgAvatar = UIImage(data: avatarData)
+                                        self.navigationController?.pushViewController(chatVC, animated: true)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -9,7 +9,7 @@
 import UIKit
 
 class ReceiveChatCell: UITableViewCell {
-
+    
     @IBOutlet weak var imvAvatar: UIImageView!
     @IBOutlet weak var vwContainer: UIView!
     @IBOutlet weak var lblContent: UILabel!
@@ -24,8 +24,14 @@ class ReceiveChatCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imvAvatar.image = nil
+        lblContent.text = nil
     }
     
     func setupUI(){
@@ -34,7 +40,8 @@ class ReceiveChatCell: UITableViewCell {
         
     }
     
-    func configWithContent(_ content: String) {
-           lblContent.text = content
-       }
+    func configWithContent(_ content: String,_ img: UIImage?) {
+        lblContent.text = content
+        imvAvatar.image = img
+    }
 }

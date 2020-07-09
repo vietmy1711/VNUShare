@@ -24,6 +24,11 @@ class SendChatCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        lblContent.text = nil
+    }
+    
     func setupUI(){
         vwContainer.layer.cornerRadius = 8
         lblContent.layer.cornerRadius = 16
