@@ -315,7 +315,42 @@ class TripDriverViewController: UIViewController {
     }
     
     @objc func messageBtnClicked() {
-        
+        let chatVC = ChatViewController()
+        db.collection("messages").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let user1 = document.get("user1") as! String
+                    let user2 = document.get("user2") as! String
+                    if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
+                        if user1 == self.trip!.customerId || user2 == self.trip!.customerId {
+                            let content = document.get("content") as! [String]
+                            let sender = document.get("sender") as! [String]
+                            let id = document.documentID
+                            let messages = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender)
+                            if user2 == Auth.auth().currentUser!.uid {
+                                chatVC.isUser1 = false
+                            }
+                            chatVC.messages = messages
+                            chatVC.messagesId = document.documentID
+                            chatVC.navigationItem.title = self.trip!.customerName
+                            self.db.collection("users").document(self.trip!.driverId!).getDocument { (document, error) in
+                                if let error = error {
+                                    print(error)
+                                } else {
+                                    if let document = document {
+                                        let avatarData = document.get("avatar") as! Data
+                                        chatVC.imgAvatar = UIImage(data: avatarData)
+                                        self.navigationController?.pushViewController(chatVC, animated: true)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @objc func changeStateBtnClicked() {
