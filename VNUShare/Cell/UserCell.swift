@@ -9,12 +9,55 @@
 import UIKit
 
 class UserCell: UITableViewCell {
-
+    
     let vwContainer: UIView = {
         let vw = UIView()
-        vw.backgroundColor = .systemTeal
+        vw.backgroundColor = .white
+        vw.layer.masksToBounds = false
+        vw.layer.cornerRadius = 8
+        vw.layer.shadowColor = UIColor.black.cgColor
+        vw.layer.shadowOffset = CGSize(width: 0, height: 4)
+        vw.layer.shadowRadius = 2
+        vw.layer.shadowOpacity = 0.1
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
+    }()
+    
+    let imvAvatar: UIImageView = {
+        let imv = UIImageView()
+        imv.layer.masksToBounds = true
+        imv.contentMode = .scaleAspectFill
+        imv.layer.cornerRadius = 25
+        imv.backgroundColor = .systemGray6
+        imv.isUserInteractionEnabled = true
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
+    }()
+    
+    let stackViewLabel: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    let lblName: UILabel = {
+        let lbl = UILabel()
+        lbl.backgroundColor = .white
+        lbl.textColor = .black
+        lbl.font = UIFont(name: "Helvetica-Bold", size: 16)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let lblLastMessage: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        lbl.font = UIFont(name: "Helvetica", size: 16)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -28,22 +71,46 @@ class UserCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     func setupCell(){
         contentView.addSubview(vwContainer)
         
-        vwContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        vwContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
-        vwContainer.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
-        vwContainer.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        vwContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2).isActive = true
+        vwContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
+        vwContainer.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 2).isActive = true
+        vwContainer.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -2).isActive = true
         
-        vwContainer.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        contentView.addSubview(imvAvatar)
+        
+        imvAvatar.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 10).isActive = true
+        imvAvatar.leftAnchor.constraint(equalTo: vwContainer.leftAnchor, constant: 10).isActive = true
+        imvAvatar.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10).isActive = true
+        
+        imvAvatar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        imvAvatar.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        contentView.addSubview(stackViewLabel)
+        
+        stackViewLabel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 16).isActive = true
+        stackViewLabel.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -16).isActive = true
+        stackViewLabel.leftAnchor.constraint(equalTo: imvAvatar.rightAnchor, constant: 10).isActive = true
+        stackViewLabel.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
+        
+        stackViewLabel.addArrangedSubview(lblName)
+        stackViewLabel.addArrangedSubview(lblLastMessage)
 
     }
-    func printSomething() {
-        print("something")
+    
+    func configCell(avatar: UIImage, name: String, lastMessage: String?) {
+        imvAvatar.image = avatar
+        lblName.text = name
+        if lastMessage == nil {
+            lblLastMessage.text = "Gửi tin nhắn ngay"
+        } else {
+            lblLastMessage.text = lastMessage
+        }
     }
 }

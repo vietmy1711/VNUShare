@@ -15,6 +15,8 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var users: [User] = []
     
+    var imageAvatars: [UIImage] = []
+    
     @IBOutlet var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -34,34 +36,18 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-            if let error = error {
-                print(error)
-            } else if let document = document {
-                let fullname = document.get("fullname") as! String
-                print(fullname)
-            }
-        }
+//        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+//            if let error = error {
+//                print(error)
+//            } else if let document = document {
+//                let fullname = document.get("fullname") as! String
+//                print(fullname)
+//            }
+//        }
     }
     func search() {
         users.removeAll()
-        //        db.collection("users").getDocuments() { (querySnapshot, error) in
-        //            if let error = error {
-        //                print("Error getting documents: \(error)")
-        //            } else {
-        //                for document in querySnapshot!.documents {
-        //                    let uid = document.documentID
-        //                    let email = document.get("email") as! String
-        //                    let fullname = document.get("fullname") as! String
-        //                    let phonenumber = document.get("phonenumber") as! String
-        //                    let role = document.get("role") as! String
-        //                    let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role)
-        //                    self.users.append(user)
-        //                    print(user)
-        //                }
-        //                self.tableView.reloadData()
-        //            }
-        //        }
+        imageAvatars.removeAll()
         
         //lấy document của user hiện tại
         db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
@@ -87,6 +73,13 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 let points: Int = pointsNS.intValue
                                 let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
                                 self.users.append(user)
+                                
+                                let avatarData = document.get("avatar")
+                                let image = UIImage(data: avatarData as! Data)
+                                self.imageAvatars.append(image!)
+                                
+                                
+                                
                                 self.tableView.reloadData()
                             }
                         }
@@ -149,7 +142,8 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-        cell.textLabel!.text = users[indexPath.row].fullname
+        cell.configCell(avatar: imageAvatars[indexPath.row], name: users[indexPath.row].fullname, lastMessage: nil)
+        //cell.textLabel!.text = users[indexPath.row].fullname
         cell.selectionStyle = .none
         return cell
     }
