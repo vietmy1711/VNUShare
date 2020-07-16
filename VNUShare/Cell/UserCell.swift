@@ -94,8 +94,8 @@ class UserCell: UITableViewCell {
         
         contentView.addSubview(stackViewLabel)
         
-        stackViewLabel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 16).isActive = true
-        stackViewLabel.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -16).isActive = true
+        stackViewLabel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: 12).isActive = true
+        stackViewLabel.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -12).isActive = true
         stackViewLabel.leftAnchor.constraint(equalTo: imvAvatar.rightAnchor, constant: 10).isActive = true
         stackViewLabel.rightAnchor.constraint(equalTo: vwContainer.rightAnchor, constant: -10).isActive = true
         

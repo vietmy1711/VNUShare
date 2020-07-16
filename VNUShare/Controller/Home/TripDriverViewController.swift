@@ -327,8 +327,10 @@ class TripDriverViewController: UIViewController {
                         if user1 == self.trip!.customerId || user2 == self.trip!.customerId {
                             let content = document.get("content") as! [String]
                             let sender = document.get("sender") as! [String]
+                            let lastNS = document.get("last") as! NSNumber
+                            let last = lastNS.doubleValue
                             let id = document.documentID
-                            let messages = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender)
+                            let messages = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender, last: last)
                             if user2 == Auth.auth().currentUser!.uid {
                                 chatVC.isUser1 = false
                             }

@@ -250,7 +250,8 @@ class TripOverViewViewController: UIViewController {
                                         "user1": self.trip!.customerId,
                                         "user2": self.user!.uid,
                                         "content": [],
-                                        "sender": []
+                                        "sender": [],
+                                        "last": Date().timeIntervalSince1970
                                     ]) { (error) in
                                         if let error = error {
                                             print(error)

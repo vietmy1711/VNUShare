@@ -15,8 +15,8 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var users: [User] = []
     
-    var imageAvatars: [UIImage] = []
-    
+    var messages: [Messages] = []
+        
     @IBOutlet var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -36,60 +36,92 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-//            if let error = error {
-//                print(error)
-//            } else if let document = document {
-//                let fullname = document.get("fullname") as! String
-//                print(fullname)
-//            }
-//        }
+        //        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+        //            if let error = error {
+        //                print(error)
+        //            } else if let document = document {
+        //                let fullname = document.get("fullname") as! String
+        //                print(fullname)
+        //            }
+        //        }
     }
     func search() {
-        users.removeAll()
-        imageAvatars.removeAll()
-        
-        //lấy document của user hiện tại
-        db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            } else {
-                if let document = document {
-                    // get contacts về, contacts là một mảng string
-                    let contacts = document.get("contacts") as! [String]
-                    //với mỗi contacts
-                    for contactUid in contacts {
-                        //get thông tin của contact trong collection users
-                        self.db.collection("users").document(contactUid).getDocument { (document, error) in
-                            if let error = error {
-                                print(error)
-                            } else if let document = document {
-                                let uid = document.documentID
-                                let email = document.get("email") as! String
-                                let fullname = document.get("fullname") as! String
-                                let phonenumber = document.get("phonenumber") as! String
-                                let role = document.get("role") as! String
-                                let pointsNS: NSNumber = document.get("points") as! NSNumber
-                                let points: Int = pointsNS.intValue
-                                let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
-                                self.users.append(user)
-                                
-                                let avatarData = document.get("avatar")
-                                let image = UIImage(data: avatarData as! Data)
-                                self.imageAvatars.append(image!)
-                                
-                                
-                                
-                                self.tableView.reloadData()
+
+        db.collection("messages").addSnapshotListener { documentSnapshot, error in
+            guard let documents = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            self.users.removeAll()
+            self.messages.removeAll()
+            for document in documents.documents {
+                let user1 = document.get("user1") as! String
+                let user2 = document.get("user2") as! String
+                if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
+                    if user1 == Auth.auth().currentUser!.uid {
+                        let content = document.get("content") as! [String]
+                        let sender = document.get("sender") as! [String]
+                        let lastNS = document.get("last") as! NSNumber
+                        let last = lastNS.doubleValue
+                        let id = document.documentID
+                        let message = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender, last: last)
+                        self.messages.append(message)
+                        self.messages = self.messages.sorted(by: {$0.last > $1.last})
+                        
+                        for _ in self.messages {
+                            self.db.collection("users").document(user2).getDocument { (document, error) in
+                                if let error = error {
+                                    print(error)
+                                } else if let document = document {
+                                    let uid = document.documentID
+                                    let email = document.get("email") as! String
+                                    let fullname = document.get("fullname") as! String
+                                    let phonenumber = document.get("phonenumber") as! String
+                                    let role = document.get("role") as! String
+                                    let pointsNS: NSNumber = document.get("points") as! NSNumber
+                                    let points: Int = pointsNS.intValue
+                                    let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
+                                    self.users.append(user)
+
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        }
+                    } else {
+                        let content = document.get("content") as! [String]
+                        let sender = document.get("sender") as! [String]
+                        let lastNS = document.get("last") as! NSNumber
+                        let last = lastNS.doubleValue
+                        let id = document.documentID
+                        let message = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender, last: last)
+                        self.messages.append(message)
+                        self.messages = self.messages.sorted(by: {$0.last > $1.last})
+                        
+                        for _ in self.messages {
+                            self.db.collection("users").document(user1).getDocument { (document, error) in
+                                if let error = error {
+                                    print(error)
+                                } else if let document = document {
+                                    let uid = document.documentID
+                                    let email = document.get("email") as! String
+                                    let fullname = document.get("fullname") as! String
+                                    let phonenumber = document.get("phonenumber") as! String
+                                    let role = document.get("role") as! String
+                                    let pointsNS: NSNumber = document.get("points") as! NSNumber
+                                    let points: Int = pointsNS.intValue
+                                    let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
+                                    self.users.append(user)
+
+                                    self.tableView.reloadData()
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        
-        
     }
+    
     func setupUI() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -98,37 +130,41 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatVC = ChatViewController()
-        db.collection("messages").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    let user1 = document.get("user1") as! String
-                    let user2 = document.get("user2") as! String
-                    if user1 == Auth.auth().currentUser!.uid || user2 == Auth.auth().currentUser!.uid {
-                        if user1 == self.users[indexPath.row].uid || user2 == self.users[indexPath.row].uid {
-                            let content = document.get("content") as! [String]
-                            let sender = document.get("sender") as! [String]
-                            let id = document.documentID
-                            let messages = Messages(id: id, user1: user1, user2: user2, content: content, sender: sender)
-                            if user2 == Auth.auth().currentUser!.uid {
-                                chatVC.isUser1 = false
-                            }
-                            chatVC.messages = messages
-                            chatVC.messagesId = document.documentID
-                            chatVC.navigationItem.title = self.users[indexPath.row].fullname
-                            self.db.collection("users").document(self.users[indexPath.row].uid).getDocument { (document, error) in
-                                if let error = error {
-                                    print(error)
-                                } else {
-                                    if let document = document {
-                                        let avatarData = document.get("avatar") as! Data
-                                        chatVC.imgAvatar = UIImage(data: avatarData)
-                                        self.navigationController?.pushViewController(chatVC, animated: true)
-                                    }
-                                }
+        
+        chatVC.messages = messages[indexPath.row]
+        chatVC.messagesId = messages[indexPath.row].id
+        if messages[indexPath.row].user2 == Auth.auth().currentUser!.uid {
+            chatVC.isUser1 = false
+            self.db.collection("users").document(self.messages[indexPath.row].user1).getDocument { (document, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let document = document {
+                        let avatarData = document.get("avatar") as! Data
+                        chatVC.imgAvatar = UIImage(data: avatarData)
+                        for user in self.users {
+                            if user.uid == self.messages[indexPath.row].user1 {
+                                chatVC.navigationItem.title = user.fullname
                             }
                         }
+                        self.navigationController?.pushViewController(chatVC, animated: true)
+                    }
+                }
+            }
+        } else {
+            self.db.collection("users").document(self.messages[indexPath.row].user2).getDocument { (document, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let document = document {
+                        let avatarData = document.get("avatar") as! Data
+                        chatVC.imgAvatar = UIImage(data: avatarData)
+                        for user in self.users {
+                            if user.uid == self.messages[indexPath.row].user2 {
+                                chatVC.navigationItem.title = user.fullname
+                            }
+                        }
+                        self.navigationController?.pushViewController(chatVC, animated: true)
                     }
                 }
             }
@@ -137,18 +173,27 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-        cell.configCell(avatar: imageAvatars[indexPath.row], name: users[indexPath.row].fullname, lastMessage: nil)
-        //cell.textLabel!.text = users[indexPath.row].fullname
+        for user in users {
+            if messages[indexPath.row].user1 == user.uid {
+                self.db.collection("users").document(user.uid).getDocument { (document, error) in
+                    if let error = error {
+                        print(error)
+                    } else if let document = document {
+                        let fullname = document.get("fullname") as! String
+                        
+                        let avatarData = document.get("avatar")
+                        let image = UIImage(data: avatarData as! Data)
+                        cell.configCell(avatar: image!, name: fullname, lastMessage: nil)
+                    }
+                }
+            }
+        }
         cell.selectionStyle = .none
         return cell
     }
-    
 }
-
-
-

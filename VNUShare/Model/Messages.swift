@@ -14,4 +14,5 @@ struct Messages {
     let user2: String
     var content: [String]
     var sender: [String]
+    var last: Double
 }
