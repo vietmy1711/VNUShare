@@ -13,12 +13,19 @@ class UserCell: UITableViewCell {
     let vwContainer: UIView = {
         let vw = UIView()
         vw.backgroundColor = .white
-        vw.layer.masksToBounds = false
-        vw.layer.cornerRadius = 8
-        vw.layer.shadowColor = UIColor.black.cgColor
-        vw.layer.shadowOffset = CGSize(width: 0, height: 4)
-        vw.layer.shadowRadius = 2
-        vw.layer.shadowOpacity = 0.1
+        //        vw.layer.masksToBounds = false
+        //        vw.layer.cornerRadius = 8
+        //        vw.layer.shadowColor = UIColor.black.cgColor
+        //        vw.layer.shadowOffset = CGSize(width: 0, height: 4)
+        //        vw.layer.shadowRadius = 2
+        //        vw.layer.shadowOpacity = 0.1
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        return vw
+    }()
+    
+    let vwSeperator: UIView = {
+        let vw = UIView()
+        vw.backgroundColor = .systemGray6
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
     }()
@@ -77,11 +84,18 @@ class UserCell: UITableViewCell {
     
     func setupCell(){
         contentView.addSubview(vwContainer)
+        contentView.addSubview(vwSeperator)
         
         vwContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2).isActive = true
-        vwContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
+        vwContainer.bottomAnchor.constraint(equalTo: vwSeperator.topAnchor, constant: 0).isActive = true
         vwContainer.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 2).isActive = true
         vwContainer.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -2).isActive = true
+        
+        vwSeperator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1).isActive = true
+        vwSeperator.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        vwSeperator.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        
+        vwSeperator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         contentView.addSubview(imvAvatar)
         
@@ -101,7 +115,7 @@ class UserCell: UITableViewCell {
         
         stackViewLabel.addArrangedSubview(lblName)
         stackViewLabel.addArrangedSubview(lblLastMessage)
-
+        
     }
     
     func configCell(avatar: UIImage, name: String, lastMessage: String?) {
