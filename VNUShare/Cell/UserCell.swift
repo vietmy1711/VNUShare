@@ -107,10 +107,10 @@ class UserCell: UITableViewCell {
     func configCell(avatar: UIImage, name: String, lastMessage: String?) {
         imvAvatar.image = avatar
         lblName.text = name
-        if lastMessage == nil {
-            lblLastMessage.text = "Gửi tin nhắn ngay"
+        if let lastMess = lastMessage {
+            lblLastMessage.text = lastMess
         } else {
-            lblLastMessage.text = lastMessage
+            lblLastMessage.text = "Gửi tin nhắn ngay"
         }
     }
 }

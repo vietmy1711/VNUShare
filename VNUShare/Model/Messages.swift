@@ -15,4 +15,11 @@ struct Messages {
     var content: [String]
     var sender: [String]
     var last: Double
+    
+    func getLastestMessage(_ user: String) -> String? {
+        if content.isEmpty != true && sender.isEmpty != true {
+            return "\(user): \(String(describing: content.last!))"
+        }
+        return nil
+    }
 }

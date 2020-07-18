@@ -179,7 +179,7 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
         for user in users {
-            if messages[indexPath.row].user1 == user.uid {
+            if messages[indexPath.row].user1 == user.uid || messages[indexPath.row].user2 == user.uid {
                 self.db.collection("users").document(user.uid).getDocument { (document, error) in
                     if let error = error {
                         print(error)
@@ -188,7 +188,16 @@ class MessageViewController: UIViewController, UITableViewDelegate, UITableViewD
                         
                         let avatarData = document.get("avatar")
                         let image = UIImage(data: avatarData as! Data)
-                        cell.configCell(avatar: image!, name: fullname, lastMessage: nil)
+                        var senderName = user.fullname
+                        var sendUser = "user1"
+                        if self.messages[indexPath.row].user2 == user.uid {
+                            sendUser = "user2"
+                        }
+                        if self.messages[indexPath.row].sender.last != sendUser {
+                            senderName = "Bạn"
+                        }
+                        let lastMessage = self.messages[indexPath.row].getLastestMessage(senderName)
+                        cell.configCell(avatar: image!, name: fullname, lastMessage: lastMessage)
                     }
                 }
             }
