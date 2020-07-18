@@ -6,13 +6,14 @@
 //  Copyright © 2020 MM. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct User: Codable {
+struct User {
     let uid: String
     let email: String
     let fullname: String
     let phonenumber: String
     let role: String
     var points: Int
+    let avatar: UIImage
 }

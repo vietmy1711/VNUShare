@@ -13,12 +13,6 @@ class UserCell: UITableViewCell {
     let vwContainer: UIView = {
         let vw = UIView()
         vw.backgroundColor = .white
-        //        vw.layer.masksToBounds = false
-        //        vw.layer.cornerRadius = 8
-        //        vw.layer.shadowColor = UIColor.black.cgColor
-        //        vw.layer.shadowOffset = CGSize(width: 0, height: 4)
-        //        vw.layer.shadowRadius = 2
-        //        vw.layer.shadowOpacity = 0.1
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
     }()

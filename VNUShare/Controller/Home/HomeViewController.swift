@@ -143,7 +143,9 @@ class HomeViewController: UIViewController {
                 let role: String = document!.get("role") as! String
                 let pointsNS: NSNumber = document!.get("points") as! NSNumber
                 let points: Int = pointsNS.intValue
-                self.user = User(uid: uid,email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
+                let avatarData = document!.get("avatar")
+                let avatar = UIImage(data: avatarData as! Data)
+                self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points, avatar: avatar!)
                 self.menuTableView.reloadData()
                 self.lblPoints.text = "Bạn đang có \(points) điểm thưởng"
             } else {

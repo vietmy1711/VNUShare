@@ -194,7 +194,9 @@ class TripOverViewViewController: UIViewController {
                 let role: String = document!.get("role") as! String
                 let pointsNS: NSNumber = document!.get("points") as! NSNumber
                 let points: Int = pointsNS.intValue
-                self.user = User(uid: uid,email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
+                let avatarData = document!.get("avatar")
+                let avatar = UIImage(data: avatarData as! Data)
+                let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points, avatar: avatar!)
             } else {
                 print("not exist")
             }

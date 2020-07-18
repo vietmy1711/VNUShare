@@ -177,7 +177,8 @@ class AccountViewController: UIViewController {
             } else {
                 if let document = document {
                     let avatarData = document.get("avatar")
-                    self.imvAvatar.image = UIImage(data: avatarData as! Data)
+                    let avatar = UIImage(data: avatarData as! Data)
+                    self.imvAvatar.image = avatar
                     
                     let uid = document.documentID
                     let email = document.get("email") as! String
@@ -186,7 +187,7 @@ class AccountViewController: UIViewController {
                     let role = document.get("role") as! String
                     let pointsNS: NSNumber = document.get("points") as! NSNumber
                     let points: Int = pointsNS.intValue
-                    self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points)
+                    self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points, avatar: avatar!)
                     self.lblName.text = self.user!.fullname
                     self.lblPoint.text = String("\(self.user!.points) điểm")
                 }
