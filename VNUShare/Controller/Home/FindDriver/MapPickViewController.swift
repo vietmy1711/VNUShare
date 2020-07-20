@@ -16,6 +16,8 @@ import Firebase
 
 class MapPickViewController: UIViewController {
     
+    var usePoint = false
+
     let db = Firestore.firestore()
     
     var user: User?
@@ -318,42 +320,57 @@ class MapPickViewController: UIViewController {
     @objc func confirmButtonClicked() {
         
         if let destination = destinationPlace, let source = sourcePlace {
-            var ref: DocumentReference? = nil
-            
-            ref = db.collection("trips").addDocument (data: [
-                "distance": totalDistance,
-                "money": totalMoney,
-                "duration": totalDuration,
-                "time": Date().timeIntervalSince1970,
-                "originName": source.name,
-                "originAddress": source.address,
-                "originLatitude": source.coordinate.latitude,
-                "originLongitude": source.coordinate.longitude,
-                "destinationName": destination.name,
-                "destinationAddress": destination.address,
-                "destinationLatitude": destination.coordinate.latitude,
-                "destinationLongitude": destination.coordinate.longitude,
-                "customerId": user!.uid,
-                "customerName": user!.fullname,
-                "customerPhoneNumber": user!.phonenumber,
-                "driverId": "",
-                "driverName": "",
-                "driverPhoneNumber": "",
-                "status": "waiting"
-            ]) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written!")
-                    self.createdId = ref!.documentID
-                    let findDriverVC = FindDriverViewController()
-                    findDriverVC.modalPresentationStyle = .fullScreen
-                    findDriverVC.tripId = self.createdId
-                    findDriverVC.user = self.user
-                    findDriverVC.delegate = self
-                    self.navigationController?.pushViewController(findDriverVC, animated: true)
+            if self.user?.points != 0 {
+                let alert = UIAlertController(title: "Dùng điểm thưởng", message: "Bạn hiện đang có \(self.user!.points) điểm thưởng, bạn có muốn dùng ngay?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dùng ngay", style: .default, handler: { (_) in
+                    self.usePoint = true
+                    self.totalMoney = self.totalMoney - self.user!.points
+                    //self.db.collection("users").document(self.user!.uid).updateData(["points": 0])
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "Để sau", style: .cancel, handler: nil))
+                self.present(alert, animated: true) {
+                    var ref: DocumentReference? = nil
+
+                    ref = self.db.collection("trips").addDocument (data: [
+                        "distance": self.totalDistance,
+                        "money": self.totalMoney,
+                        "duration": self.totalDuration,
+                        "time": Date().timeIntervalSince1970,
+                        "originName": source.name,
+                        "originAddress": source.address,
+                        "originLatitude": source.coordinate.latitude,
+                        "originLongitude": source.coordinate.longitude,
+                        "destinationName": destination.name,
+                        "destinationAddress": destination.address,
+                        "destinationLatitude": destination.coordinate.latitude,
+                        "destinationLongitude": destination.coordinate.longitude,
+                        "customerId": self.user!.uid,
+                        "customerName": self.user!.fullname,
+                        "customerPhoneNumber": self.user!.phonenumber,
+                        "driverId": "",
+                        "driverName": "",
+                        "driverPhoneNumber": "",
+                        "status": "waiting"
+                    ]) { err in
+                        if let err = err {
+                            print("Error writing document: \(err)")
+                        } else {
+                            print("Document successfully written!")
+                            self.createdId = ref!.documentID
+                            let findDriverVC = FindDriverViewController()
+                            findDriverVC.modalPresentationStyle = .fullScreen
+                            findDriverVC.tripId = self.createdId
+                            findDriverVC.user = self.user
+                            findDriverVC.delegate = self
+                            findDriverVC.usePoint = self.usePoint
+                            self.navigationController?.pushViewController(findDriverVC, animated: true)
+                        }
+                    }
                 }
             }
+            
+            
         }
     }
     

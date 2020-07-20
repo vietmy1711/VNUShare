@@ -16,6 +16,8 @@ class TripUserViewController: UIViewController {
     
     var trip: Trip?
     
+    var usePoint = false
+    
     var messagesId: String?
     
     var user: User?
@@ -331,6 +333,9 @@ class TripUserViewController: UIViewController {
                     self.btnCancel.layer.opacity = 0.5
                     self.btnCancel.isEnabled = false
                 } else if status == "finished" {
+                    if self.usePoint == true {
+                        self.db.collection("users").document(self.user!.uid).updateData(["points": 0])
+                    }
                     self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData([
                         "completed": FieldValue.arrayUnion([self.trip!.id]),
                         "points": self.user!.points + (self.trip!.distance/100)

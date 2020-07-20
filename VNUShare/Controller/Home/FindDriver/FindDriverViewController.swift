@@ -18,6 +18,8 @@ class FindDriverViewController: UIViewController {
     
     var delegate: FindDriverViewControllerDelegate?
     
+    var usePoint = false
+    
     let db = Firestore.firestore()
     
     var user: User?
@@ -147,6 +149,7 @@ class FindDriverViewController: UIViewController {
                     let tripUserVC = TripUserViewController()
                     tripUserVC.trip = trip
                     tripUserVC.user = self.user
+                    tripUserVC.usePoint = self.usePoint
                     self.db.collection("users").document(self.user!.uid).updateData([
                         "contacts": FieldValue.arrayUnion([driverId])
                         ])
