@@ -40,6 +40,7 @@ class MessageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.tintColor = .systemPink
         tabBarController?.tabBar.isHidden = false
         firstTime = true
         filteredUsers = users
