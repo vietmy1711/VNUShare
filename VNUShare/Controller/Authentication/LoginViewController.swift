@@ -8,8 +8,10 @@
 
 import UIKit
 import Firebase
+import KeychainSwift
 
 class LoginViewController: UIViewController {
+    let keychain = KeychainSwift()
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -17,12 +19,21 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTextField.text = "test2@gmail.com"
-        passwordTextField.text = "123456"
+        checkLastUser()
+//        emailTextField.text = "test2@gmail.com"
+//        passwordTextField.text = "123456"
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector(self.dismissKeyboard))
         
         view.addGestureRecognizer(tap)
+        
+        checkLoggedOn()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkLastUser()
+        passwordTextField.text = ""
     }
     
     @objc func dismissKeyboard() {
@@ -30,12 +41,36 @@ class LoginViewController: UIViewController {
         view.endEditing(true)
     }
     
+    
+    func checkLastUser() {
+        if let email = keychain.get("email") {
+            emailTextField.text = email
+        }
+    }
+    func checkLoggedOn() {
+        if let email = keychain.get("email"), let password = keychain.get("password") {
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                if let e = error {
+                    let alert = UIAlertController(title: "Có lỗi xảy ra", message: e.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Đăng nhập lại", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    self.performSegue(withIdentifier: "loginSegue", sender: self)
+                }
+            }
+        }
+    }
+    
     @IBAction func loginPressed(_ sender: UIButton) {
         if let email = emailTextField.text, let password = passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 if let e = error {
-                    print(e)
+                    let alert = UIAlertController(title: "Có lỗi xảy ra", message: e.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Đăng nhập lại", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
+                    self.keychain.set(email, forKey: "email")
+                    self.keychain.set(password, forKey: "password")
                     self.performSegue(withIdentifier: "loginSegue", sender: self)
                 }
             }

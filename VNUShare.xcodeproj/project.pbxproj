@@ -38,6 +38,8 @@
 		8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D8CB154244017B700E6CCB0 /* LaunchScreen.storyboard */; };
 		8DA6E474247BB84800F4EB57 /* MapPickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */; };
 		8DA6E476247BD3D100F4EB57 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA6E475247BD3D100F4EB57 /* API.swift */; };
+		8DABE4B524C6D0D800694E95 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DABE4B324C6D0D800694E95 /* ChangePasswordViewController.swift */; };
+		8DABE4B624C6D0D800694E95 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DABE4B424C6D0D800694E95 /* ChangePasswordViewController.xib */; };
 		8DAD7057244C25DD008961F9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7056244C25DD008961F9 /* SignUpViewController.swift */; };
 		8DAD7059244C25EA008961F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAD7058244C25EA008961F9 /* LoginViewController.swift */; };
 		8DB35AB724B3301E00B9D00E /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB35AB524B3301E00B9D00E /* HistoryCell.swift */; };
@@ -83,6 +85,8 @@
 		8D8CB157244017B700E6CCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DA6E473247BB84800F4EB57 /* MapPickViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPickViewController.swift; sourceTree = "<group>"; };
 		8DA6E475247BD3D100F4EB57 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		8DABE4B324C6D0D800694E95 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		8DABE4B424C6D0D800694E95 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
 		8DAD7056244C25DD008961F9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8DAD7058244C25EA008961F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8DB35AB524B3301E00B9D00E /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 			children = (
 				8DC36CD7245155E9002A6686 /* AccountViewController.swift */,
 				8DB35AB924B3304400B9D00E /* History */,
+				8DABE4B224C6CF4100694E95 /* Change Password */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -245,6 +250,15 @@
 				3D02744224B42FBF0096B067 /* Messages.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8DABE4B224C6CF4100694E95 /* Change Password */ = {
+			isa = PBXGroup;
+			children = (
+				8DABE4B324C6D0D800694E95 /* ChangePasswordViewController.swift */,
+				8DABE4B424C6D0D800694E95 /* ChangePasswordViewController.xib */,
+			);
+			path = "Change Password";
 			sourceTree = "<group>";
 		};
 		8DB35AB924B3304400B9D00E /* History */ = {
@@ -336,6 +350,7 @@
 				8D3F09D2249F75D9008DE850 /* TripTableViewCell.xib in Resources */,
 				8D0BF873247769AE009B7C39 /* MenuCell.xib in Resources */,
 				8DB35AB824B3301E00B9D00E /* HistoryCell.xib in Resources */,
+				8DABE4B624C6D0D800694E95 /* ChangePasswordViewController.xib in Resources */,
 				3D02744724B43FB30096B067 /* SendChatCell.xib in Resources */,
 				8D3944B6247CF270007F6B68 /* .gitignore in Resources */,
 				8D8CB156244017B700E6CCB0 /* LaunchScreen.storyboard in Resources */,
@@ -425,6 +440,7 @@
 				8D8CB14E244017B600E6CCB0 /* MessageViewController.swift in Sources */,
 				3DEA718A249FD362000EB4AE /* UserCell.swift in Sources */,
 				8DC36CD8245155E9002A6686 /* AccountViewController.swift in Sources */,
+				8DABE4B524C6D0D800694E95 /* ChangePasswordViewController.swift in Sources */,
 				3D02744624B43FB30096B067 /* SendChatCell.swift in Sources */,
 				8D2B9A702497BD6900FB153A /* SearchMapViewController.swift in Sources */,
 				3D3EB5F9249F7C3100E94DA0 /* ChatViewController.swift in Sources */,

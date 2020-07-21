@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KeychainSwift
 import Firebase
 
 class AccountViewController: UIViewController {
@@ -14,6 +15,8 @@ class AccountViewController: UIViewController {
     let db = Firestore.firestore()
     
     var user: User?
+    
+    let keychain = KeychainSwift()
     
     var imagePicker = UIImagePickerController()
     
@@ -49,9 +52,9 @@ class AccountViewController: UIViewController {
     let btnStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 2
+        stackView.spacing = 12
         stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -91,14 +94,45 @@ class AccountViewController: UIViewController {
     
     let btnHistory: UIButton = {
         let btn = UIButton()
-        btn.setTitle("   Lịch sử chuyến đi", for: .normal)
+        btn.setTitle("Lịch sử chuyến đi", for: .normal)
         btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1), for: .normal)
         btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.8), for: .highlighted)
         btn.titleLabel!.font = UIFont(name: "Helvetica", size: 17)
-        btn.setImage(UIImage(systemName: "book.fill"), for: .normal)
+       // btn.setImage(UIImage(systemName: "book.fill"), for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFit
         btn.backgroundColor = .clear
         btn.tintColor = .systemPink
         btn.addTarget(self, action: #selector(btnHistoryPressed), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    let btnChangeInfo: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Đổi thông tin cá nhân", for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1), for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.8), for: .highlighted)
+        btn.titleLabel!.font = UIFont(name: "Helvetica", size: 17)
+       // btn.setImage(UIImage(systemName: "keyboard"), for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.backgroundColor = .clear
+        btn.tintColor = .systemPink
+        btn.addTarget(self, action: #selector(btnChangeInfoPressed), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    let btnChangePassword: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Đổi mật khẩu", for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 1), for: .normal)
+        btn.setTitleColor(UIColor(red: 75/255, green: 75/255, blue: 75/255, alpha: 0.8), for: .highlighted)
+        btn.titleLabel!.font = UIFont(name: "Helvetica", size: 17)
+       // btn.setImage(UIImage(systemName: "keyboard"), for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.backgroundColor = .clear
+        btn.tintColor = .systemPink
+        btn.addTarget(self, action: #selector(btnChangePasswordPressed), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -114,7 +148,6 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUser()
         setupUI()
     }
     
@@ -123,6 +156,7 @@ class AccountViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.navigationBar.tintColor = .systemPink
         tabBarController?.tabBar.isHidden = false
+        getUser()
     }
     
     func setupUI() {
@@ -164,6 +198,8 @@ class AccountViewController: UIViewController {
         btnStackView.rightAnchor.constraint(equalTo: vwSeperator.rightAnchor, constant: -10).isActive = true
         
         btnStackView.addArrangedSubview(btnHistory)
+        btnStackView.addArrangedSubview(btnChangeInfo)
+        btnStackView.addArrangedSubview(btnChangePassword)
         
         view.addSubview(btnSignOut)
         btnSignOut.topAnchor.constraint(equalTo: btnStackView.bottomAnchor, constant: 30).isActive = true
@@ -235,12 +271,25 @@ class AccountViewController: UIViewController {
         navigationController?.pushViewController(historyVC, animated: true)
     }
     
+    @objc func btnChangeInfoPressed() {
+        let changePasswordVC = ChangePasswordViewController()
+        changePasswordVC.navigationItem.title = "Đổi mật khẩu"
+        navigationController?.pushViewController(changePasswordVC, animated: true)
+    }
+    
+    @objc func btnChangePasswordPressed() {
+        let changePasswordVC = ChangePasswordViewController()
+        changePasswordVC.navigationItem.title = "Đổi mật khẩu"
+        navigationController?.pushViewController(changePasswordVC, animated: true)
+    }
+    
     @objc func btnSignOutPressed() {
         do {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
+        keychain.delete("password")
         self.dismiss(animated: true, completion: nil)
     }
 }

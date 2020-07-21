@@ -8,6 +8,7 @@ target 'VNUShare' do
   # Pods for VNUShare
   pod 'SwiftyJSON'
   pod 'Alamofire', '~> 5.2'
+  pod 'KeychainSwift', '~> 19.0'
   pod 'IQKeyboardManagerSwift'
   pod 'NVActivityIndicatorView'
   # add the Firebase pod for Google Analytics

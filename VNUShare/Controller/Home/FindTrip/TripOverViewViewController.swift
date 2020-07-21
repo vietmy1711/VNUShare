@@ -197,6 +197,7 @@ class TripOverViewViewController: UIViewController {
                 let avatarData = document!.get("avatar")
                 let avatar = UIImage(data: avatarData as! Data)
                 let user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points, avatar: avatar!)
+                self.user = user
             } else {
                 print("not exist")
             }

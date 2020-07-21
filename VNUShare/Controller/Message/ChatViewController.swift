@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MessageKit
 import Firebase
 
 class ChatViewController: UIViewController {

@@ -65,6 +65,7 @@ class HomeViewController: UIViewController {
         menuTableView.dataSource = self
         checkIfUserLoggedIn()
         setupUI()
+        checkTrip()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,13 +73,13 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .systemPink
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
+        getUser()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
-        getUser()
     }
     
     func checkIfUserLoggedIn() {
@@ -152,6 +153,10 @@ class HomeViewController: UIViewController {
                 print("not exist")
             }
         }
+    }
+    
+    func checkTrip() {
+        
     }
 }
 
