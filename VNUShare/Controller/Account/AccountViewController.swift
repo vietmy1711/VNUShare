@@ -272,9 +272,10 @@ class AccountViewController: UIViewController {
     }
     
     @objc func btnChangeInfoPressed() {
-        let changePasswordVC = ChangePasswordViewController()
-        changePasswordVC.navigationItem.title = "Đổi mật khẩu"
-        navigationController?.pushViewController(changePasswordVC, animated: true)
+        let changeInfoVC = ChangeInfoViewController()
+        changeInfoVC.navigationItem.title = "Đổi thông tin"
+        changeInfoVC.user = user
+        navigationController?.pushViewController(changeInfoVC, animated: true)
     }
     
     @objc func btnChangePasswordPressed() {

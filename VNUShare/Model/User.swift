@@ -11,9 +11,9 @@ import UIKit
 struct User {
     let uid: String
     let email: String
-    let fullname: String
-    let phonenumber: String
-    let role: String
+    var fullname: String
+    var phonenumber: String
+    var role: String
     var points: Int
     let avatar: UIImage
 }

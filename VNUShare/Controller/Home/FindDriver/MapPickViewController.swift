@@ -17,7 +17,7 @@ import Firebase
 class MapPickViewController: UIViewController {
     
     var usePoint = false
-
+    
     let db = Firestore.firestore()
     
     var user: User?
@@ -326,51 +326,58 @@ class MapPickViewController: UIViewController {
                     self.usePoint = true
                     self.totalMoney = self.totalMoney - self.user!.points
                     //self.db.collection("users").document(self.user!.uid).updateData(["points": 0])
+                    self.findTrip(destination: destination, source: source)
+                }))
+                alert.addAction(UIAlertAction(title: "Để sau", style: .default, handler: { (_) in
+                    self.findTrip(destination: destination, source: source)
                     
                 }))
-                alert.addAction(UIAlertAction(title: "Để sau", style: .cancel, handler: nil))
-                self.present(alert, animated: true) {
-                    var ref: DocumentReference? = nil
-
-                    ref = self.db.collection("trips").addDocument (data: [
-                        "distance": self.totalDistance,
-                        "money": self.totalMoney,
-                        "duration": self.totalDuration,
-                        "time": Date().timeIntervalSince1970,
-                        "originName": source.name,
-                        "originAddress": source.address,
-                        "originLatitude": source.coordinate.latitude,
-                        "originLongitude": source.coordinate.longitude,
-                        "destinationName": destination.name,
-                        "destinationAddress": destination.address,
-                        "destinationLatitude": destination.coordinate.latitude,
-                        "destinationLongitude": destination.coordinate.longitude,
-                        "customerId": self.user!.uid,
-                        "customerName": self.user!.fullname,
-                        "customerPhoneNumber": self.user!.phonenumber,
-                        "driverId": "",
-                        "driverName": "",
-                        "driverPhoneNumber": "",
-                        "status": "waiting"
-                    ]) { err in
-                        if let err = err {
-                            print("Error writing document: \(err)")
-                        } else {
-                            print("Document successfully written!")
-                            self.createdId = ref!.documentID
-                            let findDriverVC = FindDriverViewController()
-                            findDriverVC.modalPresentationStyle = .fullScreen
-                            findDriverVC.tripId = self.createdId
-                            findDriverVC.user = self.user
-                            findDriverVC.delegate = self
-                            findDriverVC.usePoint = self.usePoint
-                            self.navigationController?.pushViewController(findDriverVC, animated: true)
-                        }
-                    }
-                }
+                self.present(alert, animated: true)
+                
             }
             
             
+            
+        }
+    }
+    
+    func findTrip(destination: Place, source: Place) {
+        var ref: DocumentReference? = nil
+        
+        ref = self.db.collection("trips").addDocument (data: [
+            "distance": self.totalDistance,
+            "money": self.totalMoney,
+            "duration": self.totalDuration,
+            "time": Date().timeIntervalSince1970,
+            "originName": source.name,
+            "originAddress": source.address,
+            "originLatitude": source.coordinate.latitude,
+            "originLongitude": source.coordinate.longitude,
+            "destinationName": destination.name,
+            "destinationAddress": destination.address,
+            "destinationLatitude": destination.coordinate.latitude,
+            "destinationLongitude": destination.coordinate.longitude,
+            "customerId": self.user!.uid,
+            "customerName": self.user!.fullname,
+            "customerPhoneNumber": self.user!.phonenumber,
+            "driverId": "",
+            "driverName": "",
+            "driverPhoneNumber": "",
+            "status": "waiting"
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+                self.createdId = ref!.documentID
+                let findDriverVC = FindDriverViewController()
+                findDriverVC.modalPresentationStyle = .fullScreen
+                findDriverVC.tripId = self.createdId
+                findDriverVC.user = self.user
+                findDriverVC.delegate = self
+                findDriverVC.usePoint = self.usePoint
+                self.navigationController?.pushViewController(findDriverVC, animated: true)
+            }
         }
     }
     
@@ -508,7 +515,7 @@ extension MapPickViewController: CLLocationManagerDelegate {
                         "lat": locationFromMap.coordinate.latitude,
                         "lon": locationFromMap.coordinate.longitude,
                         "course": locationFromMap.course
-
+                        
                 ]) { err in
                     if let err = err {
                         print(err)

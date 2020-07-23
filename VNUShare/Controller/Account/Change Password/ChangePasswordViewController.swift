@@ -49,23 +49,29 @@ class ChangePasswordViewController: UIViewController {
                     return
                 }
             }
-            Auth.auth().currentUser?.updatePassword(to: newPassword) { (error) in
-                if let e = error {
-                    let alert = UIAlertController(title: "Đã có lỗi xảy ra", message: e.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Thử lại sau", style: .default, handler: nil))
-                    self.present(alert, animated: true) {
-                        return
+            let alert = UIAlertController(title: "Đổi mật khẩu", message: "Bạn có chắc chắc muốn đổi mật khẩu", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Đổi mật khẩu", style: .default, handler: { (_) in
+                Auth.auth().currentUser?.updatePassword(to: newPassword) { (error) in
+                    if let e = error {
+                        let alert = UIAlertController(title: "Đã có lỗi xảy ra", message: e.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Thử lại sau", style: .default, handler: nil))
+                        self.present(alert, animated: true) {
+                            return
+                        }
+                    } else {
+                        let alert = UIAlertController(title: "Thành công", message: "Đã đổi mật khẩu thành công", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
+                            self.keychain.set(newPassword, forKey: "password")
+                        }))
+                        self.present(alert, animated: true)
                     }
-                } else {
-                    let alert = UIAlertController(title: "Thành công", message: "Đã đổi mật khẩu thành công", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Xác nhận", style: .default, handler: { (_) in
-                        self.keychain.set(newPassword, forKey: "password")
-                    }))
-                    self.present(alert, animated: true)
                 }
-            }
+            }))
+            alert.addAction(UIAlertAction(title: "Hủy", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
         }
     }
+    
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)

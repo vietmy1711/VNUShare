@@ -12,7 +12,6 @@ import Firebase
 class HomeViewController: UIViewController {
     
     var user: User?
-    var greetingString: String = ""
     
     let db = Firestore.firestore()
     
@@ -65,7 +64,6 @@ class HomeViewController: UIViewController {
         menuTableView.dataSource = self
         checkIfUserLoggedIn()
         setupUI()
-        checkTrip()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +72,8 @@ class HomeViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
         getUser()
+        checkTrip()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,10 +84,7 @@ class HomeViewController: UIViewController {
     
     func checkIfUserLoggedIn() {
         if Auth.auth().currentUser != nil {
-            if let user:String = Auth.auth().currentUser?.displayName {
-                self.greetingString = "Hello, \(user)"
-                getUser()
-            }
+            getUser()
         } else {
             let alert = UIAlertController(title: "Có lỗi đã xảy ra", message: "Vui lòng đăng nhập lại", preferredStyle: .alert)
             
@@ -111,8 +108,6 @@ class HomeViewController: UIViewController {
         imvTop.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         imvTop.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         imvTop.heightAnchor.constraint(equalToConstant: 220).isActive = true
-        
-        lblGreet.text = greetingString
         
         lblGreet.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
         lblGreet.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
@@ -148,6 +143,7 @@ class HomeViewController: UIViewController {
                 let avatar = UIImage(data: avatarData as! Data)
                 self.user = User(uid: uid, email: email, fullname: fullname, phonenumber: phonenumber, role: role, points: points, avatar: avatar!)
                 self.menuTableView.reloadData()
+                self.lblGreet.text = "Xin chào, \(self.user!.fullname)"
                 self.lblPoints.text = "Bạn đang có \(points) điểm thưởng"
             } else {
                 print("not exist")
